@@ -1,0 +1,310 @@
+
+    -----------------------------------------------------------------------
+          Psi4: An Open-Source Ab Initio Electronic Structure Package
+                               Psi4 1.9.1 release
+
+                         Git: Rev {} zzzzzzz 
+
+
+    D. G. A. Smith, L. A. Burns, A. C. Simmonett, R. M. Parrish,
+    M. C. Schieber, R. Galvelis, P. Kraus, H. Kruse, R. Di Remigio,
+    A. Alenaizan, A. M. James, S. Lehtola, J. P. Misiewicz, M. Scheurer,
+    R. A. Shaw, J. B. Schriber, Y. Xie, Z. L. Glick, D. A. Sirianni,
+    J. S. O'Brien, J. M. Waldrop, A. Kumar, E. G. Hohenstein,
+    B. P. Pritchard, B. R. Brooks, H. F. Schaefer III, A. Yu. Sokolov,
+    K. Patkowski, A. E. DePrince III, U. Bozkaya, R. A. King,
+    F. A. Evangelista, J. M. Turney, T. D. Crawford, C. D. Sherrill,
+    J. Chem. Phys. 152(18) 184108 (2020). https://doi.org/10.1063/5.0006002
+
+                            Additional Code Authors
+    E. T. Seidl, C. L. Janssen, E. F. Valeev, M. L. Leininger,
+    J. F. Gonthier, R. M. Richard, H. R. McAlexander, M. Saitow, X. Wang,
+    P. Verma, M. H. Lechner, A. Jiang, S. Behnle, A. G. Heide,
+    M. F. Herbst, and D. L. Poole
+
+             Previous Authors, Complete List of Code Contributors,
+                       and Citations for Specific Modules
+    https://github.com/psi4/psi4/blob/master/codemeta.json
+    https://github.com/psi4/psi4/graphs/contributors
+    http://psicode.org/psi4manual/master/introduction.html#citing-psifour
+
+    -----------------------------------------------------------------------
+
+
+    Psi4 started on: Tuesday, 18 February 2025 03:30PM
+
+    Process ID: 2695414
+    Host:       debianlab
+    PSIDATADIR: /home/sydong/miniconda3/envs/p4env/share/psi4
+    Memory:     500.0 MiB
+    Threads:    1
+    
+  ==> Input File <==
+
+--------------------------------------------------------------------------
+import forte
+
+molecule CO{
+  0 1
+  H  
+  H  1 1.0
+  symmetry c1
+}
+
+set {
+  basis                 cc-pvdz
+  reference             rhf
+  scf_type              pk
+  maxiter               300
+  e_convergence         10
+  d_convergence         8
+#  docc                  [5,0,1,1]
+}
+
+set forte {
+  job_type              mcscf_two_step
+  active_space_solver                fci
+#  restricted_docc       [2]
+  active                [2,]
+  int_type              fcidump
+  fcidump_file          DRESSED.DUMP 
+  e_convergence         8  # energy convergence of the FCI iterations
+  r_convergence         8  # residual convergence of the FCI iterations
+  casscf_e_convergence  8  # energy convergence of the MCSCF iterations
+  casscf_g_convergence  6  # gradient convergence of the MCSCF iterations
+  casscf_micro_maxiter  4  # do at least 4 micro iterations per macro iteration
+}
+
+Eforte = energy('forte')
+--------------------------------------------------------------------------
+
+Scratch directory: /tmp/
+
+  Forte
+  ----------------------------------------------------------------------------
+  A suite of quantum chemistry methods for strongly correlated electrons
+
+    git branch:  - git commit: 
+
+  Developed by:
+    Francesco A. Evangelista, Chenyang Li, Kevin P. Hannon,
+    Jeffrey B. Schriber, Tianyuan Zhang, Chenxi Cai,
+    Nan He, Nicholas Stair, Shuhe Wang, Renke Huang
+  ----------------------------------------------------------------------------
+
+  Forte will use custom integrals
+  Preparing forte objects from a custom source
+
+  Reading integral information from FCIDUMP file DRESSED.DUMP
+  Read options for space ACTIVE
+
+  ==> MO Space Information <==
+
+  -------------------------------
+                        A   Sum
+  -------------------------------
+    FROZEN_DOCC         0     0
+    RESTRICTED_DOCC     0     0
+    GAS1                2     2
+    GAS2                0     0
+    GAS3                0     0
+    GAS4                0     0
+    GAS5                0     0
+    GAS6                0     0
+    RESTRICTED_UOCC     8     8
+    FROZEN_UOCC         0     0
+    Total              10    10
+  -------------------------------
+
+  ==> Integral Transformation <==
+
+  Number of molecular orbitals:                         10
+  Number of correlated molecular orbitals:              10
+  Number of frozen occupied orbitals:                    0
+  Number of frozen unoccupied orbitals:                  0
+  Two-electron integral type:                       Custom
+
+
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Timing for preparing custom (FCIDUMP) integrals:            0.000 s.
+
+          -----------------------------------------------------------
+                  Multi-Configurational Self Consistent Field
+                Two-Step Approximate Second-Order AO Algorithm
+            written by Chenyang Li, Kevin P. Hannon, and Shuhe Wang
+          -----------------------------------------------------------
+
+
+  ==> MCSCF Calculation Information <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Integral type                                    FCIDUMP
+    CI solver type                                       FCI
+    Final orbital type                             CANONICAL
+    Derivative type                                     NONE
+    Optimize orbitals                                   TRUE
+    Include internal rotations                         FALSE
+    Debug printing                                     FALSE
+    Energy convergence                             1.000e-08
+    Gradient convergence                           1.000e-06
+    Max value for rotation                         2.000e-01
+    Max number of macro iterations                       100
+    Max number of micro iterations                         4
+    Min number of micro iterations                         4
+    DIIS start                                            15
+    Min DIIS vectors                                       3
+    Max DIIS vectors                                       8
+    Frequency of DIIS extrapolation                        1
+    --------------------------------------------------------
+
+  ==> Independent Orbital Rotations <==
+
+    ORBITAL SPACES                         A
+    ----------------------------------------
+             ACTIVE / RESTRICTED_DOCC      0
+    RESTRICTED_UOCC /          ACTIVE     16
+    RESTRICTED_UOCC / RESTRICTED_DOCC      0
+    ----------------------------------------
+
+  ==> MCSCF Iterations <==
+
+                      Energy CI                    Energy Orbital
+           ------------------------------  ------------------------------
+    Iter.        Total Energy       Delta        Total Energy       Delta  Orb. Grad.  Micro
+    ----------------------------------------------------------------------------------------
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+       2      -1.113257748374 -1.1133e+00     -1.127274973103 -1.1273e+00  8.5706e-03    4/N
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+       3      -1.130520704184 -1.7263e-02     -1.131024478875 -3.7495e-03  2.8155e-03    4/N
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+       4      -1.131119069530 -5.9837e-04     -1.131130783001 -1.0630e-04  7.1304e-05    4/N
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+       5      -1.131132297051 -1.3228e-05     -1.131132479481 -1.6965e-06  1.3438e-05    4/N
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+       6      -1.131132501654 -2.0460e-07     -1.131132504316 -2.4835e-08  1.7276e-06    3/Y
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.001 s.
+       7      -1.131132504638 -2.9837e-09     -1.131132504675 -3.5973e-10  1.3294e-07    2/Y
+    ----------------------------------------------------------------------------------------
+
+  A miracle has come to pass: MCSCF iterations have converged!
+
+  Performing final CI Calculation using converged orbitals
+
+  ==> String Lists <==
+
+    --------------------------------------------------------
+    number of alpha electrons                              1
+    number of beta electrons                               1
+    number of alpha strings                                2
+    number of beta strings                                 2
+    --------------------------------------------------------
+
+  ==> FCI Solver <==
+
+    --------------------------------------------------------
+    Spin adapt                                         FALSE
+    Number of determinants                                 4
+    Symmetry                                               0
+    Multiplicity                                           1
+    Number of roots                                        1
+    Target root                                            0
+    --------------------------------------------------------
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         4
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+     3       1       *
+     1       3        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   singlet    0       -1.131132504680  +0.000000  added
+  -------------------------------------------------------
+
+  ==> Root No. 0 <==
+
+    20      0.98766890
+    02     -0.15655715
+
+    Total Energy:      -1.131132504680, <S^2>: 0.000000
+    Time for FCI:       0.000081580000
+
+  ==> Energy Summary <==
+
+    Multi.(2ms)  Irrep.  No.               Energy      <S^2>
+    --------------------------------------------------------
+       1  (  0)     A     0       -1.131132504680   0.000000
+    --------------------------------------------------------
+
+  Time to prepare integrals:        0.003 seconds
+  Time to run job          :        0.025 seconds
+  Total                    :        0.027 seconds
+
+    Psi4 stopped on: Tuesday, 18 February 2025 03:30PM
+    Psi4 wall time for execution: 0:00:00.09
+
+*** Psi4 exiting successfully. Buy a developer a beer!

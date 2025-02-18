@@ -1,0 +1,39 @@
+2025-02-18:15:18:32,939 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:18:32,941 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:18:33,314 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:20:04,532 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:20:04,534 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:20:04,618 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:20:24,908 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:20:24,910 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:20:24,999 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:24:37,526 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:24:37,528 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:24:37,610 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:25:40,632 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:25:40,634 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:25:40,719 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:26:02,403 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:26:02,405 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:26:02,489 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:28:23,979 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:28:23,981 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:28:24,67 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:33:32,711 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:33:32,712 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=0.52917721067
+2025-02-18:15:33:32,797 INFO     [psi4.driver.driver:526] Return energy(): -1.1001537647935242
+2025-02-18:15:37:12,710 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:37:12,712 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=2.381297448015
+2025-02-18:15:37:12,864 INFO     [psi4.driver.driver:526] Return energy(): -14.839973000644921
+2025-02-18:15:41:44,147 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:41:44,148 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=2.381297448015
+2025-02-18:15:41:44,299 INFO     [psi4.driver.driver:526] Return energy(): -14.839973000644921
+2025-02-18:15:44:47,403 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:44:47,405 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=2.381297448015
+2025-02-18:15:44:47,558 INFO     [psi4.driver.driver:526] Return energy(): -14.839973000644921
+2025-02-18:15:50:32,427 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:50:32,428 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=2.381297448015
+2025-02-18:15:50:32,580 INFO     [psi4.driver.driver:526] Return energy(): -14.839973000644921
+2025-02-18:15:52:29,394 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'DF_BASIS_MP2': 'CC-PVDZ-F12-OPTRI', 'E_CONVERGENCE': 1e-10, 'MAXITER': 40, 'SCF_TYPE': 'PK', 'SCREENING': 'CSAM', 'function_kwargs': {}}
+2025-02-18:15:52:29,396 INFO     [psi4.driver.driver:523] Compute energy(): method=scf, basis=cc-pvdz, molecule=default, nre=2.381297448015
+2025-02-18:15:52:29,551 INFO     [psi4.driver.driver:526] Return energy(): -14.839973000644921
