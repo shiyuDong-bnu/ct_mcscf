@@ -30,9 +30,9 @@ psi4.core.clean_variables()
 psi4.set_output_file("ct_ucc_test.out", True)
 B_BASIS = "cc-pvdz"
 GAMMA = 0.6
-# bond_length = np.concatenate([np.linspace(1.5, 2.5, 7),
-#                              np.linspace(2.5, 3.0, 5),
-#                              np.linspace(3.0, 5.0, 5)])
+#bond_length = np.concatenate([np.linspace(1.5, 2.5, 7),
+#                             np.linspace(2.5, 3.0, 5),
+#                             np.linspace(3.0, 5.0, 5)])
 bond_length=[2.0]
 E_HF=[]
 E_MCSCF=[]
@@ -54,7 +54,7 @@ def do_ct(mol, r, b_basis, gamma):
     print("regular hf energy is ", e_hf)
     print("run ct scf")
     h_ct = canonical_transform(
-        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=False)
+        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=True)
     rhf_ct = rhf_energy(psi_mol, wfn, h_ct)
     print("ct  hf energy is ", rhf_ct["escf"],
           " correlation energy is ", rhf_ct["escf"]-e_hf)
@@ -95,7 +95,8 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
     h_ao_ct=h1e_ct
     C_ao_ct=cp_ct
     if DO_CT:
-        g_ao=g_ao_ct
+        #g_ao=g_ao_ct
+        g_ao=(g_ao_ct+np.einsum("ijkl->jikl",g_ao_ct))/2
         h_ao=h_ao_ct
     ## do an scf
     scf_results = scf_drv.compute(molecule, basis)
@@ -212,7 +213,11 @@ for r_h2 in bond_length:
     E_MCSCF.append(e_mcscf)
     E_CT.append(ct_escf)
     E_CT_MCSCF.append(e_ct_mcscf)
-# np.save("e_hf.npy",E_HF)
-# np.save("e_mcscf.npy",E_MCSCF)
-# np.save("e_ct.npy",E_CT)
-# np.save("e_ct_mcscf.npy",E_CT_MCSCF)
+    print(e_hf)
+    print(e_mcscf)
+    print(ct_escf)
+    print(e_ct_mcscf)
+#np.save("e_hf.npy",E_HF)
+#np.save("e_mcscf.npy",E_MCSCF)
+#np.save("e_ct.npy",E_CT)
+#np.save("e_ct_mcscf.npy",E_CT_MCSCF)
