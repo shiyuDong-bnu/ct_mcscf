@@ -46,14 +46,15 @@ def do_ct(mol, r, b_basis, gamma):
     print("regular hf energy is ", e_hf)
     print("run ct scf")
     h_ct = canonical_transform(
-        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=False)
+        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=True)
     rhf_ct = rhf_energy(psi_mol, wfn, h_ct)
     print("ct  hf energy is ", rhf_ct["escf"],
           " correlation energy is ", rhf_ct["escf"]-e_hf)
     h1e_ct, h2e_ct, cp_ct=convert_ct_to_quccsd(h_ct, rhf_ct)
     h1e_ct_mo=np.einsum("ij,iI,jJ->IJ",h1e_ct,cp_ct,cp_ct,optimize=True)
     h2e_ct_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",h2e_ct,cp_ct,cp_ct,cp_ct,cp_ct,optimize=True)
-    write_dump("DRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=h1e_ct_mo,mo_eri=h2e_ct_mo)
+    h2_sym=(h2e_ct_mo+np.einsum("ijkl->jikl",h2e_ct_mo))/2
+    write_dump("DRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=h1e_ct_mo,mo_eri=h2_sym)
     return e_hf,h_ct, rhf_ct
 
 
