@@ -17,9 +17,6 @@ def get_eri_ri_ri_int(my_orbital_space):
 
     # <pq|rs>
     g_pqrs = mints.ao_eri(bs_obs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)  # to phys notation
-    print(s)
-    print(Cp.shape)
-    print(g_pqrs.shape)
     g[s,s,s,s] = np.einsum("pP,qQ,rR,sS,pqrs->PQRS", Cp, Cp, Cp, Cp, g_pqrs, optimize=True)
 
     # <pq|xy> and <xy|pq> and <xq|py> and <py|xq>
