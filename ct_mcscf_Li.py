@@ -54,7 +54,7 @@ def do_ct(mol, r, b_basis, gamma):
     print("regular hf energy is ", e_hf)
     print("run ct scf")
     h_ct = canonical_transform(
-        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=True)
+        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=False)
     rhf_ct = rhf_energy(psi_mol, wfn, h_ct)
     print("ct  hf energy is ", rhf_ct["escf"],
           " correlation energy is ", rhf_ct["escf"]-e_hf)
@@ -95,8 +95,8 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
     h_ao_ct=h1e_ct
     C_ao_ct=cp_ct
     if DO_CT:
-        #g_ao=g_ao_ct
-        g_ao=(g_ao_ct+np.einsum("ijkl->jikl",g_ao_ct))/2
+        g_ao=g_ao_ct
+        #g_ao=(g_ao_ct+np.einsum("ijkl->jikl",g_ao_ct))/2
         h_ao=h_ao_ct
     ## do an scf
     scf_results = scf_drv.compute(molecule, basis)
@@ -121,7 +121,6 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
             mo_coeff=cp_ct
         C_inact=mo_coeff[:,:nIn]
         C_act=mo_coeff[:,active_index]
-
         Density_inac=np.einsum("iI,jI->ij",C_inact,C_inact)
         J_in_ao=np.einsum("ijkl,kl->ij",g_ao,Density_inac)
         K_in_ao=np.einsum("ijkl,jk->il",g_ao,Density_inac)
@@ -152,6 +151,7 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
         F_pi_A=np.einsum("ij,iI,jJ->IJ",F_active_ao,mo_coeff,C_inact)
         ## equation 155
         F_ip=2*(F_pi_I+F_pi_A).T
+            
         ## then active genearl part
         F_pv_I=np.einsum("ij,iI,jJ->IJ",F_inactive_ao,mo_coeff,C_act,
                 optimize=True)
@@ -184,8 +184,7 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
         step=kappa/diga_hess
         ## equation 126
         U_tran=scipy.linalg.expm(step)
-        new_mo_coeff=np.einsum("iI,IJ->iJ",mo_coeff,U_tran)
-        ## reset orbitals 
+        new_mo_coeff=np.einsum("iI,IJ->iJ",mo_coeff,U_tran) ## reset orbitals 
         ene = np.zeros(nbas)
         occ = np.zeros(nbas)
         newmolorb = vlx.MolecularOrbitals([new_mo_coeff], [ene], [occ], vlx.molorb.rest)
@@ -213,10 +212,10 @@ for r_h2 in bond_length:
     E_MCSCF.append(e_mcscf)
     E_CT.append(ct_escf)
     E_CT_MCSCF.append(e_ct_mcscf)
-    print(e_hf)
-    print(e_mcscf)
-    print(ct_escf)
-    print(e_ct_mcscf)
+    print("hf",e_hf)
+    print("mcscf",e_mcscf)
+    print("ct hf",ct_escf)
+    print("ct mcscf",e_ct_mcscf)
 #np.save("e_hf.npy",E_HF)
 #np.save("e_mcscf.npy",E_MCSCF)
 #np.save("e_ct.npy",E_CT)
