@@ -7,7 +7,7 @@ from ct.ct import canonical_transform
 import psi4
 import numpy as np
 from psi4.core import MintsHelper
-from write_dump import write_dump
+from write_dump import write_dump,write_dump_np
 # set geometry and basis
 psi_mol = psi4.geometry(
     """
@@ -24,7 +24,7 @@ B_BASIS = "cc-pvdz"
 GAMMA = 0.6
 bond_length = [2.0]
 
-def do_ct(mol, r, b_basis, gamma):
+def do_ct(mol, r, b_basis, gamma,fc=True,sym_int=False):
     mol.r = r
     psi4.set_options({'basis': b_basis,
                       'df_basis_mp2': "cc-pVDZ-F12-Optri",
@@ -40,21 +40,24 @@ def do_ct(mol, r, b_basis, gamma):
     V_nuc=psi_mol.nuclear_repulsion_energy()
     n_ele=wfn.nalpha()*2
     n_obs=wfn.nmo()
-    write_dump("BARE.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=mo_h_core,mo_eri=mo_eri)
+    write_dump_np("BARE.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=mo_h_core,mo_eri=mo_eri)
     basis = psi4.core.get_global_option('BASIS')
     df_basis = psi4.core.get_global_option('DF_BASIS_MP2')
     print("regular hf energy is ", e_hf)
     print("run ct scf")
+    print("frezze core",fc)
     h_ct = canonical_transform(
-        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=True)
+        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=fc)
     rhf_ct = rhf_energy(psi_mol, wfn, h_ct)
     print("ct  hf energy is ", rhf_ct["escf"],
           " correlation energy is ", rhf_ct["escf"]-e_hf)
     h1e_ct, h2e_ct, cp_ct=convert_ct_to_quccsd(h_ct, rhf_ct)
     h1e_ct_mo=np.einsum("ij,iI,jJ->IJ",h1e_ct,cp_ct,cp_ct,optimize=True)
     h2e_ct_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",h2e_ct,cp_ct,cp_ct,cp_ct,cp_ct,optimize=True)
-    h2_sym=(h2e_ct_mo+np.einsum("ijkl->jikl",h2e_ct_mo))/2
-    write_dump("DRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=h1e_ct_mo,mo_eri=h2_sym)
+    if sym_int:
+         h2_sym=(h2e_ct_mo+np.einsum("ijkl->jikl",h2e_ct_mo))/2
+         h2e_ct_mo=h2_sym
+    write_dump_np("DRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=h1e_ct_mo,mo_eri=h2e_ct_mo)
     return e_hf,h_ct, rhf_ct
 
 
@@ -72,7 +75,7 @@ for r_h2 in bond_length:
     psi4.core.clean_options()
     psi4.core.clean()
     psi4.core.clean_variables()
-    e_hf,Hct, ct_rhf = do_ct(psi_mol, r_h2, B_BASIS, GAMMA)
+    e_hf,Hct, ct_rhf = do_ct(psi_mol, r_h2, B_BASIS, GAMMA,fc=True,sym_int=False)
     ct_escf = ct_rhf['escf']
     ## save integral
     h1e_ct, h2e_ct, cp_ct=convert_ct_to_quccsd(Hct,ct_rhf)
