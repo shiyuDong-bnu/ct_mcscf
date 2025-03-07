@@ -3,7 +3,7 @@
           Psi4: An Open-Source Ab Initio Electronic Structure Package
                                Psi4 1.9.1 release
 
-                         Git: Rev {} zzzzzzz 
+                         Git: Rev {HEAD} f53cdd7 
 
 
     D. G. A. Smith, L. A. Burns, A. C. Simmonett, R. M. Parrish,
@@ -31,11 +31,11 @@
     -----------------------------------------------------------------------
 
 
-    Psi4 started on: Tuesday, 18 February 2025 04:46PM
+    Psi4 started on: Friday, 07 March 2025 04:59PM
 
-    Process ID: 2703998
+    Process ID: 376657
     Host:       debianlab
-    PSIDATADIR: /home/sydong/miniconda3/envs/p4env/share/psi4
+    PSIDATADIR: /home/sydong/install_tutorial/psi4/share/psi4
     Memory:     500.0 MiB
     Threads:    1
     
@@ -70,21 +70,21 @@ set forte {
   fcidump_file          DRESSED.DUMP 
   e_convergence         8  # energy convergence of the FCI iterations
   r_convergence         8  # residual convergence of the FCI iterations
-  casscf_e_convergence  8  # energy convergence of the MCSCF iterations
-  casscf_g_convergence  6  # gradient convergence of the MCSCF iterations
-  casscf_micro_maxiter  4  # do at least 4 micro iterations per macro iteration
+  mcscf_e_convergence  8  # energy convergence of the MCSCF iterations
+  mcscf_g_convergence  6  # gradient convergence of the MCSCF iterations
+  mcscf_micro_maxiter  4  # do at least 4 micro iterations per macro iteration
 }
 
 Eforte = energy('forte')
 --------------------------------------------------------------------------
 
-Scratch directory: /tmp/
+Scratch directory: /home/sydong/scratch/psi4/
 
   Forte
   ----------------------------------------------------------------------------
   A suite of quantum chemistry methods for strongly correlated electrons
 
-    git branch:  - git commit: 
+    git branch: HEAD - git commit: 259d7b80
 
   Developed by:
     Francesco A. Evangelista, Chenyang Li, Kevin P. Hannon,
@@ -96,7 +96,6 @@ Scratch directory: /tmp/
   Preparing forte objects from a custom source
 
   Reading integral information from FCIDUMP file DRESSED.DUMP
-  Read options for space ACTIVE
 
   ==> MO Space Information <==
 
@@ -126,7 +125,7 @@ Scratch directory: /tmp/
 
 
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Timing for preparing custom (FCIDUMP) integrals:            0.000 s.
+  Timing for preparing custom integrals:                      0.000 s.
 
           -----------------------------------------------------------
                   Multi-Configurational Self Consistent Field
@@ -149,9 +148,9 @@ Scratch directory: /tmp/
     Energy convergence                             1.000e-08
     Gradient convergence                           1.000e-06
     Max value for rotation                         2.000e-01
-    Max number of macro iterations                       100
-    Max number of micro iterations                         4
-    Min number of micro iterations                         4
+    Max number of macro iter.                            100
+    Max number of micro iter. for orbitals                 4
+    Max number of micro iter. for CI                      12
     DIIS start                                            15
     Min DIIS vectors                                       3
     Max DIIS vectors                                       8
@@ -166,326 +165,6 @@ Scratch directory: /tmp/
     RESTRICTED_UOCC /          ACTIVE     24
     RESTRICTED_UOCC / RESTRICTED_DOCC      0
     ----------------------------------------
-
-  ==> MCSCF Iterations <==
-
-                      Energy CI                    Energy Orbital
-           ------------------------------  ------------------------------
-    Iter.        Total Energy       Delta        Total Energy       Delta  Orb. Grad.  Micro
-    ----------------------------------------------------------------------------------------
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       2      -1.132768758326 -1.1328e+00     -1.135513529592 -1.1355e+00  1.4762e-02    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       3      -1.135584580364 -2.8158e-03     -1.135594247145 -8.0718e-05  4.0045e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       4      -1.135595184737 -1.0604e-05     -1.135605373454 -1.1126e-05  2.1371e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       5      -1.135606899127 -1.1714e-05     -1.135619497089 -1.4124e-05  1.1637e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       6      -1.135620989401 -1.4090e-05     -1.135638598703 -1.9102e-05  2.7119e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       7      -1.135641311130 -2.0322e-05     -1.135656596612 -1.7998e-05  3.8286e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       8      -1.135658258729 -1.6948e-05     -1.135669125499 -1.2529e-05  3.8968e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       9      -1.135670174798 -1.1916e-05     -1.135682435497 -1.3310e-05  3.5623e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      10      -1.135683576982 -1.3402e-05     -1.135704096749 -2.1661e-05  3.5117e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      11      -1.135706165444 -2.2588e-05     -1.135714687917 -1.0591e-05  2.8102e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      12      -1.135715505266 -9.3398e-06     -1.135723973762 -9.2858e-06  3.3146e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      13      -1.135724645482 -9.1402e-06     -1.135735300902 -1.1327e-05  3.1439e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      14      -1.135736277281 -1.1632e-05     -1.135740534952 -5.2340e-06  2.1240e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      15      -1.135740851504 -4.5742e-06     -1.135745183513 -4.6486e-06  2.9912e-04    4/N
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      16      -1.135745465437 -4.6139e-06     -1.135749139467 -3.9560e-06  2.7560e-04    4/N   S
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      17      -1.135749496025 -4.0306e-06     -1.135752959335 -3.8199e-06  1.8287e-04    4/N   S
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      18      -1.135753292508 -3.7965e-06     -1.135757646858 -4.6875e-06  1.7355e-04    4/N   S
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      19      -1.135758054350 -4.7618e-06     -1.135759536463 -1.8896e-06  1.1631e-04    4/N   S/E
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      20      -1.135730919052  2.7135e-05     -1.135756341157  3.1953e-06  5.3172e-05    4/N   S/E
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      21      -1.135768172462 -3.7253e-05     -1.135768823590 -1.2482e-05  3.8437e-05    4/N   S/E
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      22      -1.135768912091 -7.3963e-07     -1.135769027109 -2.0352e-07  7.0700e-06    4/N   S/E
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      23      -1.135769060962 -1.4887e-07     -1.135769063845 -3.6736e-08  2.9439e-06    4/N   S/E
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-  Integrals are about to be updated.
-  Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      24      -1.135769064419 -3.4570e-09     -1.135769064613 -7.6809e-10  1.9688e-07    2/Y
-    ----------------------------------------------------------------------------------------
-
-  A miracle has come to pass: MCSCF iterations have converged!
-
-  Performing final CI Calculation using converged orbitals
 
   ==> String Lists <==
 
@@ -521,33 +200,52 @@ Scratch directory: /tmp/
 
     Spin    Root           Energy        <S^2>    Status
   -------------------------------------------------------
-   singlet    0       -1.135769064656  +0.000000  added
+   singlet    0       -1.132766654794  +0.000000  added
   -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-08
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                     16
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0       -1.132766654794        1.132766654794        0.000000000000      1
+       1       -1.132766654794        0.000000000000        0.000000000000      2
+  ---------------------------------------------------------------------------------
 
   ==> Root No. 0 <==
 
-    2000     -0.98689028
-    0200      0.10761125
-    0b0a     -0.06707162
-    0a0b     -0.06707162
-    0002      0.05388875
-    0020      0.04877741
+    2000     -0.98770104
+    0200      0.10553016
+    0a0b     -0.06594802
+    0b0a     -0.06594802
+    0002      0.04997433
+    0020      0.04445854
 
-    Total Energy:      -1.135769064656, <S^2>: -0.000000
-    Time for FCI:       0.000136293000
+    Total Energy:      -1.132766654794, <S^2>: 0.000000
+    Time for FCI:       0.000790216000
 
   ==> Energy Summary <==
 
     Multi.(2ms)  Irrep.  No.               Energy      <S^2>
     --------------------------------------------------------
-       1  (  0)     A     0       -1.135769064656  -0.000000
+       1  (  0)     A     0       -1.132766654794   0.000000
     --------------------------------------------------------
 
-  Time to prepare integrals:        0.003 seconds
-  Time to run job          :        0.107 seconds
-  Total                    :        0.110 seconds
+  ==> Natural Orbitals <==
 
-    Psi4 stopped on: Tuesday, 18 February 2025 04:46PM
-    Psi4 wall time for execution: 0:00:00.17
-
-*** Psi4 exiting successfully. Buy a developer a beer!
+        1A      1.951370      2A      0.044588      3A      0.003965  
+        4A      0.000077  
+sydong:  unsymmetrize 2RDM

@@ -3,7 +3,7 @@
           Psi4: An Open-Source Ab Initio Electronic Structure Package
                                Psi4 1.9.1 release
 
-                         Git: Rev {} zzzzzzz 
+                         Git: Rev {HEAD} f53cdd7 
 
 
     D. G. A. Smith, L. A. Burns, A. C. Simmonett, R. M. Parrish,
@@ -31,11 +31,11 @@
     -----------------------------------------------------------------------
 
 
-    Psi4 started on: Tuesday, 18 February 2025 04:45PM
+    Psi4 started on: Friday, 07 March 2025 05:07PM
 
-    Process ID: 2703971
+    Process ID: 377109
     Host:       debianlab
-    PSIDATADIR: /home/sydong/miniconda3/envs/p4env/share/psi4
+    PSIDATADIR: /home/sydong/install_tutorial/psi4/share/psi4
     Memory:     500.0 MiB
     Threads:    1
     
@@ -70,21 +70,21 @@ set forte {
   fcidump_file          BARE.DUMP 
   e_convergence         8  # energy convergence of the FCI iterations
   r_convergence         8  # residual convergence of the FCI iterations
-  casscf_e_convergence  8  # energy convergence of the MCSCF iterations
-  casscf_g_convergence  6  # gradient convergence of the MCSCF iterations
-  casscf_micro_maxiter  4  # do at least 4 micro iterations per macro iteration
+  mcscf_e_convergence  8  # energy convergence of the MCSCF iterations
+  mcscf_g_convergence  6  # gradient convergence of the MCSCF iterations
+  mcscf_micro_maxiter  4  # do at least 4 micro iterations per macro iteration
 }
 
 Eforte = energy('forte')
 --------------------------------------------------------------------------
 
-Scratch directory: /tmp/
+Scratch directory: /home/sydong/scratch/psi4/
 
   Forte
   ----------------------------------------------------------------------------
   A suite of quantum chemistry methods for strongly correlated electrons
 
-    git branch:  - git commit: 
+    git branch: HEAD - git commit: 259d7b80
 
   Developed by:
     Francesco A. Evangelista, Chenyang Li, Kevin P. Hannon,
@@ -96,7 +96,6 @@ Scratch directory: /tmp/
   Preparing forte objects from a custom source
 
   Reading integral information from FCIDUMP file BARE.DUMP
-  Read options for space ACTIVE
 
   ==> MO Space Information <==
 
@@ -126,7 +125,7 @@ Scratch directory: /tmp/
 
 
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Timing for preparing custom (FCIDUMP) integrals:            0.000 s.
+  Timing for preparing custom integrals:                      0.000 s.
 
           -----------------------------------------------------------
                   Multi-Configurational Self Consistent Field
@@ -149,9 +148,9 @@ Scratch directory: /tmp/
     Energy convergence                             1.000e-08
     Gradient convergence                           1.000e-06
     Max value for rotation                         2.000e-01
-    Max number of macro iterations                       100
-    Max number of micro iterations                         4
-    Min number of micro iterations                         4
+    Max number of macro iter.                            100
+    Max number of micro iter. for orbitals                 4
+    Max number of micro iter. for CI                      12
     DIIS start                                            15
     Min DIIS vectors                                       3
     Max DIIS vectors                                       8
@@ -167,317 +166,425 @@ Scratch directory: /tmp/
     RESTRICTED_UOCC / RESTRICTED_DOCC      0
     ----------------------------------------
 
+  ==> String Lists <==
+
+    --------------------------------------------------------
+    number of alpha electrons                              1
+    number of beta electrons                               1
+    number of alpha strings                                4
+    number of beta strings                                 4
+    --------------------------------------------------------
+
+  ==> FCI Solver <==
+
+    --------------------------------------------------------
+    Spin adapt                                         FALSE
+    Number of determinants                                16
+    Symmetry                                               0
+    Multiplicity                                           1
+    Number of roots                                        1
+    Target root                                            0
+    --------------------------------------------------------
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         16
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    10       1       *
+     6       3        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   singlet    0       -1.129544952365  +0.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-08
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                     16
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0       -1.129544952365        1.129544952365        0.000000000000      1
+       1       -1.129544952365        0.000000000000        0.000000000000      2
+  ---------------------------------------------------------------------------------
+
+  ==> Root No. 0 <==
+
+    2000      0.98674139
+    0200     -0.10944972
+    0a0b     -0.06695030
+    0b0a     -0.06695030
+    0002     -0.05280800
+    0020     -0.04971702
+
+    Total Energy:      -1.129544952365, <S^2>: -0.000000
+    Time for FCI:       0.000762612000
+
+  ==> Energy Summary <==
+
+    Multi.(2ms)  Irrep.  No.               Energy      <S^2>
+    --------------------------------------------------------
+       1  (  0)     A     0       -1.129544952365  -0.000000
+    --------------------------------------------------------
+
+  ==> Natural Orbitals <==
+
+        1A      1.947578      2A      0.047323      3A      0.004957  
+        4A      0.000142  
+sydong:  unsymmetrize 2RDM
+
+
   ==> MCSCF Iterations <==
 
                       Energy CI                    Energy Orbital
            ------------------------------  ------------------------------
     Iter.        Total Energy       Delta        Total Energy       Delta  Orb. Grad.  Micro
-    ----------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------------------sydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       2      -1.129544952365 -1.1295e+00     -1.132468266161 -1.1325e+00  1.5211e-02    4/N
+  Integrals update took     0.006 s.
+       1      -1.129544952365 -1.1295e+00     -1.132468266161 -1.1325e+00  1.5211e-02    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       3      -1.132537840692 -2.9929e-03     -1.132554115863 -8.5850e-05  5.6433e-04    4/N
+  Integrals update took     0.005 s.
+       2      -1.132537840692 -2.9929e-03     -1.132554115863 -8.5850e-05  5.6433e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       4      -1.132555612024 -1.7771e-05     -1.132572528355 -1.8412e-05  5.6589e-04    4/N
+  Integrals update took     0.006 s.
+       3      -1.132555612024 -1.7771e-05     -1.132572528355 -1.8412e-05  5.6589e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       5      -1.132574451933 -1.8840e-05     -1.132594984924 -2.2457e-05  9.9306e-05    4/N
+  Integrals update took     0.005 s.
+       4      -1.132574451933 -1.8840e-05     -1.132594984924 -2.2457e-05  9.9306e-05    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       6      -1.132597155180 -2.2703e-05     -1.132619723481 -2.4739e-05  2.3282e-04    4/N
+  Integrals update took     0.005 s.
+       5      -1.132597155180 -2.2703e-05     -1.132619723481 -2.4739e-05  2.3282e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       7      -1.132622545608 -2.5390e-05     -1.132642465250 -2.2742e-05  3.1445e-04    4/N
+  Integrals update took     0.005 s.
+       6      -1.132622545608 -2.5390e-05     -1.132642465250 -2.2742e-05  3.1445e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       8      -1.132644497212 -2.1952e-05     -1.132661802072 -1.9337e-05  3.2849e-04    4/N
+  Integrals update took     0.005 s.
+       7      -1.132644497212 -2.1952e-05     -1.132661802072 -1.9337e-05  3.2849e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-       9      -1.132663700316 -1.9203e-05     -1.132677218212 -1.5416e-05  2.9534e-04    4/N
+  Integrals update took     0.005 s.
+       8      -1.132663700316 -1.9203e-05     -1.132677218212 -1.5416e-05  2.9534e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      10      -1.132678559458 -1.4859e-05     -1.132688912327 -1.1694e-05  2.6946e-04    4/N
+  Integrals update took     0.005 s.
+       9      -1.132678559458 -1.4859e-05     -1.132688912327 -1.1694e-05  2.6946e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      11      -1.132690011063 -1.1452e-05     -1.132697146305 -8.2340e-06  2.4631e-04    4/N
+  Integrals update took     0.005 s.
+      10      -1.132690011063 -1.1452e-05     -1.132697146305 -8.2340e-06  2.4631e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      12      -1.132697861489 -7.8504e-06     -1.132706478091 -9.3318e-06  2.1546e-04    4/N
+  Integrals update took     0.005 s.
+      11      -1.132697861489 -7.8504e-06     -1.132706478091 -9.3318e-06  2.1546e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      13      -1.132707263720 -9.4022e-06     -1.132711874861 -5.3968e-06  1.6589e-04    4/N
+  Integrals update took     0.005 s.
+      12      -1.132707263720 -9.4022e-06     -1.132711874861 -5.3968e-06  1.6589e-04    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      14      -1.132712291852 -5.0281e-06     -1.132714369453 -2.4946e-06  4.1967e-05    4/N
+  Integrals update took     0.005 s.
+      13      -1.132712291852 -5.0281e-06     -1.132714369453 -2.4946e-06  4.1967e-05    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      15      -1.132714403119 -2.1113e-06     -1.132716067401 -1.6979e-06  3.6601e-05    4/N
+  Integrals update took     0.005 s.
+      14      -1.132714403119 -2.1113e-06     -1.132716067401 -1.6979e-06  3.6601e-05    4/Nsydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      16      -1.132716103893 -1.7008e-06     -1.132717459684 -1.3923e-06  6.3276e-06    4/N   S
+  Integrals update took     0.005 s.
+      15      -1.132716103893 -1.7008e-06     -1.132717459684 -1.3923e-06  6.3276e-06    4/N   Ssydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      17      -1.132717499622 -1.3957e-06     -1.132718635564 -1.1759e-06  2.8570e-05    4/N   S
+  Integrals update took     0.005 s.
+      16      -1.132717499622 -1.3957e-06     -1.132718635564 -1.1759e-06  2.8570e-05    4/N   Ssydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      18      -1.132718681440 -1.1818e-06     -1.132719634020 -9.9846e-07  5.4079e-05    4/N   S
+  Integrals update took     0.005 s.
+      17      -1.132718681440 -1.1818e-06     -1.132719634020 -9.9846e-07  5.4079e-05    4/N   Ssydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      19      -1.132719684147 -1.0027e-06     -1.132720513666 -8.7965e-07  7.1639e-05    4/N   S/E
+  Integrals update took     0.006 s.
+      18      -1.132719684147 -1.0027e-06     -1.132720513666 -8.7965e-07  7.1639e-05    4/N   S/E
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.sydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      20      -1.132724209933 -4.5258e-06     -1.132724737991 -4.2243e-06  5.4028e-05    4/N   S/E
+  Integrals update took     0.006 s.
+      19      -1.132724209933 -4.5258e-06     -1.132724737991 -4.2243e-06  5.4028e-05    4/N   S/E
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.sydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      21      -1.132725246771 -1.0368e-06     -1.132725325870 -5.8788e-07  7.5329e-06    4/N   S/E
+  Integrals update took     0.005 s.
+      20      -1.132725246771 -1.0368e-06     -1.132725325870 -5.8788e-07  7.5329e-06    4/N   S/E
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.sydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.006 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      22      -1.132725317446 -7.0675e-08     -1.132725331270 -5.3994e-09  4.2400e-06    4/N   S/E
+  Integrals update took     0.005 s.
+      21      -1.132725317446 -7.0675e-08     -1.132725331270 -5.3994e-09  4.2400e-06    4/N   S/E
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.sydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      23      -1.132725334628 -1.7182e-08     -1.132725334797 -3.5274e-09  9.8076e-07    3/Y   S/E
+  Integrals update took     0.005 s.
+      22      -1.132725334628 -1.7182e-08     -1.132725334797 -3.5274e-09  9.8076e-07    3/Y   S/E
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.sydong:  unsymmetrize 2RDM
+
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
+  Integrals update took     0.005 s.
   Integrals are about to be updated.
   Timing for freezing core and virtual orbitals:              0.000 s.
-  Integrals update took     0.001 s.
-      24      -1.132725334855 -2.2671e-10     -1.132725334861 -6.3571e-11  6.4384e-08    2/Y
+  Integrals update took     0.005 s.
+      23      -1.132725334855 -2.2671e-10     -1.132725334861 -6.3572e-11  6.4384e-08    2/Y
     ----------------------------------------------------------------------------------------
 
   A miracle has come to pass: MCSCF iterations have converged!
@@ -521,6 +628,27 @@ Scratch directory: /tmp/
    singlet    0       -1.132725334862  +0.000000  added
   -------------------------------------------------------
 
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-08
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                     16
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0       -1.132725334862        0.000000000007        0.000000000000      1
+  ---------------------------------------------------------------------------------
+
   ==> Root No. 0 <==
 
     2000      0.98589000
@@ -531,7 +659,7 @@ Scratch directory: /tmp/
     0020     -0.05374672
 
     Total Energy:      -1.132725334862, <S^2>: 0.000000
-    Time for FCI:       0.000135760000
+    Time for FCI:       0.000503177000
 
   ==> Energy Summary <==
 
@@ -540,11 +668,11 @@ Scratch directory: /tmp/
        1  (  0)     A     0       -1.132725334862   0.000000
     --------------------------------------------------------
 
-  Time to prepare integrals:        0.002 seconds
-  Time to run job          :        0.106 seconds
-  Total                    :        0.109 seconds
+  Time to prepare integrals:        0.004 seconds
+  Time to run job          :        0.592 seconds
+  Total                    :        0.597 seconds
 
-    Psi4 stopped on: Tuesday, 18 February 2025 04:45PM
-    Psi4 wall time for execution: 0:00:00.16
+    Psi4 stopped on: Friday, 07 March 2025 05:07PM
+    Psi4 wall time for execution: 0:00:00.90
 
 *** Psi4 exiting successfully. Buy a developer a beer!
