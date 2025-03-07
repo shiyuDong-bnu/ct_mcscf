@@ -15,8 +15,8 @@ import scipy.linalg
 # set geometry and basis
 psi_mol = psi4.geometry(
     """
-    Li  0 0 0
-    Li 0 0 r
+    H  0 0 0
+    H 0 0 r
     symmetry c1
     """
 )
@@ -28,7 +28,7 @@ B_BASIS = "cc-pvdz"
 GAMMA = 0.6
 # bond_length = np.concatenate([np.linspace(0.4, 1.0, 7),
 #                              np.linspace(1.2, 2.0, 5)])
-bond_length=[2.0]
+bond_length=[1.0]
 E_HF=[]
 E_MCSCF=[]
 E_CT=[]
@@ -65,8 +65,8 @@ def convert_ct_to_quccsd(h_ct, hf_ct):
 
 def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
     mol_template = """
-    Li 0.0000 0.0000  0.0000
-    Li 0.0000 0.0000  bond_length
+    H 0.0000 0.0000  0.0000
+    H 0.0000 0.0000  bond_length
     """
     scf_drv = vlx.ScfRestrictedDriver()
 
