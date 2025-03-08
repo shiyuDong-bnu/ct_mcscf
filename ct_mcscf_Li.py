@@ -6,6 +6,7 @@ from ct.rhf_energy import rhf_energy
 from ct.ct import canonical_transform
 import scipy.linalg
 import psi4
+from psi4.core import MintsHelper
 import numpy as np
 import multipsi as mtp
 import veloxchem as vlx
@@ -16,6 +17,7 @@ import multipsi as mtp
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.linalg
+from write_dump import write_dump_np
 # set geometry and basis
 psi_mol = psi4.geometry(
     """
@@ -49,15 +51,33 @@ def do_ct(mol, r, b_basis, gamma):
                       'screening': 'csam',
                       'e_convergence': 1e-10})
     e_hf, wfn = psi4.energy("scf", molecule=mol, return_wfn=True)
+    ## dump bare integral
+    mints=MintsHelper(wfn)
+    ao_eri=mints.ao_eri().np
+    mo_eri=mints.mo_eri(wfn.Ca(),wfn.Ca(),wfn.Ca(),wfn.Ca()).np
+    mo_h_core=wfn.Ca().np.T@(mints.ao_potential().np+mints.ao_kinetic().np)@wfn.Ca().np
+    V_nuc=psi_mol.nuclear_repulsion_energy()
+    n_ele=wfn.nalpha()*2
+    n_obs=wfn.nmo()
+    write_dump_np("BARE.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=mo_h_core,mo_eri=mo_eri)
+    ## end dump bare integral
     basis = psi4.core.get_global_option('BASIS')
     df_basis = psi4.core.get_global_option('DF_BASIS_MP2')
     print("regular hf energy is ", e_hf)
     print("run ct scf")
     h_ct = canonical_transform(
-        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=False)
+        mol, wfn, basis, df_basis, gamma=gamma, frezee_core=True)
     rhf_ct = rhf_energy(psi_mol, wfn, h_ct)
     print("ct  hf energy is ", rhf_ct["escf"],
           " correlation energy is ", rhf_ct["escf"]-e_hf)
+    
+    ## dump dressed integral 
+    h1e_ct, h2e_ct, cp_ct=convert_ct_to_quccsd(h_ct, rhf_ct)
+    h1e_ct_mo=np.einsum("ij,iI,jJ->IJ",h1e_ct,cp_ct,cp_ct,optimize=True)
+    h2e_ct_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",h2e_ct,cp_ct,cp_ct,cp_ct,cp_ct,optimize=True)
+    write_dump_np("DRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,mo_h_core=h1e_ct_mo,mo_eri=h2e_ct_mo)
+    ## end dump dressed integral
+
     return e_hf,h_ct, rhf_ct
 
 
@@ -112,6 +132,9 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
     ## from here macro iteration
     CONVERGE=False
     GNORM=1e-5
+    ENORM=1e-10
+    E_OLD=0
+    DELTA=1e10
     COUNT=0
     while not CONVERGE:
         print("At Iteration {}".format(COUNT+1))
@@ -136,6 +159,7 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
         CIdrv._update_integrals(E_inactive, h_active_mo, g_active_mo_int)
         ci_results = CIdrv.compute(molecule, basis, space) #Compute only the ground state
         E_ci = CIdrv.get_energy()
+        DELTA=E_ci-E_OLD
         D_act=CIdrv.get_active_density()
         Gamma_act=CIdrv.get_active_2body_density(0)
         ##  prepare for micro iteration
@@ -162,11 +186,21 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
         Q_pu=np.einsum("pwvx,uwvx->pu",g_pwvx,Gamma_act)
         ## equation 166
         F_up+=Q_pu.T
+        if COUNT==0 and DO_CT:
+            np.save("f_ip",F_ip)
+            np.save("f_up",F_up)
+            np.save("f_pv_i",F_pv_I)
+            np.save("q_pu",Q_pu)
+            np.save("g_pwvx",g_pwvx)
+            np.save("rdm1",D_act)
+            np.save("rdm2",Gamma_act)
         F_total=np.zeros((nbas,nbas))
         F_total[:nIn,:]=F_ip
         F_total[active_index,:]=F_up
         ## equation 147
         kappa=2*(F_total-F_total.T)
+        if COUNT==0 and DO_CT:
+            np.save("kappa",kappa)
         print("Energy is {:.10f},grad norm {:.6f}".format(E_ci,np.linalg.norm(kappa.flatten())))
         diagnal1 = np.einsum("pq,pm,qm->m", 2*(F_inactive_ao+F_active_ao), mo_coeff, mo_coeff
                             ,optimize=True) # Diagonal of 2*Fin+Fact in MO basis
@@ -189,7 +223,8 @@ def run_mcscf(r_h2,h1e_ct, h2e_ct, cp_ct,DO_CT=True):
         occ = np.zeros(nbas)
         newmolorb = vlx.MolecularOrbitals([new_mo_coeff], [ene], [occ], vlx.molorb.rest)
         space.molecular_orbitals = newmolorb
-        CONVERGE=np.linalg.norm(kappa.flatten())<GNORM
+        CONVERGE=(np.linalg.norm(kappa.flatten())<GNORM  and DELTA<ENORM)
+        E_OLD=E_ci
         COUNT+=1
     return E_ci
 
