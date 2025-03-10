@@ -1,6 +1,7 @@
 import numpy as np
 import psi4
 import time
+from ct.diis import DIIS
 def rhf_energy(molecule, wfn, ct=None):
     maxiter = psi4.core.get_global_option('MAXITER')
     e_conv = psi4.core.get_global_option('E_CONVERGENCE')
@@ -52,26 +53,29 @@ def rhf_energy(molecule, wfn, ct=None):
     enuc = molecule.nuclear_repulsion_energy()
     eold = 0.0
     Dold = np.zeros_like(D)
-    
+    ## set up diis
+    my_diis=DIIS()
     for scf_iter in range(1, maxiter + 1):
         J = np.einsum('pqrs,qs->pr', I, D)
         K = np.einsum('pqrs,qr->ps', I, D)
         F = H + 2 * J - K
     
-        # diis_e = np.einsum('ij,jk,kl->il', F, D, S) - np.einsum('ij,jk,kl->il', S, D, F)
-        # diis_e = A.dot(diis_e).dot(A)
-        # drms = np.mean(diis_e**2)**0.5
-    
+        
         scf_e = np.einsum('pq,pq->', F + H, D) + enuc
         drms = np.sum(np.power(D - Dold, 2)) ** 0.5
-    
+
+        diis_error=my_diis.calc_error(F,D,S,A)
+        my_diis.update(F,diis_error)
+
         print('SCF Iteration %3d: Energy = %4.16f   dE = % 1.5E   dRMS = %1.5E' % (scf_iter, scf_e, (scf_e - eold), drms))
         if (abs(scf_e - eold) < e_conv) and (drms < d_conv):
             break
     
         eold = scf_e
         Dold = D
-    
+
+        if scf_iter >1:
+            F=my_diis.extropolate()
         Fp = A.dot(F).dot(A)
         e, C2 = np.linalg.eigh(Fp)
         C = A.dot(C2)
