@@ -5,12 +5,12 @@ from ct.utils.orbital_space import OrbitalSpace
 from ct.get_int import get_eri_ri_ri_int,get_hcore_int,get_density,get_fock
 from ct.get_f12_int import get_f12,gen_V,get_fock_ri,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
-def canonical_transform(mol,wfn,basis,df_basis,gamma,frezee_core):
+def canonical_transform(mol,wfn,basis,df_basis,gamma,frezee_core,mr_info):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
     g=get_eri_ri_ri_int(my_orbital_space)
-    D1,D2=get_density(my_orbital_space)
+    D1,D2=get_density(my_orbital_space,mr_info)
     h=get_hcore_int(my_orbital_space)
     f=get_fock(my_orbital_space,h,D1,g)
     G=get_f12(gamma,my_orbital_space)
@@ -24,7 +24,8 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,frezee_core):
         B_final_temp[0,:,:,:]=B_final_temp[:,0,:,:]=B_final_temp[:,:,0,:]=B_final_temp[:,:,:,0]=0
     V_rational=rational_generate(np.einsum("ijkl->klij",V_noper))
 
-    X_rational_temp=rational_generate(X_noper) X_rational=conjugate(rational_generate(conjugate(X_rational_temp)))
+    X_rational_temp=rational_generate(X_noper)
+    X_rational=conjugate(rational_generate(conjugate(X_rational_temp)))
 
     B_rational_temp=rational_generate(B_final_temp)
     B_rational=conjugate(rational_generate(conjugate(B_rational_temp)))
