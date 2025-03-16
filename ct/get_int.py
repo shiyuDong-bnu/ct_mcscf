@@ -63,7 +63,7 @@ def get_hcore_int(my_orbital_space):
     return h
 
 # Density
-def get_density(my_orbital_space):
+def get_density(my_orbital_space,mr_info=None):
     no=my_orbital_space.no
     nbf=my_orbital_space.nbf
     o=my_orbital_space.o   
@@ -73,6 +73,20 @@ def get_density(my_orbital_space):
     D2 = np.zeros((nbf,nbf,nbf,nbf))
     D2[o,o,o,o] = 4 * np.einsum("ij,kl->ikjl", delta[o,o], delta[o,o])
     D2[o,o,o,o] -= 2 * np.einsum("il,kj->ikjl", delta[o,o], delta[o,o])
+    if mr_info is  not None:
+        a_ind=mr_info['active_index']
+        o_ind=mr_info['occupied_index']
+        D1[a_ind,a_ind]=mr_info['RDM1']
+        ## 2rdm ,first index is occ
+        delta=np.identity(nbf)
+        D2[o_ind,:,:,:]=2*np.einsum("iq,rs->iqrs",delta[o_ind,:],D1)
+        D2[o_ind,:,:,:]-=np.einsum("is,rq->iqrs",delta[o_ind,:],D1)
+        ## first index is active
+        ## third index is occ
+        D2[a_ind,:,o_ind,:]=2*np.einsum("is,uq->uqis",delta[o_ind,:],D1[a_ind,:])
+        D2[a_ind,:,o_ind,:]-=np.einsum("iq,us->uqis",delta[o_ind,:],D1[a_ind,:])
+        ## third index is active
+        D2[a_ind,a_ind,a_ind,a_ind]=mr_info['RDM2']
     return D1,D2
 def  get_fock(my_orbital_space,h,D1,g):
     o=my_orbital_space.o
