@@ -6,6 +6,7 @@ calculate using forte
 from ct.rhf_energy import rhf_energy
 from ct.ct import canonical_transform
 import psi4
+import forte
 import numpy as np
 from psi4.core import MintsHelper
 from write_dump import write_dump_np
@@ -17,15 +18,19 @@ psi_mol = psi4.geometry(
     symmetry c1
     """
 )
-psi4.core.clean_options()
-psi4.core.clean()
-psi4.core.clean_variables()
-psi4.set_output_file("ct_ucc_test.out", True)
+#psi4.core.clean_options()
+#psi4.core.clean()
+#psi4.core.clean_variables()
+psi4.set_output_file("Li2_pes.out", True)
 B_BASIS = "cc-pvdz"
 GAMMA = 0.6
-bond1=np.linspace(3.0,4.0,5)
-bond2=np.linsapce
-bond_length = [2.0]
+x1=np.linspace(1.5,2.0,5)
+x2=np.linspace(2.0,4.0,21)
+x3=np.linspace(4.0,6.0,5)
+x4=np.linspace(6.0,12.0,5)
+x_total=np.unique(np.concatenate([x1,x2,x3,x4]))
+#bond_length = [2.0]
+bond_length = x_total 
 
 def do_ct(mol, r, b_basis, gamma,fc=True):
     mol.r = r
@@ -34,7 +39,9 @@ def do_ct(mol, r, b_basis, gamma,fc=True):
                       'scf_type': 'pk',
                       'maxiter': 40,
                       'screening': 'csam',
+                      "d_convergence":1e-5,
                       'e_convergence': 1e-10})
+
     e_hf, wfn = psi4.energy("scf", molecule=mol, return_wfn=True)
     mints=MintsHelper(wfn)
     mo_eri=mints.mo_eri(wfn.Ca(),wfn.Ca(),wfn.Ca(),wfn.Ca()).np
@@ -69,35 +76,38 @@ def convert_ct_to_quccsd(h_ct, hf_ct):
 
 def forte_calc(mol,r,dump_fname):
     mol.r=r
-   # psi4.core.clean_options()
-   # psi4.core.clean()
+    psi4.core.clean_options()
+    # psi4.core.clean()
    # psi4.core.clean_variables()
-    import forte
-    psi4.set_options(
-        {
+   
+    forte_options=   {
      #       "basis":"cc-pvdz",
      #       "reference":"rhf",
      #       "scf_type":"pk",
-            ## set forte
             #"forte__job_type":"mcscf_two_step",
-            "forte__active_space_solver":"fci",
-            "forte__restricted_docc":[2],
-            "forte__active":[4],
-            "forte__int_type" :"fcidump",
-            "forte__fcidump_file":dump_fname,
-            "forte__mcscf_g_convergence":6,
-            "forte__mcscf_micro_maxiter":4,
-            "forte__correlation_solver":"mrdsrg",
-            "forte__corr_level":"ldsrg2",
-            "forte__dsrg_s":0.5,
+            "active_space_solver":"fci",
+            "restricted_docc":[2],
+            "active":[4],
+            "int_type" :"fcidump",
+            "fcidump_file":dump_fname,
+            "mcscf_g_convergence":6,
+            "mcscf_micro_maxiter":4,
+            "correlation_solver":"mrdsrg",
+            "corr_level":"ldsrg2",
+            "dsrg_s":0.5,
         }
-    )
-    psi4.energy("forte")
+    
+    psi4.energy("forte",forte_options=forte_options)
     variables=psi4.core.variables()
     e_ref=variables['DSRG REFERENCE ENERGY']
     e_final=variables['CURRENT ENERGY']
     return  e_ref,e_final    
-
+E_HF=[]
+E_CT_HF=[]
+E_BARE_MCSCF=[]
+E_BARE_CORR=[]
+E_DRESSED_MCSCF=[]
+E_DRESSED_CORR=[]
 for r_h2 in bond_length:
     print("at bond length {}".format(r_h2))
     psi4.core.clean_options()
@@ -107,11 +117,23 @@ for r_h2 in bond_length:
     ct_escf = ct_rhf['escf']
     e_mcscf_bare,e_corre_bare=forte_calc(psi_mol,r_h2,dump_fname="BARE.DUMP")
     e_mcscf_dressed,e_corre_dressed=forte_calc(psi_mol,r_h2,dump_fname="DRESSED.DUMP")
-    print("hatree fock",e_hf)
-    print("ct hf",ct_escf)
-    print("bare mcscf",e_mcscf_bare)
-    print("bare corr",e_corre_bare)
-    print("dressed mcscf",e_mcscf_dressed)
-    print("dressed corr",e_corre_dressed)
-
-
+    E_HF.append(e_hf)
+    E_CT_HF.append(ct_escf)
+    E_BARE_MCSCF.append(e_mcscf_bare)
+    E_BARE_CORR.append(e_corre_bare)
+    E_DRESSED_MCSCF.append(e_mcscf_dressed)
+    E_DRESSED_CORR.append(e_corre_dressed)
+#    print("hatree fock",e_hf)
+#    print("ct hf",ct_escf)
+#    print("bare mcscf",e_mcscf_bare)
+#    print("bare corr",e_corre_bare)
+#    print("dressed mcscf",e_mcscf_dressed)
+#    print("dressed corr",e_corre_dressed)
+np.save("Li_dimer",{
+    "E_HF":E_HF,
+    "E_CT_HF":E_CT_HF,
+    "E_BARE_MCSCF":E_BARE_MCSCF,
+    "E_BARE_CORR":E_BARE_CORR,
+    "E_DRESSED_MCSCF":E_DRESSED_MCSCF,
+    "E_DRESSED_CORR":E_DRESSED_CORR,
+    })
