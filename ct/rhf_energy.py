@@ -92,7 +92,8 @@ def rhf_energy(molecule, wfn, ct=None):
     
     # build fock and get orbital energies
     Fmo = C.T.dot(F).dot(C)
-    eps = np.diag(Fmo)
+    eps, C2 = np.linalg.eigh(Fp)
+    C = A.dot(C2)
     print(f'Orbital energies: {eps}')
 
     out = {'wfn': wfn, 'C': C, 'eps': eps, 'H1': H, 'H2': I, 'nbf': nbf, 'ndocc': ndocc, 'escf': scf_e}
