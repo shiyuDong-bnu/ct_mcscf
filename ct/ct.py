@@ -5,7 +5,7 @@ from ct.utils.orbital_space import OrbitalSpace
 from ct.get_int import get_eri_ri_ri_int,get_hcore_int,get_density,get_fock
 from ct.get_f12_int import get_f12,gen_V,get_fock_ri,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
-def canonical_transform(mol,wfn,basis,df_basis,gamma,frezee_core):
+def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)

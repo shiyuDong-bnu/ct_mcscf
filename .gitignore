@@ -1,7 +1,14 @@
 test/
 # Ignore all .pyc files
 *.pyc
-
+# Ignore .npy files
+*.npy
+# Ignore .pkl file which is generate by write dump to save large mo integral
+*.pkl 
+#Ignore .out and .log .clean files which is generate by calculations
+*.out
+*.log
+*.clean
 # Ignore __pycache__ directory 
 __pycache__/
 

@@ -91,7 +91,6 @@ def rhf_energy(molecule, wfn, ct=None):
     print('Final SCF energy: %.8f hartree' % scf_e)
     
     # build fock and get orbital energies
-    Fmo = C.T.dot(F).dot(C)
     eps, C2 = np.linalg.eigh(Fp)
     C = A.dot(C2)
     print(f'Orbital energies: {eps}')
