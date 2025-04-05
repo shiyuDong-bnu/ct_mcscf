@@ -154,7 +154,9 @@ def rohf_energy(molecule, wfn, ct=None):
     
         if SCF_ITER == maxiter:
             raise Exception("Maximum number of SCF cycles exceeded.")
-
+    ## calculate eps and C using converged Fock matrix ,not extrapolate Fock.
+    eps, C2 = np.linalg.eigh(Feff)
+    C = A.dot(C2)
     print('Total time for SCF iterations: %.3f seconds \n' % (time.time() - t))
 
     print('Final SCF energy: %.8f hartree' % SCF_E)

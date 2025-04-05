@@ -17,7 +17,7 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
     V_noper,X_noper=gen_V(gamma,my_orbital_space)
     fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs=get_fock_ri(my_orbital_space)
     B_final_temp=gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo)
-    if frezee_core:
+    if freeze_core:
         G[:,:,:,0]=G[:,:,0,:]=0
         V_noper[0,:,:,:]=V_noper[:,0,:,:]=0
         X_noper[0,:,:,:]=X_noper[:,0,:,:]=X_noper[:,:,0,:]=X_noper[:,:,:,0]=0

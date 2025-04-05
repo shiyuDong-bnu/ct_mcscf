@@ -5,7 +5,7 @@ from ct.utils.orbital_space import OrbitalSpace
 from ct.get_int import get_eri_ri_ri_int,get_hcore_int,get_density,get_fock
 from ct.get_f12_int import get_f12,gen_V,get_fock_ri,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
-def canonical_transform(mol,wfn,basis,df_basis,gamma,frezee_core,mr_info):
+def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core,mr_info):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
@@ -17,7 +17,7 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,frezee_core,mr_info):
     V_noper,X_noper=gen_V(gamma,my_orbital_space)
     fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs=get_fock_ri(my_orbital_space)
     B_final_temp=gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo)
-    if frezee_core:
+    if freeze_core:
         G[:,:,:,0]=G[:,:,0,:]=0
         V_noper[0,:,:,:]=V_noper[:,0,:,:]=0
         X_noper[0,:,:,:]=X_noper[:,0,:,:]=X_noper[:,:,0,:]=X_noper[:,:,:,0]=0
