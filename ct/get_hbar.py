@@ -1,4 +1,7 @@
 import numpy as np
+from ct.utils.timer import timer_decorator  
+
+@timer_decorator
 def get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h):
     s=my_orbital_space.s
     c=my_orbital_space.c
@@ -30,6 +33,7 @@ def get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h):
     gbar += 0.25 * (Cbar2.transpose((2,3,0,1)) + Cbar2.transpose((3,2,1,0)))
     gbar += g[s,s,s,s]
     return hbar ,gbar
+@timer_decorator
 def one_body(my_orbital_space,h,Dbar,G,g,f):
     debug=False
     s=my_orbital_space.s
@@ -81,6 +85,7 @@ def one_body(my_orbital_space,h,Dbar,G,g,f):
     # Eq. (15)
     hbar = h[s,s] + 0.5 * Cbar1[s,s] + 0.5 * Cbar1.T
     return hbar
+@timer_decorator
 def two_body_direct(my_orbital_space,V,X,B,G,f,h):
     ## equation (20)
     s=my_orbital_space.s
@@ -95,6 +100,7 @@ def two_body_direct(my_orbital_space,V,X,B,G,f,h):
     Cbar2[s,o,o,o] -= 2 * np.einsum("klij,pk->plij", X[o,o,o,o], f[s,o])
     Cbar2[o,o,o,o] += B[o,o,o,o]
     return Cbar2
+@timer_decorator
 def two_body_decoposited(my_orbital_space,D1,g,G,f):
     debug=False
     s=my_orbital_space.s

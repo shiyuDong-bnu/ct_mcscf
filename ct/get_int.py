@@ -1,6 +1,7 @@
 import numpy as np
 import psi4
-
+from ct.utils.timer import timer_decorator
+@timer_decorator
 def get_eri_ri_ri_int(my_orbital_space):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
@@ -38,6 +39,7 @@ def get_eri_ri_ri_int(my_orbital_space):
     g[s,c,s,s] = g[s,s,s,c].transpose((2,3,0,1))
     g[c,s,s,s] = g[s,s,s,c].transpose((3,2,1,0))
     return g
+@timer_decorator
 def get_hcore_int(my_orbital_space):
     nri=my_orbital_space.nri
     bs_obs=my_orbital_space.bs_obs()
@@ -63,6 +65,7 @@ def get_hcore_int(my_orbital_space):
     return h
 
 # Density
+@timer_decorator
 def get_density(my_orbital_space,mr_info=None):
     no=my_orbital_space.no
     nbf=my_orbital_space.nbf

@@ -2,7 +2,9 @@
 """
 import psi4
 import numpy as np
+from ct.utils.timer import timer_decorator
 # G = 3/8 <αβ|Q12 F12|ij> + 1/8 <αβ|Q12 F12|ji>
+@timer_decorator
 def get_f12(gamma,my_orbital_space):
     nri=my_orbital_space.nri
     bs_obs=my_orbital_space.bs_obs()
@@ -28,6 +30,7 @@ def get_f12(gamma,my_orbital_space):
 
     G = (0.375 * QF + 0.125 * QF.transpose((0,1,3,2))) / gamma
     return G
+@timer_decorator
 def gen_V(gamma,my_orbital_space):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
@@ -80,6 +83,8 @@ def gen_V(gamma,my_orbital_space):
     V_noper/=gamma
     X_noper/=gamma**2
     return V_noper,X_noper
+
+@timer_decorator
 def get_fock_ri(my_orbital_space):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
@@ -156,6 +161,8 @@ def get_fock_ri(my_orbital_space):
     total_fock=fock_ri_mo-K_ri_mo
     f_virtual_cabs=total_fock[n_occ:n_gbs,n_gbs:]
     return fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs
+
+@timer_decorator
 def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()

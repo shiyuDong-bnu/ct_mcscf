@@ -29,7 +29,6 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
 
     B_rational_temp=rational_generate(B_final_temp)
     B_rational=conjugate(rational_generate(conjugate(B_rational_temp)))
-
     hbar,gbar=get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h)
     Cp=my_orbital_space.Cp
     mints=psi4.core.MintsHelper(my_orbital_space.bs_obs())
