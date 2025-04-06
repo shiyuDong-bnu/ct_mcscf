@@ -17,7 +17,6 @@ def get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h):
     # Eq. (28)
     Dbar = 2 * np.einsum("pq,rs->prqs", D1, D1) - np.einsum("ps,rq->prqs", D1, D1) - D2
 
-    U,S= three_body(my_orbital_space,g,G,f)
    ## 1-body
     hbar=one_body(my_orbital_space,h,Dbar,G,g,f)
 
