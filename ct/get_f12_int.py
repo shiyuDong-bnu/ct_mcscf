@@ -3,6 +3,8 @@
 import psi4
 import numpy as np
 from ct.utils.timer import timer_decorator
+import sys
+import time
 # G = 3/8 <αβ|Q12 F12|ij> + 1/8 <αβ|Q12 F12|ji>
 @timer_decorator
 def get_f12(gamma,my_orbital_space):
@@ -16,15 +18,20 @@ def get_f12(gamma,my_orbital_space):
     o=my_orbital_space.o
     v=my_orbital_space.v
     mints=psi4.core.MintsHelper(bs_obs)
+    begin=time.time()
     f12_cf = mints.f12_cgtg(gamma)
     QF = np.zeros((nri, nri, no, no))
 
     # <xy|ij>
     QF_xyij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_cabs, bs_obs).to_array().swapaxes(1,2)
+    QF_xaij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)
+    end=time.time()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
+
     QF[c,c,o,o] = np.einsum("xX,yY,iI,jJ,xyij->XYIJ", Cx, Cx, Cp[:,o], Cp[:,o], QF_xyij, optimize=True)
 
     # <xa|ij> and <ax|ji>
-    QF_xaij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)
+    
     QF[c,v,o,o] = np.einsum("xX,aA,iI,jJ,xaij->XAIJ", Cx, Cp[:,v], Cp[:,o], Cp[:,o], QF_xaij, optimize=True)
     QF[v,c,o,o] = QF[c,v,o,o].transpose((1,0,3,2))
 
@@ -42,7 +49,7 @@ def gen_V(gamma,my_orbital_space):
     v=my_orbital_space.v
     n_occ=no
     mints=psi4.core.MintsHelper(bs_obs)
-
+    being=time.perf_counter()
     f12_cgtg=mints.f12_cgtg(gamma)
     rv_gggg=mints.ao_f12g12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
@@ -50,6 +57,9 @@ def gen_V(gamma,my_orbital_space):
     rr_gggg=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     v_ggga=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_cabs)
     v_gggg=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_obs)
+    end=time.perf_counter()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-being)
+    
     rv_gggg_phy=np.einsum("iajb->ijab",rv_gggg)
     r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
     v_ggga_phy=np.einsum("iajb->ijab",v_ggga)
@@ -102,6 +112,7 @@ def get_fock_ri(my_orbital_space):
     cx_save=Cx
     n_gbs=nbf
     n_cabs=ncabs
+    begin=time.time()
     t_oo_ao=mints.ao_kinetic(bs_obs,bs_obs)
     t_oc_ao=mints.ao_kinetic(bs_obs,bs_cabs)
     t_cc_ao=mints.ao_kinetic(bs_cabs,bs_cabs)
@@ -112,6 +123,8 @@ def get_fock_ri(my_orbital_space):
     v_oooc_ao=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_cabs)
     v_oocc_ao=mints.ao_eri(bs_obs,bs_obs,bs_cabs,bs_cabs)
     v_ococ_ao=mints.ao_eri(bs_obs,bs_cabs,bs_obs,bs_cabs)
+    end=time.time()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
     #3) transform to mo basis
     t_oo_mo=np.einsum("ij,iI,jJ->IJ",t_oo_ao,cp_save,cp_save,optimize=True)
     t_oc_mo=np.einsum("ij,iI,jJ->IJ",t_oc_ao,cp_save,cx_save,optimize=True)
@@ -180,6 +193,7 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     n_gbs=my_orbital_space.nbf
     n_cabs=my_orbital_space.ncabs
     n_ri=my_orbital_space.nri
+    begin=time.time()
     f12_cgtg=mints.f12_cgtg(gamma)
     d_com_ao=mints.ao_f12_double_commutator(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     d_com_ao_phy=np.einsum("iajb->ijab",d_com_ao)
@@ -187,6 +201,8 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
                     cp_save[:,:n_occ],cp_save[:,:n_occ],optimize=True)
     rr_gggc_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
     rr_gggg_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs) ## calculated twice
+    end=time.time()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
     # generat r2 ooo_ri
     rr_gggc_ao_phy=np.einsum("iajb->ijab",rr_gggc_ao)
     rr_gggg_ao_phy=np.einsum("iajb->ijab",rr_gggg_ao)
@@ -228,10 +244,7 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
             r_oo_ri_ri_mo,optimize=True)
     B_temp-=temps
     B_temp-=np.einsum("mnkl->nmlk",temps)
-    def contraction_of_symmetric(r,f):
-        tp=np.einsum("mnpa,pq,xyqa->mnxy",r,f,r,optimize=True)
-        temp=tp+np.einsum("mnxy->nmyx",tp)
-        return temp
+
     def get_CAC_integral(r_oo_ri_ri_mo,total_fock):
         ## fock slice is cc
         ## r slice is CA
@@ -260,10 +273,6 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     B_sym_temp-=contraction_of_symmetric(
         *get_DBD_integral(r_oo_ri_ri_mo,total_fock)
     )
-    def contraction_of_unsymmetric(r1,f,r2):
-        tp=np.einsum("mnpa,pA,xyAa->mnxy",r1,f,r2)
-        temp=tp+np.einsum("mnxy->nmyx",tp)
-        return temp
     def get_DBA_integral(r_oo_ri_ri_mo,total_fock):
         slice_d=slice(0,n_gbs)
         slice_b=slice(n_occ,n_gbs)
@@ -294,3 +303,11 @@ def rational_generate(array):
     return 3/8*array+1/8*np.einsum("ijkl->ijlk",array)
 def conjugate(array):
     return np.einsum("ijkl->klij",array)
+def contraction_of_unsymmetric(r1,f,r2):
+    tp=np.einsum("mnpa,pA,xyAa->mnxy",r1,f,r2,optimize=True)
+    temp=tp+np.einsum("mnxy->nmyx",tp)
+    return temp
+def contraction_of_symmetric(r,f):
+    tp=np.einsum("mnpa,pq,xyqa->mnxy",r,f,r,optimize=True)
+    temp=tp+np.einsum("mnxy->nmyx",tp)
+    return temp
