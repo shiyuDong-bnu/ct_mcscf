@@ -1,4 +1,7 @@
 import psi4
+from ct.utils.timer import timer_decorator
+
+@timer_decorator
 def get_cabs(mol,wfn,basis,df_basis):
     """
     use psi4 to generate cabs basis space 

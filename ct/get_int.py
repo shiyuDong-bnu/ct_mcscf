@@ -1,6 +1,9 @@
 import numpy as np
 import psi4
-
+from ct.utils.timer import timer_decorator
+import time
+import sys
+@timer_decorator
 def get_eri_ri_ri_int(my_orbital_space):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
@@ -11,33 +14,47 @@ def get_eri_ri_ri_int(my_orbital_space):
     c=my_orbital_space.c
     mints = psi4.core.MintsHelper(bs_obs)
     psi4.core.set_global_option("SCREENING", "NONE")
-
     # for simplicity, let's get all 2e integrals
     g = np.zeros((nri, nri, nri, nri))
-
+    
     # <pq|rs>
-    g_pqrs = mints.ao_eri(bs_obs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)  # to phys notation
-    g[s,s,s,s] = np.einsum("pP,qQ,rR,sS,pqrs->PQRS", Cp, Cp, Cp, Cp, g_pqrs, optimize=True)
+    begin=time.time()
+    g_pqrs = mints.ao_eri(bs_obs, bs_obs, bs_obs, bs_obs).to_array()  # to phys notation
+    g_pqxy = mints.ao_eri(bs_obs, bs_cabs, bs_obs, bs_cabs).to_array() # <pq|xy> = (px|qy)
+    g_pxqy = mints.ao_eri(bs_obs, bs_obs, bs_cabs, bs_cabs).to_array()
+    g_pqrx = mints.ao_eri(bs_obs, bs_obs, bs_obs, bs_cabs).to_array()
+    end=time.time()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
 
+    begin=time.time()
+    g[s,s,s,s] = np.einsum("pP,qQ,rR,sS,prqs->PQRS", Cp, Cp, Cp, Cp, g_pqrs, optimize="greedy")
+    end=time.time()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals transformation ",end-begin)
     # <pq|xy> and <xy|pq> and <xq|py> and <py|xq>
-    g_pqxy = mints.ao_eri(bs_obs, bs_cabs, bs_obs, bs_cabs).to_array().swapaxes(1,2)  # <pq|xy> = (px|qy)
-    g[s,s,c,c] = np.einsum("pP,qQ,xX,yY,pqxy->PQXY", Cp, Cp, Cx, Cx, g_pqxy, optimize=True)
+    
+    g[s,s,c,c] = np.einsum("pP,qQ,xX,yY,pxqy->PQXY", Cp, Cp, Cx, Cx, g_pqxy, optimize="greedy")
+    #path_info = np.einsum_path("pP,qQ,xX,yY,pxqy->PQXY", Cp, Cp, Cx, Cx, g_pqxy, optimize="greedy")
+    #print("Path info for Eq. (18):", path_info[0])
+    #print("Path info for Eq. (18):", path_info[1])
+    begin=time.time()
     g[c,c,s,s] = g[s,s,c,c].transpose((2,3,0,1))
     g[c,s,s,c] = g[s,s,c,c].transpose((2,1,0,3))
     g[s,c,c,s] = g[s,s,c,c].transpose((0,3,2,1))
-
+    end=time.time()
+    print(f"{ sys._getframe(  ).f_code.co_name} time to do array transpose ",end-begin)
     # <px|qy> and <xp|yq>
-    g_pxqy = mints.ao_eri(bs_obs, bs_obs, bs_cabs, bs_cabs).to_array().swapaxes(1,2)
-    g[s,c,s,c] = np.einsum("pP,xX,qQ,yY,pxqy->PXQY", Cp, Cx, Cp, Cx, g_pxqy, optimize=True)
+   
+    g[s,c,s,c] = np.einsum("pP,xX,qQ,yY,pqxy->PXQY", Cp, Cx, Cp, Cx, g_pxqy, optimize="greedy")
     g[c,s,c,s] = g[s,c,s,c].transpose((1,0,3,2))
 
     # <pq|rx> and <qp|xr> and <rx|pq> and <xr|qp>
-    g_pqrx = mints.ao_eri(bs_obs, bs_obs, bs_obs, bs_cabs).to_array().swapaxes(1,2)
-    g[s,s,s,c] = np.einsum("pP,qQ,rR,xX,pqrx->PQRX", Cp, Cp, Cp, Cx, g_pqrx, optimize=True)
+    
+    g[s,s,s,c] = np.einsum("pP,qQ,rR,xX,prqx->PQRX", Cp, Cp, Cp, Cx, g_pqrx, optimize="greedy")
     g[s,s,c,s] = g[s,s,s,c].transpose((1,0,3,2))
     g[s,c,s,s] = g[s,s,s,c].transpose((2,3,0,1))
     g[c,s,s,s] = g[s,s,s,c].transpose((3,2,1,0))
     return g
+@timer_decorator
 def get_hcore_int(my_orbital_space):
     nri=my_orbital_space.nri
     bs_obs=my_orbital_space.bs_obs()
@@ -63,6 +80,7 @@ def get_hcore_int(my_orbital_space):
     return h
 
 # Density
+@timer_decorator
 def get_density(my_orbital_space,mr_info=None):
     no=my_orbital_space.no
     nbf=my_orbital_space.nbf
