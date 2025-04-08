@@ -33,9 +33,9 @@ def get_eri_ri_ri_int(my_orbital_space):
     # <pq|xy> and <xy|pq> and <xq|py> and <py|xq>
     
     g[s,s,c,c] = np.einsum("pP,qQ,xX,yY,pxqy->PQXY", Cp, Cp, Cx, Cx, g_pqxy, optimize="greedy")
-    path_info = np.einsum_path("pP,qQ,xX,yY,pxqy->PQXY", Cp, Cp, Cx, Cx, g_pqxy, optimize="greedy")
-    print("Path info for Eq. (18):", path_info[0])
-    print("Path info for Eq. (18):", path_info[1])
+    #path_info = np.einsum_path("pP,qQ,xX,yY,pxqy->PQXY", Cp, Cp, Cx, Cx, g_pqxy, optimize="greedy")
+    #print("Path info for Eq. (18):", path_info[0])
+    #print("Path info for Eq. (18):", path_info[1])
     begin=time.time()
     g[c,c,s,s] = g[s,s,c,c].transpose((2,3,0,1))
     g[c,s,s,c] = g[s,s,c,c].transpose((2,1,0,3))
