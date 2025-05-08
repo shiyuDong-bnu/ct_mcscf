@@ -94,15 +94,21 @@ def get_density(my_orbital_space,mr_info=None):
     if mr_info is  not None:
         a_ind=mr_info['active_index']
         o_ind=mr_info['occupied_index']
+        ## copy from single reference
+        D1 = np.zeros((nbf, nbf))
+        D1[o_ind,o_ind] = 2 * delta[o_ind,o_ind]
+        D2 = np.zeros((nbf,nbf,nbf,nbf))
+        ## end copy from single reference
+
         D1[a_ind,a_ind]=mr_info['RDM1']
         ## 2rdm ,first index is occ
         delta=np.identity(nbf)
-        D2[o_ind,:,:,:]=2*np.einsum("iq,rs->iqrs",delta[o_ind,:],D1)
-        D2[o_ind,:,:,:]-=np.einsum("is,rq->iqrs",delta[o_ind,:],D1)
+        D2[o_ind,:,:,:]=2*np.einsum("iq,rs->irqs",delta[o_ind,:],D1)
+        D2[o_ind,:,:,:]-=np.einsum("is,rq->irqs",delta[o_ind,:],D1)
         ## first index is active
         ## third index is occ
-        D2[a_ind,:,o_ind,:]=2*np.einsum("is,uq->uqis",delta[o_ind,:],D1[a_ind,:])
-        D2[a_ind,:,o_ind,:]-=np.einsum("iq,us->uqis",delta[o_ind,:],D1[a_ind,:])
+        D2[a_ind,o_ind,:,:]=2*np.einsum("is,uq->uiqs",delta[o_ind,:],D1[a_ind,:])
+        D2[a_ind,o_ind,:,:]-=np.einsum("iq,us->uiqs",delta[o_ind,:],D1[a_ind,:])
         ## third index is active
         D2[a_ind,a_ind,a_ind,a_ind]=mr_info['RDM2']
     return D1,D2
