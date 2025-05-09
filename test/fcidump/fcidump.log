@@ -1,0 +1,3 @@
+2025-05-09:13:29:48,391 INFO     [psi4.driver.task_planner:285] PLANNING Atomic:  keywords={'D_CONVERGENCE': 1e-08, 'E_CONVERGENCE': 1e-10, 'MAXITER': 300, 'REFERENCE': 'RHF', 'SCF_TYPE': 'PK', 'forte__scf_type': 'PK', 'forte__e_convergence': 1e-10, 'forte__d_convergence': 1e-08, 'forte__reference': 'RHF', 'forte__maxiter': 300, 'forte__basis': 'CC-PVDZ', 'function_kwargs': {}}
+2025-05-09:13:29:48,394 INFO     [psi4.driver.driver:523] Compute energy(): method=forte, basis=cc-pvdz, molecule=default, nre=6.014699644935847
+2025-05-09:13:29:49,39 INFO     [psi4.driver.driver:526] Return energy(): -54.82540361356744
