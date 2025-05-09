@@ -1,8 +1,16 @@
-In this branch ,we will refactor the ct code 
-# we will do it in three steps
+First 
+Download forte from [git@github.com:shiyuDong-bnu/forte.git](https://github.com/shiyuDong-bnu/forte.git)
+```
+git clone git@github.com:shiyuDong-bnu/forte.git
+git checkout ct_forte
+```
+Next 
+Download ct_mcscf from [git@github.com:shiyuDong-bnu/ct_mcscf.git](https://github.com/shiyuDong-bnu/ct_mcscf.git)
+```
+git clone git@github.com:shiyuDong-bnu/ct_mcscf.git
+```
+Examples are in test 
+```
+cd test
+```
 
- - [ ]  sepearte three body decomposite part from others
-
-- [ ]  change three body part calculation path
-
-- [ ]   parallel coding
