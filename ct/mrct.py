@@ -11,6 +11,8 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core,mr_info):
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
     g=get_eri_ri_ri_int(my_orbital_space)
     D1,D2=get_density(my_orbital_space,mr_info)
+    import pdb
+    pdb.set_trace()
     h=get_hcore_int(my_orbital_space)
     f=get_fock(my_orbital_space,h,D1,g)
     G=get_f12(gamma,my_orbital_space)
@@ -18,10 +20,18 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core,mr_info):
     fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs=get_fock_ri(my_orbital_space)
     B_final_temp=gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo)
     if freeze_core:
-        G[:,:,:,0]=G[:,:,0,:]=0
-        V_noper[0,:,:,:]=V_noper[:,0,:,:]=0
-        X_noper[0,:,:,:]=X_noper[:,0,:,:]=X_noper[:,:,0,:]=X_noper[:,:,:,0]=0
-        B_final_temp[0,:,:,:]=B_final_temp[:,0,:,:]=B_final_temp[:,:,0,:]=B_final_temp[:,:,:,0]=0
+        nfrzc=wfn.nfrzc()
+        try :
+            assert nfrzc>0
+            print("number of freeze core orbital  is ",nfrzc)
+        except:
+            raise("""Freeze core is set true, but get zero number of freeze core orbital \n
+            you should also set freeze core option in psi4 ,which is where this 
+            code get number fo freeze core orbital""")
+        G[:,:,:,:nfrzc]=G[:,:,:nfrzc,:]=0
+        V_noper[:nfrzc,:,:,:]=V_noper[:,:nfrzc,:,:]=0
+        X_noper[:nfrzc,:,:,:]=X_noper[:,:nfrzc,:,:]=X_noper[:,:,:nfrzc,:]=X_noper[:,:,:,:nfrzc]=0
+        B_final_temp[:nfrzc,:,:,:]=B_final_temp[:,:nfrzc,:,:]=B_final_temp[:,:,:nfrzc,:]=B_final_temp[:,:,:,:nfrzc]=0
     V_rational=rational_generate(np.einsum("ijkl->klij",V_noper))
 
     X_rational_temp=rational_generate(X_noper)
