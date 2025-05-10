@@ -31,11 +31,11 @@
     -----------------------------------------------------------------------
 
 
-    Psi4 started on: Friday, 09 May 2025 01:29PM
+    Psi4 started on: Saturday, 10 May 2025 10:02AM
 
-    Process ID: 3953285
-    Host:       hydrogen
-    PSIDATADIR: /data/home/sydong/opt/psi4/share/psi4
+    Process ID: 3140623
+    Host:       debianlab
+    PSIDATADIR: /home/sydong/install_tutorial/psi4/share/psi4
     Memory:     500.0 MiB
     Threads:    1
     Molecule: geometry: Molecule is not complete, please use 'update_geometry'
@@ -43,7 +43,7 @@
 Molecule: Setting geometry variable r_ch to 2.102300
 Molecule: Setting geometry variable ahch to 101.710000
 
-Scratch directory: /data/home/sydong/scratch/psi4/
+Scratch directory: /home/sydong/scratch/psi4/
 
   Forte
   ----------------------------------------------------------------------------
@@ -93,236 +93,6 @@ Scratch directory: /data/home/sydong/scratch/psi4/
 
   Timing for freezing core and virtual orbitals:              0.000 s.
   Timing for preparing custom integrals:                      0.001 s.
-
-  Preparing forte objects from a Psi4 Wavefunction object Using basis set CC-PVDZ from Psi4 global options.   => Libint2 <=
-
-    Primary   basis highest AM E, G, H:  6, 6, 3
-    Auxiliary basis highest AM E, G, H:  7, 7, 4
-    Onebody   basis highest AM E, G, H:  -, -, -
-    Solid Harmonics ordering:            Gaussian
-
-*** tstart() called on hydrogen
-*** at Fri May  9 13:29:48 2025
-
-   => Loading Basis Set <=
-
-    Name: CC-PVDZ
-    Role: ORBITAL
-    Keyword: BASIS
-    atoms 1   entry C          line   138 file /data/home/sydong/opt/psi4/share/psi4/basis/cc-pvdz.gbs 
-    atoms 2-3 entry H          line    22 file /data/home/sydong/opt/psi4/share/psi4/basis/cc-pvdz.gbs 
-
-
-         ---------------------------------------------------------
-                                   SCF
-               by Justin Turney, Rob Parrish, Andy Simmonett
-                          and Daniel G. A. Smith
-                              RHF Reference
-                        1 Threads,    500 MiB Core
-         ---------------------------------------------------------
-
-  ==> Geometry <==
-
-    Molecular point group: c1
-    Full point group: C2v
-
-    Geometry (in Bohr), charge = 0, multiplicity = 1:
-
-       Center              X                  Y                   Z               Mass       
-    ------------   -----------------  -----------------  -----------------  -----------------
-         C            0.000000000000     0.000000000000    -0.190863170104    12.000000000000
-         H            0.000000000000    -1.630440522826     1.136287534046     1.007825032230
-         H            0.000000000000     1.630440522826     1.136287534046     1.007825032230
-
-  Running in c1 symmetry.
-
-  Rotational constants: A =     19.80481  B =     11.23490  C =      7.16840 [cm^-1]
-  Rotational constants: A = 593733.17106  B = 336813.79877  C = 214903.20347 [MHz]
-  Nuclear repulsion =    6.014699644935847
-
-  Charge       = 0
-  Multiplicity = 1
-  Electrons    = 8
-  Nalpha       = 4
-  Nbeta        = 4
-
-  ==> Algorithm <==
-
-  SCF Algorithm Type is PK.
-  DIIS enabled.
-  MOM disabled.
-  Fractional occupation disabled.
-  Guess Type is SAD.
-  Energy threshold   = 1.00e-10
-  Density threshold  = 1.00e-08
-  Integral threshold = 1.00e-12
-
-  ==> Primary Basis <==
-
-  Basis Set: CC-PVDZ
-    Blend: CC-PVDZ
-    Number of shells: 12
-    Number of basis functions: 24
-    Number of Cartesian functions: 25
-    Spherical Harmonics?: true
-    Max angular momentum: 2
-
-  ==> Integral Setup <==
-
-  Using in-core PK algorithm.
-   Calculation information:
-      Number of atoms:                   3
-      Number of AO shells:              12
-      Number of primitives:             32
-      Number of atomic orbitals:        25
-      Number of basis functions:        24
-
-      Integral cutoff                 1.00e-12
-      Number of threads:                 1
-
-  Performing in-core PK
-  Using 90300 doubles for integral storage.
-  We computed 3081 shell quartets total.
-  Whereas there are 3081 unique shell quartets.
-
-  ==> DiskJK: Disk-Based J/K Matrices <==
-
-    J tasked:                  Yes
-    K tasked:                  Yes
-    wK tasked:                  No
-    Memory [MiB]:              375
-    Schwarz Cutoff:          1E-12
-
-    OpenMP threads:              1
-
-  Minimum eigenvalue in the overlap matrix is 2.8712604800E-02.
-  Reciprocal condition number of the overlap matrix is 7.7320335120E-03.
-    Using symmetric orthogonalization.
-
-  ==> Pre-Iterations <==
-
-  SCF Guess: Superposition of Atomic Densities via on-the-fly atomic UHF (no occupation information).
-
-   -------------------------
-    Irrep   Nso     Nmo    
-   -------------------------
-     A         24      24 
-   -------------------------
-    Total      24      24
-   -------------------------
-
-  ==> Iterations <==
-
-                        Total Energy        Delta E     RMS |[F,P]|
-
-   @RHF iter SAD:   -38.17046734184490   -3.81705e+01   0.00000e+00 
-   @RHF iter   1:   -38.87001134666038   -6.99544e-01   4.87804e-03 ADIIS/DIIS
-   @RHF iter   2:   -38.88050821298012   -1.04969e-02   1.03345e-03 ADIIS/DIIS
-   @RHF iter   3:   -38.88099703297714   -4.88820e-04   2.71486e-04 ADIIS/DIIS
-   @RHF iter   4:   -38.88104336531818   -4.63323e-05   5.73986e-05 DIIS
-   @RHF iter   5:   -38.88104507147468   -1.70616e-06   8.85278e-06 DIIS
-   @RHF iter   6:   -38.88104514242077   -7.09461e-08   1.57360e-06 DIIS
-   @RHF iter   7:   -38.88104514552551   -3.10474e-09   3.39040e-07 DIIS
-   @RHF iter   8:   -38.88104514567172   -1.46208e-10   5.27250e-08 DIIS
-   @RHF iter   9:   -38.88104514567462   -2.89901e-12   5.31933e-09 DIIS
-  Energy and wave function converged.
-
-
-  ==> Post-Iterations <==
-
-    Orbital Energies [Eh]
-    ---------------------
-
-    Doubly Occupied:                                                      
-
-       1A    -11.294184     2A     -0.887998     3A     -0.557433  
-       4A     -0.390728  
-
-    Virtual:                                                              
-
-       5A      0.062788     6A      0.195244     7A      0.260123  
-       8A      0.586212     9A      0.694948    10A      0.738118  
-      11A      0.782650    12A      0.862641    13A      1.008432  
-      14A      1.201842    15A      1.214557    16A      1.288106  
-      17A      1.746015    18A      1.762820    19A      1.933018  
-      20A      2.006488    21A      2.024872    22A      2.308185  
-      23A      2.649152    24A      2.743767  
-
-    Final Occupation by Irrep:
-              A 
-    DOCC [     4 ]
-    NA   [     4 ]
-    NB   [     4 ]
-
-  @RHF Final Energy:   -38.88104514567462
-
-   => Energetics <=
-
-    Nuclear Repulsion Energy =              6.0146996449358472
-    One-Electron Energy =                 -63.5308050345083331
-    Two-Electron Energy =                  18.6350602438978683
-    Total Energy =                        -38.8810451456746193
-
-Computation Completed
-
-
-Properties will be evaluated at   0.000000,   0.000000,   0.000000 [a0]
-
-Properties computed using the SCF density matrix
-
-
- Multipole Moments:
-
- ------------------------------------------------------------------------------------
-     Multipole            Electronic (a.u.)      Nuclear  (a.u.)        Total (a.u.)
- ------------------------------------------------------------------------------------
-
- L = 1.  Multiply by 2.5417464519 to convert [e a0] to [Debye]
- Dipole X            :         -0.0000000            0.0000000           -0.0000000
- Dipole Y            :          0.0000000            0.0000000            0.0000000
- Dipole Z            :         -0.3596734            1.1273960            0.7677226
- Magnitude           :                                                    0.7677226
-
- ------------------------------------------------------------------------------------
-
-*** tstop() called on hydrogen at Fri May  9 13:29:48 2025
-Module time:
-	user time   =       0.24 seconds =       0.00 minutes
-	system time =       0.04 seconds =       0.00 minutes
-	total time  =          0 seconds =       0.00 minutes
-Total time:
-	user time   =       0.24 seconds =       0.00 minutes
-	system time =       0.04 seconds =       0.00 minutes
-	total time  =          0 seconds =       0.00 minutes
-
-
-  ==> MO Space Information <==
-
-  -------------------------------
-                        A   Sum
-  -------------------------------
-    FROZEN_DOCC         0     0
-    RESTRICTED_DOCC     1     1
-    GAS1                6     6
-    GAS2                0     0
-    GAS3                0     0
-    GAS4                0     0
-    GAS5                0     0
-    GAS6                0     0
-    RESTRICTED_UOCC    17    17
-    FROZEN_UOCC         0     0
-    Total              24    24
-  -------------------------------   => Loading Basis Set <=
-
-    Name: STO-3G
-    Role: ORBITAL
-    Keyword: MINAO_BASIS
-    atoms 1   entry C          line    61 file /data/home/sydong/opt/psi4/share/psi4/basis/sto-3g.gbs 
-    atoms 2-3 entry H          line    19 file /data/home/sydong/opt/psi4/share/psi4/basis/sto-3g.gbs 
-
-
-  State Singlet (Ms = 0) A GAS min: 0 0 0 0 0 0 ; GAS max: 12 0 0 0 0 0 ; weights:
-      1.000000000000
 
           -----------------------------------------------------------
                   Multi-Configurational Self Consistent Field
@@ -383,26 +153,24 @@ Total time:
     Target root                                            0
     --------------------------------------------------------
   Initial guess space is incomplete.
-  Adding 16 determinant(s).
+  Adding 5 determinant(s).
 
   ==> Initial Guess <==
 
-  Initial guess determinants:         66
+  Initial guess determinants:         55
 
   Classification of the initial guess solutions
 
   Number   2S+1   Selected
   ------------------------
-    22       1       *
-    32       3        
-    11       5        
-     1       7        
+    26       1       *
+    26       3        
+     3       5        
   ------------------------
 
     Spin    Root           Energy        <S^2>    Status
   -------------------------------------------------------
-   triplet    0      -54.116555555275  +2.000000  removed
-   singlet    0      -53.976565386215  -0.000000  added
+   singlet    0      -38.899897414174  -0.000000  added
   -------------------------------------------------------
 
   ==> Davidson-Liu Solver <==
@@ -423,135 +191,59 @@ Total time:
   Davidson-Liu solver: adding 1 guess vectors
   Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
   ---------------------------------------------------------------------------------
-       0      -53.976565386215       53.976565386215        1.422464453702      1
-       1      -54.617671576803        0.641106190587        0.751496698505      2
-       2      -54.738549447264        0.120877870461        0.418220049964      3
-       3      -54.800954828404        0.062405381140        0.238066868264      4
-       4      -54.819391329830        0.018436501427        0.107400397421      5
-       5      -54.823214213531        0.003822883700        0.071354374698      6
-       6      -54.824703551348        0.001489337817        0.032430273998      7
-       7      -54.825243014965        0.000539463617        0.020904692918      8
-       8      -54.825375707926        0.000132692960        0.008000519376      9
-       9      -54.825395749948        0.000020042022        0.003840546395     10
-      10      -54.825400143738        0.000004393790        0.002405577634      3
-      11      -54.825402877306        0.000002733569        0.001434616492      4
-      12      -54.825403432965        0.000000555659        0.000708207600      5
-      13      -54.825403576922        0.000000143956        0.000315829427      6
-      14      -54.825403606104        0.000000029182        0.000155755565      7
-      15      -54.825403611341        0.000000005238        0.000079860759      8
-      16      -54.825403613067        0.000000001726        0.000035852493      9
-      17      -54.825403613531        0.000000000463        0.000009150551     10
-      18      -54.825403613558        0.000000000028        0.000004739370      3
-      19      -54.825403613566        0.000000000008        0.000001879098      4
-      20      -54.825403613567        0.000000000001        0.000001098780      5
-      21      -54.825403613567        0.000000000000        0.000000557813      6
+       0      -38.899897414174       38.899897414174        0.267536544265      1
+       1      -38.939306157747        0.039408743573        0.057090501103      2
+       2      -38.940762264727        0.001456106981        0.010839450956      3
+       3      -38.940818805866        0.000056541139        0.002333180834      4
+       4      -38.940821966122        0.000003160256        0.000505679705      5
+       5      -38.940822082464        0.000000116342        0.000090646446      6
+       6      -38.940822086710        0.000000004246        0.000019381872      7
+       7      -38.940822086926        0.000000000217        0.000004213453      8
+       8      -38.940822086935        0.000000000009        0.000000778849      9
   ---------------------------------------------------------------------------------
 
   ==> Root No. 0 <==
 
-    22ba00     -0.28508668
-    22ab00     -0.28508668
-    2baba0     -0.26128508
-    2abab0     -0.26128508
-    2aabb0     -0.25884641
-    2bbaa0     -0.25884641
-    b2ba0a     -0.17776266
-    a2ab0b     -0.17776266
-    aaabbb     -0.16247220
-    bbbaaa     -0.16247220
-    20ab20     -0.15670685
-    20ba20     -0.15670685
-    a2ba0b     -0.15457181
-    b2ab0a     -0.15457181
-    220a0b     -0.15245269
-    220b0a     -0.15245269
-    ababab     -0.14941318
-    bababa     -0.14941318
-    aababb     -0.14245176
-    bbabaa     -0.14245176
-    2b0baa      0.14018837
-    2a0abb      0.14018837
-    2a0bba     -0.13941302
-    2b0aab     -0.13941302
-    baabba     -0.12200497
-    abbaab     -0.12200497
-    a0ab2b     -0.08372490
-    b0ba2a     -0.08372490
-    200b2a      0.08366334
-    200a2b      0.08366334
-    b20a02     -0.07925670
-    a20b02     -0.07925670
-    bb0aa2     -0.07108122
-    aa0bb2     -0.07108122
-    b0ab2a     -0.06785375
-    a0ba2b     -0.06785375
-    ab0ba2      0.06339447
-    ba0ab2      0.06339447
-    02ba20      0.05731775
-    02ab20      0.05731775
-    20ab02      0.05705109
-    20ba02      0.05705109
-    02ba02     -0.05030860
-    02ab02     -0.05030860
-    a00b22      0.03824795
-    b00a22      0.03824795
-    ab2ba0      0.03417212
-    ba2ab0      0.03417212
-    0abab2     -0.03305824
-    0baba2     -0.03305824
-    0b2baa      0.03126099
-    0a2abb      0.03126099
-    a22b00      0.03070889
-    b22a00      0.03070889
-    0bbaa2     -0.02947444
-    0aabb2     -0.02947444
-    022b0a      0.02769066
-    022a0b      0.02769066
-    aa2bb0     -0.02652178
-    bb2aa0     -0.02652178
-    baaabb     -0.02535181
-    abbbaa     -0.02535181
-    0a2bba     -0.02519947
-    0b2aab     -0.02519947
-    a02b20     -0.02332157
-    b02a20     -0.02332157
-    b2aa0b      0.02319085
-    a2bb0a      0.02319085
-    202a0b      0.02289016
-    202b0a      0.02289016
-    aabbba     -0.02207683
-    bbaaab     -0.02207683
-    020a2b     -0.02149497
-    020b2a     -0.02149497
-    b20a20      0.01994012
-    a20b20      0.01994012
-    00ba22     -0.01906756
-    00ab22     -0.01906756
-    b02a02      0.01863733
-    a02b02      0.01863733
-    babaab      0.01839039
-    ababba      0.01839039
-    a0bb2a      0.01587115
-    b0aa2b      0.01587115
-    baabab      0.01511541
-    abbaba      0.01511541
-    002b2a     -0.01373558
-    002a2b     -0.01373558
+    222000     -0.96763013
+    220200      0.17859471
+    202020      0.07210273
+    b2a200      0.06286220
+    a2b200      0.06286220
+    022200      0.04441562
+    022002      0.04245575
+    ab20ab     -0.03907007
+    ba20ba     -0.03907007
+    202002      0.03761809
+    2ba0ab      0.03335950
+    2ab0ba      0.03335950
+    220020      0.03116392
+    b2a002     -0.03043275
+    a2b002     -0.03043275
+    ba20ab     -0.02900004
+    ab20ba     -0.02900004
+    2ba0ba      0.02428388
+    2ab0ab      0.02428388
+    220002      0.02374903
+    022020      0.02158165
+    200220     -0.01369246
+    020202     -0.01286189
+    aa20bb     -0.01007003
+    bb20aa     -0.01007003
 
-    Total Energy:     -54.825403613567, <S^2>: 0.000000
-    Time for FCI:       0.041391235000
+    Total Energy:     -38.940822086935, <S^2>: 0.000000
+    Time for FCI:       0.011458390000
 
   ==> Energy Summary <==
 
     Multi.(2ms)  Irrep.  No.               Energy      <S^2>
     --------------------------------------------------------
-       1  (  0)     A     0      -54.825403613567   0.000000
+       1  (  0)     A     0      -38.940822086935   0.000000
     --------------------------------------------------------
 
   ==> Natural Orbitals <==
 
-        2A      1.960774      3A      1.960628      4A      1.000000  
-        5A      0.999885      6A      0.039412      7A      0.039302  
+        2A      1.981905      3A      1.976889      4A      1.911821  
+        5A      0.085505      6A      0.023015      7A      0.020865  
 
  sydong:  unsymmetrize 2RDM
 
@@ -564,25 +256,21 @@ Total time:
     ----------------------------------------------------------------------------------------
  sydong:  unsymmetrize 2RDM
 
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-       1     -54.825403613567 -5.4825e+01    -54.825403613567 -5.4825e+01  0.0000e+00    6/N
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.038 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.034 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.034 s.
+  Integrals are about to be updated.
+  Timing for freezing core and virtual orbitals:              0.000 s.
+  Integrals update took     0.033 s.
+       1     -38.940822086935 -3.8941e+01    -38.940822086969 -3.8941e+01  6.4855e-07    4/Y
 
-  Davidson-Liu solver: restarting from previous calculation.
- sydong:  unsymmetrize 2RDM
-
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-  L-BFGS Warning: Skip this vector due to negative rho
-       2     -54.825403613567 -7.8160e-14    -54.825403613567  0.0000e+00  0.0000e+00    6/N
-    ----------------------------------------------------------------------------------------
-
-  A miracle has come to pass: MCSCF iterations have converged!
+  Initial orbitals are already converged!
 
   Performing final CI Calculation using converged orbitals
 
@@ -624,116 +312,55 @@ Total time:
   Davidson-Liu solver: restarting from previous calculation.
   Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
   ---------------------------------------------------------------------------------
-       0      -54.825403613567        0.000000000000        0.000000557813      1
+       0      -38.940822086969        0.000000000033        0.000003915937      1
+       1      -38.940822086979        0.000000000010        0.000001309693      2
+       2      -38.940822086980        0.000000000001        0.000000363880      3
   ---------------------------------------------------------------------------------
 
   ==> Root No. 0 <==
 
-    22ba00     -0.28508668
-    22ab00     -0.28508668
-    2baba0     -0.26128508
-    2abab0     -0.26128508
-    2aabb0     -0.25884641
-    2bbaa0     -0.25884641
-    b2ba0a     -0.17776266
-    a2ab0b     -0.17776266
-    aaabbb     -0.16247220
-    bbbaaa     -0.16247220
-    20ab20     -0.15670685
-    20ba20     -0.15670685
-    a2ba0b     -0.15457181
-    b2ab0a     -0.15457181
-    220a0b     -0.15245269
-    220b0a     -0.15245269
-    ababab     -0.14941318
-    bababa     -0.14941318
-    aababb     -0.14245176
-    bbabaa     -0.14245176
-    2b0baa      0.14018837
-    2a0abb      0.14018837
-    2a0bba     -0.13941302
-    2b0aab     -0.13941302
-    baabba     -0.12200497
-    abbaab     -0.12200497
-    a0ab2b     -0.08372490
-    b0ba2a     -0.08372490
-    200b2a      0.08366334
-    200a2b      0.08366334
-    b20a02     -0.07925670
-    a20b02     -0.07925670
-    bb0aa2     -0.07108122
-    aa0bb2     -0.07108122
-    b0ab2a     -0.06785375
-    a0ba2b     -0.06785375
-    ab0ba2      0.06339447
-    ba0ab2      0.06339447
-    02ba20      0.05731775
-    02ab20      0.05731775
-    20ab02      0.05705109
-    20ba02      0.05705109
-    02ba02     -0.05030860
-    02ab02     -0.05030860
-    a00b22      0.03824795
-    b00a22      0.03824795
-    ab2ba0      0.03417212
-    ba2ab0      0.03417212
-    0abab2     -0.03305824
-    0baba2     -0.03305824
-    0b2baa      0.03126099
-    0a2abb      0.03126099
-    a22b00      0.03070889
-    b22a00      0.03070889
-    0bbaa2     -0.02947444
-    0aabb2     -0.02947444
-    022b0a      0.02769066
-    022a0b      0.02769066
-    aa2bb0     -0.02652178
-    bb2aa0     -0.02652178
-    baaabb     -0.02535181
-    abbbaa     -0.02535181
-    0a2bba     -0.02519947
-    0b2aab     -0.02519947
-    a02b20     -0.02332157
-    b02a20     -0.02332157
-    b2aa0b      0.02319085
-    a2bb0a      0.02319085
-    202a0b      0.02289016
-    202b0a      0.02289016
-    aabbba     -0.02207683
-    bbaaab     -0.02207683
-    020a2b     -0.02149497
-    020b2a     -0.02149497
-    b20a20      0.01994012
-    a20b20      0.01994012
-    00ba22     -0.01906756
-    00ab22     -0.01906756
-    b02a02      0.01863733
-    a02b02      0.01863733
-    babaab      0.01839039
-    ababba      0.01839039
-    a0bb2a      0.01587115
-    b0aa2b      0.01587115
-    baabab      0.01511541
-    abbaba      0.01511541
-    002b2a     -0.01373558
-    002a2b     -0.01373558
+    222000      0.96762968
+    220200     -0.17859645
+    202020     -0.07210310
+    a2b200     -0.06286234
+    b2a200     -0.06286234
+    022200     -0.04441603
+    022002     -0.04245588
+    ab20ab      0.03906974
+    ba20ba      0.03906974
+    202002     -0.03761866
+    2ab0ba     -0.03335940
+    2ba0ab     -0.03335940
+    220020     -0.03116542
+    b2a002      0.03043277
+    a2b002      0.03043277
+    ab20ba      0.02900002
+    ba20ab      0.02900002
+    2ba0ba     -0.02428455
+    2ab0ab     -0.02428455
+    220002     -0.02374869
+    022020     -0.02158163
+    200220      0.01369273
+    020202      0.01286202
+    bb20aa      0.01006969
+    aa20bb      0.01006969
 
-    Total Energy:     -54.825403613567, <S^2>: 0.000000
-    Time for FCI:       0.006779128000
+    Total Energy:     -38.940822086980, <S^2>: -0.000000
+    Time for FCI:       0.005160446000
 
   ==> Energy Summary <==
 
     Multi.(2ms)  Irrep.  No.               Energy      <S^2>
     --------------------------------------------------------
-       1  (  0)     A     0      -54.825403613567   0.000000
+       1  (  0)     A     0      -38.940822086980  -0.000000
     --------------------------------------------------------
 
   ==> Natural Orbitals <==
 
-        2A      1.960774      3A      1.960628      4A      1.000000  
-        5A      0.999885      6A      0.039412      7A      0.039302  
+        2A      1.981905      3A      1.976888      4A      1.911820  
+        5A      0.085507      6A      0.023015      7A      0.020865  
 
 
-  Time to prepare integrals:        0.521 seconds
-  Time to run job          :        0.122 seconds
-  Total                    :        0.643 seconds
+  Time to prepare integrals:        0.139 seconds
+  Time to run job          :        0.186 seconds
+  Total                    :        0.324 seconds
