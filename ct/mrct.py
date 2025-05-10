@@ -11,8 +11,6 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core,mr_info):
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
     g=get_eri_ri_ri_int(my_orbital_space)
     D1,D2=get_density(my_orbital_space,mr_info)
-    import pdb
-    pdb.set_trace()
     h=get_hcore_int(my_orbital_space)
     f=get_fock(my_orbital_space,h,D1,g)
     G=get_f12(gamma,my_orbital_space)
