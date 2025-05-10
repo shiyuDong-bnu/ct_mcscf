@@ -21,6 +21,7 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
         nfrzc=wfn.nfrzc()
         try :
             assert nfrzc>0
+            print("number of freeze core orbital  is ",nfrzc)
         except:
             raise("""Freeze core is set true, but get zero number of freeze core orbital \n
             you should also set freeze core option in psi4 ,which is where this 
