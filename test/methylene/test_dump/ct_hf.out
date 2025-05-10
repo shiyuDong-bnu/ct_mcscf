@@ -1,0 +1,60 @@
+hf energy -38.89230504250601
+mcscf energy -38.926812919768864
+get_cabs Execution time: 0.0323 seconds
+get_eri_ri_ri_int time to do integrals in  6.734323740005493
+get_eri_ri_ri_int time to do integrals transformation  0.28203892707824707
+get_eri_ri_ri_int time to do array transpose  0.916506290435791
+get_eri_ri_ri_int Execution time: 10.4851 seconds
+get_density Execution time: 0.0036 seconds
+get_hcore_int Execution time: 0.0094 seconds
+get_f12 time to do integrals in  4.418557643890381
+get_f12 Execution time: 4.6845 seconds
+gen_V time to do integrals in  4.423850381746888
+gen_V Execution time: 4.7022 seconds
+get_fock_ri time to do integrals in  6.260897636413574
+get_fock_ri Execution time: 6.5784 seconds
+gen_b time to do integrals in  3.482924222946167
+gen_b Execution time: 8.4897 seconds
+one_body Execution time: 0.1407 seconds
+two_body_decoposited Execution time: 0.2605 seconds
+two_body_direct Execution time: 0.0119 seconds
+get_hbar Execution time: 0.6218 seconds
+
+Number of occupied orbitals: 4
+Number of basis functions: 48
+
+  Total time taken for integrals 0.000 seconds.
+
+
+Total time taken for setup: 0.003 seconds
+SCF Iteration   1: Energy = -29.9078757289057009   dE = -2.99079E+01   dRMS = 1.76345E+00
+SCF Iteration   2: Energy = -34.7352368040175250   dE = -4.82736E+00   dRMS = 2.61170E+00
+SCF Iteration   3: Energy = -38.2679556185018797   dE = -3.53272E+00   dRMS = 2.37737E+00
+SCF Iteration   4: Energy = -38.8760279991012467   dE = -6.08072E-01   dRMS = 4.07470E-01
+SCF Iteration   5: Energy = -38.9165281819311701   dE = -4.05002E-02   dRMS = 1.76651E-01
+SCF Iteration   6: Energy = -38.9171030277334182   dE = -5.74846E-04   dRMS = 2.71573E-02
+SCF Iteration   7: Energy = -38.9171709305221611   dE = -6.79028E-05   dRMS = 7.42152E-03
+SCF Iteration   8: Energy = -38.9171752112759393   dE = -4.28075E-06   dRMS = 2.57791E-03
+SCF Iteration   9: Energy = -38.9171752550181296   dE = -4.37422E-08   dRMS = 3.60829E-04
+SCF Iteration  10: Energy = -38.9171752567264591   dE = -1.70833E-09   dRMS = 8.17697E-05
+SCF Iteration  11: Energy = -38.9171752567864928   dE = -6.00338E-11   dRMS = 8.32268E-06
+SCF Iteration  12: Energy = -38.9171752567883900   dE = -1.89715E-12   dRMS = 1.81644E-06
+SCF Iteration  13: Energy = -38.9171752567885463   dE = -1.56319E-13   dRMS = 3.30803E-07
+SCF Iteration  14: Energy = -38.9171752567883757   dE =  1.70530E-13   dRMS = 5.64180E-08
+SCF Iteration  15: Energy = -38.9171752567884255   dE = -4.97380E-14   dRMS = 1.00392E-08
+SCF Iteration  16: Energy = -38.9171752567885321   dE = -1.06581E-13   dRMS = 1.04047E-08
+SCF Iteration  17: Energy = -38.9171752567884042   dE =  1.27898E-13   dRMS = 7.79155E-09
+Total time for SCF iterations: 0.196 seconds 
+
+Final SCF energy: -38.91717526 hartree
+Orbital energies: [-11.28678445  -0.8967362   -0.56911497  -0.40255744   0.02726413
+   0.07177211   0.09157151   0.11290297   0.13305266   0.23754664
+   0.24979595   0.47061208   0.51267366   0.56796862   0.58437498
+   0.59429674   0.62383154   0.64205634   0.67987642   0.69456449
+   0.90583773   1.04926552   1.08935859   1.09029076   1.11853442
+   1.24853515   1.35624212   1.46556556   2.22805134   2.38604728
+   2.53146448   2.63807234   2.72260334   2.80151202   2.82066916
+   2.87880573   3.08736885   3.18751461   3.20010899   3.39356231
+   3.39574395   3.56453781   3.94890354   4.33466237   6.65052348
+   9.18989208   9.52725045   9.71326294]
+ct  hf energy is  -38.917175256788404  correlation energy is  -0.024870214282394443
