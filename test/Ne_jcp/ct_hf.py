@@ -5,8 +5,8 @@ then do ct
 finally do ct-hf
 """
 import sys
-sys.path.append("/data/home/sydong/work/ct_mcscf/")
-sys.path.append("/data/home/sydong/software/forte/")
+sys.path.append("/home/sydong/work/workspace/reproducing/ct_mcscf/")
+sys.path.append("/home/sydong/work/workspace/reproducing/forte")
 from ct.rhf_energy import rhf_energy
 from ct.ct import canonical_transform
 import psi4

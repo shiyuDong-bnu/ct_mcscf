@@ -1,9 +1,9 @@
 import psi4
 import numpy as np
 import sys
-sys.path.append("/data/home/sydong/work/ct_mcscf/")
-sys.path.append("/data/home/sydong/software/forte")
-from utils.write_dump import  write_dump_np
+sys.path.append("/home/sydong/work/workspace/reproducing/ct_mcscf/")
+sys.path.insert(0,"/home/sydong/work/workspace/reproducing/forte")
+from write_dump import  write_dump_np
 psi4.set_output_file("methylene.out")
 psi_mol=psi4.geometry(
 """

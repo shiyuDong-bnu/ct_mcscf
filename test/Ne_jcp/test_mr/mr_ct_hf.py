@@ -4,9 +4,9 @@ Ne with active space set to 1 slater determinant
 """
 
 import sys
+sys.path.append("/home/sydong/work/workspace/reproducing/ct_mcscf/")
+sys.path.insert(0,"/home/sydong/work/workspace/reproducing/forte")
 
-sys.path.append("/data/home/sydong/software/forte")
-sys.path.append("/data/home/sydong/work/ct_mcscf/")
 import numpy as np
 import psi4
 import forte
