@@ -1,0 +1,234 @@
+
+Host: hydrogen
+
+Timers On : Sun May 11 11:24:55 2025
+Timers Off: Sun May 11 11:29:36 2025
+
+Wall Time:      280.97 seconds
+
+                                                       Time (seconds)
+Module                                       User      System        Wall        Calls
+Total PK formation time             :      1.733u      0.233s      1.181w      2 calls
+Libint2ERI::Libint2ERI              :      0.083u      0.067s      0.109w     14 calls
+HF: Form core H                     :      0.017u      0.000s      0.001w      1 calls
+HF: Form S/X                        :      0.000u      0.000s      0.002w      1 calls
+HF: Guess                           :      0.050u      0.017s      0.044w      1 calls
+SAD Guess                           :      0.050u      0.017s      0.043w      1 calls
+HF: Form G                          :      0.350u      0.050s      0.240w     11 calls
+JK: D                               :      0.067u      0.000s      0.016w    179 calls
+JK: USO2AO                          :      0.033u      0.000s      0.010w    179 calls
+JK: JK                              :     46.817u      0.267s     28.325w    179 calls
+PK computes JK                      :     46.817u      0.267s     28.318w    179 calls
+JK: AO2USO                          :      0.000u      0.000s      0.000w    179 calls
+HF: Form F                          :      0.000u      0.000s      0.002w     11 calls
+HF: Form D                          :      0.000u      0.000s      0.000w     11 calls
+HF: DIIS                            :      0.017u      0.000s      0.014w     10 calls
+HF: Form C                          :      0.017u      0.000s      0.010w     10 calls
+Integrals                           :      0.717u      0.083s      0.485w      1 calls
+Build (pu|xy) integrals             :     39.950u      0.083s     23.940w     55 calls
+semicanonicalize orbitals           :      0.000u      0.000s      0.001w      1 calls
+Rotate RDMs                         :      0.000u      0.000s      0.003w      1 calls
+Libint2F12::Libint2F12              :      4.883u      0.117s      0.095w     10 calls
+Libint2F12G12::Libint2F12G12        :      2.217u      0.017s      0.009w      1 calls
+Libint2F12DoubleCommutator::Libint2F12DoubleCommutator:      0.017u      0.000s      0.008w      1 calls
+
+--------------------------------------------------------------------------------------
+Total PK formation time             :      1.017u      0.150s      0.699w      1 calls
+| Libint2ERI::Libint2ERI            :      0.050u      0.033s      0.042w      2 calls
+HF: Form core H                     :      0.017u      0.000s      0.001w      1 calls
+HF: Form S/X                        :      0.000u      0.000s      0.002w      1 calls
+HF: Guess                           :      0.050u      0.017s      0.044w      1 calls
+| SAD Guess                         :      0.050u      0.017s      0.043w      1 calls
+HF: Form G                          :      0.350u      0.050s      0.240w     11 calls
+| JK: D                             :      0.000u      0.000s      0.000w     11 calls
+| JK: USO2AO                        :      0.000u      0.000s      0.000w     11 calls
+| JK: JK                            :      0.350u      0.050s      0.239w     11 calls
+| | PK computes JK                  :      0.350u      0.050s      0.239w     11 calls
+| JK: AO2USO                        :      0.000u      0.000s      0.000w     11 calls
+HF: Form F                          :      0.000u      0.000s      0.002w     11 calls
+HF: Form D                          :      0.000u      0.000s      0.000w     11 calls
+HF: DIIS                            :      0.017u      0.000s      0.014w     10 calls
+HF: Form C                          :      0.017u      0.000s      0.010w     10 calls
+Integrals                           :      0.717u      0.083s      0.485w      1 calls
+| Total PK formation time           :      0.717u      0.083s      0.482w      1 calls
+| | Libint2ERI::Libint2ERI          :      0.033u      0.017s      0.026w      2 calls
+JK: D                               :      0.017u      0.000s      0.002w    113 calls
+JK: USO2AO                          :      0.017u      0.000s      0.002w    113 calls
+JK: JK                              :      7.033u      0.133s      4.345w    113 calls
+| PK computes JK                    :      7.033u      0.133s      4.343w    113 calls
+JK: AO2USO                          :      0.000u      0.000s      0.000w    113 calls
+Build (pu|xy) integrals             :     39.950u      0.083s     23.940w     55 calls
+| JK: D                             :      0.050u      0.000s      0.014w     55 calls
+| JK: USO2AO                        :      0.017u      0.000s      0.008w     55 calls
+| JK: JK                            :     39.433u      0.083s     23.741w     55 calls
+| | PK computes JK                  :     39.433u      0.083s     23.736w     55 calls
+| JK: AO2USO                        :      0.000u      0.000s      0.000w     55 calls
+semicanonicalize orbitals           :      0.000u      0.000s      0.001w      1 calls
+Rotate RDMs                         :      0.000u      0.000s      0.003w      1 calls
+Libint2ERI::Libint2ERI              :      0.000u      0.017s      0.041w     10 calls
+Libint2F12::Libint2F12              :      4.883u      0.117s      0.095w     10 calls
+Libint2F12G12::Libint2F12G12        :      2.217u      0.017s      0.009w      1 calls
+Libint2F12DoubleCommutator::Libint2F12DoubleCommutator:      0.017u      0.000s      0.008w      1 calls
+
+**************************************************************************************
+
+Host: hydrogen
+
+Timers On : Sun May 11 11:29:55 2025
+Timers Off: Sun May 11 11:39:13 2025
+
+Wall Time:      557.43 seconds
+
+                                                       Time (seconds)
+Module                                       User      System        Wall        Calls
+Diagonalize CI Hamiltonian          :      0.633u      0.033s      0.399w     13 calls
+Single sub. lists                   :      0.050u      0.017s      0.050w     38 calls
+A lists                             :      0.033u      0.000s      0.026w     38 calls
+B lists                             :      0.017u      0.017s      0.024w     38 calls
+Double sub. lists                   :      0.133u      0.000s      0.071w     26 calls
+AA lists                            :      0.017u      0.000s      0.015w     26 calls
+AB lists                            :      0.100u      0.000s      0.040w     26 calls
+BB lists                            :      0.000u      0.000s      0.015w     26 calls
+Build sigma                         :      0.467u      0.000s      0.266w    140 calls
+Dump DETCI WFN                      :      0.000u      0.000s      0.007w     13 calls
+Build SF 1-RDM                      :      0.017u      0.000s      0.006w     12 calls
+Build SF 2-RDM                      :      0.033u      0.000s      0.030w     12 calls
+Triple sub. lists                   :      0.017u      0.000s      0.004w      1 calls
+AAA lists                           :      0.000u      0.000s      0.000w      1 calls
+AAB lists                           :      0.000u      0.000s      0.002w      1 calls
+ABB lists                           :      0.000u      0.000s      0.002w      1 calls
+BBB lists                           :      0.017u      0.000s      0.000w      1 calls
+semicanonicalize orbitals           :     18.450u      5.333s     14.273w      1 calls
+build Fock                          :      0.067u      0.000s      0.043w      1 calls
+Rotate RDMs                         :      1.517u      0.017s      0.915w      1 calls
+make_cumulant_L2aa                  :      0.000u      0.000s      0.000w      2 calls
+make_cumulant_L2ab                  :      0.000u      0.000s      0.000w      1 calls
+make_cumulant_L3aaa                 :      0.017u      0.000s      0.011w      2 calls
+make_cumulant_L3aab                 :      0.000u      0.000s      0.003w      1 calls
+make_cumulant_L3abb                 :      0.017u      0.000s      0.003w      1 calls
+
+--------------------------------------------------------------------------------------
+Diagonalize CI Hamiltonian          :      0.633u      0.033s      0.399w     13 calls
+| Single sub. lists                 :      0.017u      0.017s      0.017w     13 calls
+| | A lists                         :      0.000u      0.000s      0.009w     13 calls
+| | B lists                         :      0.017u      0.017s      0.008w     13 calls
+| Double sub. lists                 :      0.050u      0.000s      0.035w     13 calls
+| | AA lists                        :      0.000u      0.000s      0.008w     13 calls
+| | AB lists                        :      0.033u      0.000s      0.020w     13 calls
+| | BB lists                        :      0.000u      0.000s      0.008w     13 calls
+| Build sigma                       :      0.467u      0.000s      0.266w    140 calls
+Single sub. lists                   :      0.033u      0.000s      0.032w     25 calls
+| A lists                           :      0.033u      0.000s      0.017w     25 calls
+| B lists                           :      0.000u      0.000s      0.015w     25 calls
+Dump DETCI WFN                      :      0.000u      0.000s      0.007w     13 calls
+Build SF 1-RDM                      :      0.017u      0.000s      0.006w     12 calls
+Double sub. lists                   :      0.083u      0.000s      0.035w     13 calls
+| AA lists                          :      0.017u      0.000s      0.008w     13 calls
+| AB lists                          :      0.067u      0.000s      0.020w     13 calls
+| BB lists                          :      0.000u      0.000s      0.008w     13 calls
+Build SF 2-RDM                      :      0.033u      0.000s      0.030w     12 calls
+Triple sub. lists                   :      0.017u      0.000s      0.004w      1 calls
+| AAA lists                         :      0.000u      0.000s      0.000w      1 calls
+| AAB lists                         :      0.000u      0.000s      0.002w      1 calls
+| ABB lists                         :      0.000u      0.000s      0.002w      1 calls
+| BBB lists                         :      0.017u      0.000s      0.000w      1 calls
+semicanonicalize orbitals           :     18.450u      5.333s     14.273w      1 calls
+| build Fock                        :      0.067u      0.000s      0.043w      1 calls
+| Rotate RDMs                       :      1.517u      0.017s      0.915w      1 calls
+make_cumulant_L2aa                  :      0.000u      0.000s      0.000w      2 calls
+make_cumulant_L2ab                  :      0.000u      0.000s      0.000w      1 calls
+make_cumulant_L3aaa                 :      0.017u      0.000s      0.011w      2 calls
+make_cumulant_L3aab                 :      0.000u      0.000s      0.003w      1 calls
+make_cumulant_L3abb                 :      0.017u      0.000s      0.003w      1 calls
+
+**************************************************************************************
+
+Host: hydrogen
+
+Timers On : Sun May 11 11:49:13 2025
+Timers Off: Sun May 11 11:50:04 2025
+
+Wall Time:       51.87 seconds
+
+                                                       Time (seconds)
+Module                                       User      System        Wall        Calls
+Total PK formation time             :      1.667u      0.233s      1.148w      2 calls
+Libint2ERI::Libint2ERI              :      0.067u      0.083s      0.092w      6 calls
+HF: Form core H                     :      0.000u      0.000s      0.001w      1 calls
+HF: Form S/X                        :      0.000u      0.000s      0.001w      1 calls
+HF: Guess                           :      0.050u      0.033s      0.040w      1 calls
+SAD Guess                           :      0.050u      0.033s      0.040w      1 calls
+HF: Form G                          :      0.383u      0.017s      0.234w     11 calls
+JK: D                               :      0.050u      0.000s      0.014w    177 calls
+JK: USO2AO                          :      0.000u      0.000s      0.009w    177 calls
+JK: JK                              :     44.200u      0.167s     26.563w    177 calls
+PK computes JK                      :     44.200u      0.167s     26.557w    177 calls
+JK: AO2USO                          :      0.017u      0.000s      0.000w    177 calls
+HF: Form F                          :      0.017u      0.000s      0.003w     11 calls
+HF: Form D                          :      0.000u      0.000s      0.000w     11 calls
+HF: DIIS                            :      0.033u      0.000s      0.016w     10 calls
+HF: Form C                          :      0.017u      0.000s      0.010w     10 calls
+Integrals                           :     16.283u      3.067s     11.622w      1 calls
+Build (pu|xy) integrals             :     36.700u      0.033s     22.090w     51 calls
+semicanonicalize orbitals           :      0.133u      0.000s      0.077w      2 calls
+build Fock                          :      0.133u      0.000s      0.076w      1 calls
+Rotate RDMs                         :      0.017u      0.000s      0.003w      1 calls
+make_cumulant_L2aa                  :      0.000u      0.000s      0.000w      2 calls
+make_cumulant_L2ab                  :      0.000u      0.000s      0.000w      1 calls
+make_cumulant_L3aaa                 :      0.017u      0.000s      0.011w      2 calls
+make_cumulant_L3aab                 :      0.000u      0.000s      0.003w      1 calls
+make_cumulant_L3abb                 :      0.017u      0.000s      0.003w      1 calls
+
+--------------------------------------------------------------------------------------
+Total PK formation time             :      0.967u      0.150s      0.668w      1 calls
+| Libint2ERI::Libint2ERI            :      0.033u      0.050s      0.043w      2 calls
+HF: Form core H                     :      0.000u      0.000s      0.001w      1 calls
+HF: Form S/X                        :      0.000u      0.000s      0.001w      1 calls
+HF: Guess                           :      0.050u      0.033s      0.040w      1 calls
+| SAD Guess                         :      0.050u      0.033s      0.040w      1 calls
+HF: Form G                          :      0.383u      0.017s      0.234w     11 calls
+| JK: D                             :      0.000u      0.000s      0.000w     11 calls
+| JK: USO2AO                        :      0.000u      0.000s      0.000w     11 calls
+| JK: JK                            :      0.367u      0.017s      0.232w     11 calls
+| | PK computes JK                  :      0.367u      0.017s      0.232w     11 calls
+| JK: AO2USO                        :      0.000u      0.000s      0.000w     11 calls
+HF: Form F                          :      0.017u      0.000s      0.003w     11 calls
+HF: Form D                          :      0.000u      0.000s      0.000w     11 calls
+HF: DIIS                            :      0.033u      0.000s      0.016w     10 calls
+HF: Form C                          :      0.017u      0.000s      0.010w     10 calls
+Integrals                           :     16.283u      3.067s     11.622w      1 calls
+| Total PK formation time           :      0.700u      0.083s      0.479w      1 calls
+| | Libint2ERI::Libint2ERI          :      0.017u      0.017s      0.025w      2 calls
+| Libint2ERI::Libint2ERI            :      0.000u      0.017s      0.013w      1 calls
+| JK: D                             :      0.000u      0.000s      0.000w      1 calls
+| JK: USO2AO                        :      0.000u      0.000s      0.000w      1 calls
+| JK: JK                            :      0.017u      0.000s      0.010w      1 calls
+| | PK computes JK                  :      0.017u      0.000s      0.010w      1 calls
+| JK: AO2USO                        :      0.000u      0.000s      0.000w      1 calls
+JK: D                               :      0.017u      0.000s      0.002w    112 calls
+JK: USO2AO                          :      0.000u      0.000s      0.002w    112 calls
+JK: JK                              :      7.200u      0.117s      4.343w    112 calls
+| PK computes JK                    :      7.200u      0.117s      4.341w    112 calls
+JK: AO2USO                          :      0.017u      0.000s      0.000w    112 calls
+Build (pu|xy) integrals             :     36.700u      0.033s     22.090w     51 calls
+| JK: D                             :      0.033u      0.000s      0.012w     51 calls
+| JK: USO2AO                        :      0.000u      0.000s      0.007w     51 calls
+| JK: JK                            :     36.483u      0.033s     21.903w     51 calls
+| | PK computes JK                  :     36.483u      0.033s     21.899w     51 calls
+| JK: AO2USO                        :      0.000u      0.000s      0.000w     51 calls
+semicanonicalize orbitals           :      0.133u      0.000s      0.077w      2 calls
+| build Fock                        :      0.133u      0.000s      0.076w      1 calls
+| | JK: D                           :      0.000u      0.000s      0.000w      2 calls
+| | JK: USO2AO                      :      0.000u      0.000s      0.000w      2 calls
+| | JK: JK                          :      0.133u      0.000s      0.075w      2 calls
+| | | PK computes JK                :      0.133u      0.000s      0.075w      2 calls
+| | JK: AO2USO                      :      0.000u      0.000s      0.000w      2 calls
+Rotate RDMs                         :      0.017u      0.000s      0.003w      1 calls
+Libint2ERI::Libint2ERI              :      0.017u      0.000s      0.012w      1 calls
+make_cumulant_L2aa                  :      0.000u      0.000s      0.000w      2 calls
+make_cumulant_L2ab                  :      0.000u      0.000s      0.000w      1 calls
+make_cumulant_L3aaa                 :      0.017u      0.000s      0.011w      2 calls
+make_cumulant_L3aab                 :      0.000u      0.000s      0.003w      1 calls
+make_cumulant_L3abb                 :      0.017u      0.000s      0.003w      1 calls
+
+**************************************************************************************

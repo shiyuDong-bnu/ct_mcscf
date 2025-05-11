@@ -1,0 +1,1952 @@
+
+    -----------------------------------------------------------------------
+          Psi4: An Open-Source Ab Initio Electronic Structure Package
+                               Psi4 1.9.1 release
+
+                         Git: Rev {HEAD} f53cdd7 
+
+
+    D. G. A. Smith, L. A. Burns, A. C. Simmonett, R. M. Parrish,
+    M. C. Schieber, R. Galvelis, P. Kraus, H. Kruse, R. Di Remigio,
+    A. Alenaizan, A. M. James, S. Lehtola, J. P. Misiewicz, M. Scheurer,
+    R. A. Shaw, J. B. Schriber, Y. Xie, Z. L. Glick, D. A. Sirianni,
+    J. S. O'Brien, J. M. Waldrop, A. Kumar, E. G. Hohenstein,
+    B. P. Pritchard, B. R. Brooks, H. F. Schaefer III, A. Yu. Sokolov,
+    K. Patkowski, A. E. DePrince III, U. Bozkaya, R. A. King,
+    F. A. Evangelista, J. M. Turney, T. D. Crawford, C. D. Sherrill,
+    J. Chem. Phys. 152(18) 184108 (2020). https://doi.org/10.1063/5.0006002
+
+                            Additional Code Authors
+    E. T. Seidl, C. L. Janssen, E. F. Valeev, M. L. Leininger,
+    J. F. Gonthier, R. M. Richard, H. R. McAlexander, M. Saitow, X. Wang,
+    P. Verma, M. H. Lechner, A. Jiang, S. Behnle, A. G. Heide,
+    M. F. Herbst, and D. L. Poole
+
+             Previous Authors, Complete List of Code Contributors,
+                       and Citations for Specific Modules
+    https://github.com/psi4/psi4/blob/master/codemeta.json
+    https://github.com/psi4/psi4/graphs/contributors
+    http://psicode.org/psi4manual/master/introduction.html#citing-psifour
+
+    -----------------------------------------------------------------------
+
+
+    Psi4 started on: Sunday, 11 May 2025 11:29AM
+
+    Process ID: 3998310
+    Host:       hydrogen
+    PSIDATADIR: /data/home/sydong/opt/psi4/share/psi4
+    Memory:     500.0 MiB
+    Threads:    1
+    Molecule: geometry: Molecule is not complete, please use 'update_geometry'
+                    once all variables are set.
+Molecule: Setting geometry variable r_ch to 2.041300
+Molecule: Setting geometry variable ahch to 134.220000
+
+Scratch directory: /data/home/sydong/scratch/psi4/
+
+  Forte
+  ----------------------------------------------------------------------------
+  A suite of quantum chemistry methods for strongly correlated electrons
+
+    git branch: ct_forte - git commit: 41562031
+
+  Developed by:
+    Francesco A. Evangelista, Chenyang Li, Kevin P. Hannon,
+    Jeffrey B. Schriber, Tianyuan Zhang, Chenxi Cai,
+    Nan He, Nicholas Stair, Shuhe Wang, Renke Huang
+  ----------------------------------------------------------------------------
+
+  Forte will use options passed as a dictionary. Option read from psi4 will be ignored
+
+  Forte will use custom integrals
+  Preparing forte objects from a custom source
+
+  Reading integral information from FCIDUMP file MRDRESSED.DUMP
+
+  ==> MO Space Information <==
+
+  -------------------------------
+                        A   Sum
+  -------------------------------
+    FROZEN_DOCC         1     1
+    RESTRICTED_DOCC     0     0
+    GAS1                6     6
+    GAS2                0     0
+    GAS3                0     0
+    GAS4                0     0
+    GAS5                0     0
+    GAS6                0     0
+    RESTRICTED_UOCC    82    82
+    FROZEN_UOCC         0     0
+    Total              89    89
+  -------------------------------
+
+  ==> Integral Transformation <==
+
+  Number of molecular orbitals:                         89
+  Number of correlated molecular orbitals:              88
+  Number of frozen occupied orbitals:                    1
+  Number of frozen unoccupied orbitals:                  0
+  Two-electron integral type:                       Custom
+
+
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.804 s.
+  Timing for preparing custom integrals:                      3.933 s.
+
+          -----------------------------------------------------------
+                  Multi-Configurational Self Consistent Field
+                Two-Step Approximate Second-Order AO Algorithm
+            written by Chenyang Li, Kevin P. Hannon, and Shuhe Wang
+          -----------------------------------------------------------
+
+
+  ==> MCSCF Calculation Information <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Integral type                                    FCIDUMP
+    CI solver type                                     DETCI
+    Final orbital type                             CANONICAL
+    Derivative type                                     NONE
+    Optimize orbitals                                   TRUE
+    Include internal rotations                         FALSE
+    Debug printing                                     FALSE
+    Energy convergence                             1.000e-10
+    Gradient convergence                           1.000e-06
+    Max value for rotation                         2.000e-01
+    Max number of macro iter.                            100
+    Max number of micro iter. for orbitals                 4
+    Max number of micro iter. for CI                      12
+    DIIS start                                            15
+    Min DIIS vectors                                       3
+    Max DIIS vectors                                       8
+    Frequency of DIIS extrapolation                        1
+    --------------------------------------------------------
+
+  ==> Independent Orbital Rotations <==
+
+    ORBITAL SPACES                         A
+    ----------------------------------------
+             ACTIVE / RESTRICTED_DOCC      0
+    RESTRICTED_UOCC /          ACTIVE    492
+    RESTRICTED_UOCC / RESTRICTED_DOCC      0
+    ----------------------------------------
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+  Number of determinants (CAS): 400
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Davidson-Liu solver algorithm using SigmaVectorSparseList sigma algorithm
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 3 determinant(s) missing
+
+  Guess determinants after screening: 47
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         47
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    22       1        
+    22       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.262632509949  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.087924102849       45.087924102849        0.012157330330      1
+       1      -45.088015689585        0.000091586736        0.001477965868      2
+       2      -45.088017550383        0.000001860797        0.000167574774      3
+       3      -45.088017570387        0.000000020004        0.000018748421      4
+       4      -45.088017570704        0.000000000317        0.000003024711      5
+       5      -45.088017570714        0.000000000010        0.000000593468      6
+       6      -45.088017570714        0.000000000000        0.000000064869      7
+       7      -45.088017570714        0.000000000000        0.000000007456      8
+  ---------------------------------------------------------------------------------
+  Davidson-Liu procedure took  0.020439 s
+
+  Done diagonalizing Hamiltonian, 2.532e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.772e-04 seconds
+        β          6.092e-04 seconds
+  Time spent building 1-rdm: 4.846e-04 seconds
+
+  ==> CI Vectors & Occupation Number for Triplet (Ms = 0)  <==
+
+  Important determinants with coefficients |C| >= 5.000e-02
+
+  ---- Root No. 0 ----
+
+          A    Coefficients
+    -----------------------
+     22ba00   -0.7070563559
+     22ab00    0.7070563559
+    -----------------------
+
+    Occupation Numbers:
+        2A    1.99990415    1A    1.99989704    3A    1.00000076    4A    1.00000000
+        5A    0.00010674    6A    0.00009131
+
+    Total Energy:  -38.943531756138647
+
+  ==> Energy Summary <==
+
+    Multi.(2ms)  Irrep.  No.               Energy      <S^2>
+    --------------------------------------------------------
+       3  (  0)     A     0      -38.943531756139   2.000000
+    --------------------------------------------------------
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.474e-04 seconds
+        β          6.220e-04 seconds
+  Time spent building 1-rdm: 4.830e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.822e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.520e-03 seconds
+        ββ         5.757e-04 seconds
+  Time spent building 2-rdm: 2.487e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+
+  ==> MCSCF Iterations <==
+
+                      Energy CI                    Energy Orbital
+           ------------------------------  ------------------------------
+    Iter.        Total Energy       Delta        Total Energy       Delta  Orb. Grad.  Micro
+    ----------------------------------------------------------------------------------------
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.791 s.
+  Integrals update took    14.266 s.
+  L-BFGS Warning: Skip this vector due to negative rho
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.851 s.
+  Integrals update took    13.309 s.
+  L-BFGS Warning: Skip this vector due to negative rho
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.160 s.
+  L-BFGS Warning: Skip this vector due to negative rho
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.791 s.
+  Integrals update took    13.416 s.
+       1     -38.943531756139 -3.8944e+01    -38.947602355967 -3.8948e+01  2.8414e-04    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267712494290  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.093004087191       45.093004087191        0.233970700164      1
+       1      -45.120711938308        0.027707851117        0.037852820734      2
+       2      -45.121298605600        0.000586667293        0.004633388761      3
+       3      -45.121308512907        0.000009907306        0.000935911211      4
+       4      -45.121308976018        0.000000463112        0.000152345372      5
+       5      -45.121308989220        0.000000013202        0.000024090958      6
+       6      -45.121308989575        0.000000000354        0.000003967447      7
+       7      -45.121308989583        0.000000000008        0.000000500514      8
+       8      -45.121308989583        0.000000000000        0.000000086220      9
+       9      -45.121308989583        0.000000000000        0.000000012509     10
+      10      -45.121308989583        0.000000000000        0.000000002279      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.114e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.627e-04 seconds
+        β          6.147e-04 seconds
+  Time spent building 1-rdm: 4.820e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.632e-04 seconds
+        β          6.274e-04 seconds
+  Time spent building 1-rdm: 4.875e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.853e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.535e-03 seconds
+        ββ         5.865e-04 seconds
+  Time spent building 2-rdm: 2.480e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.831 s.
+  Integrals update took    13.553 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.793 s.
+  Integrals update took    13.161 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.400 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.840 s.
+  Integrals update took    13.533 s.
+       2     -38.976823175007 -3.3291e-02    -38.980519686660 -3.2917e-02  5.2237e-04    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267418702870  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092710295771       45.092710295771        0.250962116065      1
+       1      -45.124956548858        0.032246253087        0.042969966463      2
+       2      -45.125687788749        0.000731239891        0.005411038506      3
+       3      -45.125701509410        0.000013720661        0.001238443360      4
+       4      -45.125702277096        0.000000767687        0.000220234419      5
+       5      -45.125702304189        0.000000027092        0.000040756949      6
+       6      -45.125702305177        0.000000000988        0.000007662179      7
+       7      -45.125702305207        0.000000000030        0.000000866291      8
+       8      -45.125702305208        0.000000000000        0.000000157641      9
+       9      -45.125702305208        0.000000000000        0.000000021718     10
+      10      -45.125702305208        0.000000000000        0.000000004224      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.109e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.569e-04 seconds
+        β          6.129e-04 seconds
+  Time spent building 1-rdm: 4.815e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.661e-04 seconds
+        β          6.155e-04 seconds
+  Time spent building 1-rdm: 4.831e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.849e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.548e-03 seconds
+        ββ         5.769e-04 seconds
+  Time spent building 2-rdm: 2.469e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.148 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.791 s.
+  Integrals update took    13.265 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.857 s.
+  Integrals update took    13.590 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.801 s.
+  Integrals update took    13.144 s.
+       3     -38.981216490632 -4.3933e-03    -38.981358162674 -8.3848e-04  2.2774e-04    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267489111049  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092780703949       45.092780703949        0.249218444688      1
+       1      -45.125131077545        0.032350373595        0.042825063988      2
+       2      -45.125867852253        0.000736774709        0.005629647228      3
+       3      -45.125882780542        0.000014928289        0.001289315424      4
+       4      -45.125883614089        0.000000833547        0.000229906721      5
+       5      -45.125883643547        0.000000029458        0.000044461007      6
+       6      -45.125883644726        0.000000001179        0.000008670205      7
+       7      -45.125883644766        0.000000000040        0.000000970948      8
+       8      -45.125883644767        0.000000000001        0.000000156873      9
+       9      -45.125883644767        0.000000000000        0.000000021083     10
+      10      -45.125883644767        0.000000000000        0.000000004171      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.111e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.632e-04 seconds
+        β          6.153e-04 seconds
+  Time spent building 1-rdm: 4.827e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.624e-04 seconds
+        β          6.281e-04 seconds
+  Time spent building 1-rdm: 4.882e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.893e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.541e-03 seconds
+        ββ         5.770e-04 seconds
+  Time spent building 2-rdm: 2.464e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.380 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.853 s.
+  Integrals update took    13.499 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.806 s.
+  Integrals update took    13.201 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.266 s.
+       4     -38.981397830191 -1.8134e-04    -38.981409286593 -5.1124e-05  3.0271e-05    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267554371888  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092845964789       45.092845964789        0.248437006320      1
+       1      -45.125146424934        0.032300460145        0.042717388876      2
+       2      -45.125882616070        0.000736191137        0.005703980584      3
+       3      -45.125897954005        0.000015337935        0.001299057065      4
+       4      -45.125898801846        0.000000847841        0.000231757616      5
+       5      -45.125898831688        0.000000029842        0.000045236124      6
+       6      -45.125898832912        0.000000001224        0.000008886160      7
+       7      -45.125898832954        0.000000000042        0.000000984285      8
+       8      -45.125898832955        0.000000000001        0.000000153495      9
+       9      -45.125898832955        0.000000000000        0.000000020665     10
+      10      -45.125898832955        0.000000000000        0.000000004075      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.124e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.640e-04 seconds
+        β          6.101e-04 seconds
+  Time spent building 1-rdm: 4.834e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.615e-04 seconds
+        β          6.215e-04 seconds
+  Time spent building 1-rdm: 4.837e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.923e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.543e-03 seconds
+        ββ         5.876e-04 seconds
+  Time spent building 2-rdm: 2.463e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.803 s.
+  Integrals update took    13.501 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.839 s.
+  Integrals update took    13.310 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.799 s.
+  Integrals update took    13.284 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.791 s.
+  Integrals update took    13.366 s.
+       5     -38.981413018379 -1.5188e-05    -38.981414218480 -4.9319e-06  6.9868e-06    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267583098894  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092874691795       45.092874691795        0.248163936391      1
+       1      -45.125148518488        0.032273826693        0.042674130661      2
+       2      -45.125884098722        0.000735580233        0.005728159209      3
+       3      -45.125899567365        0.000015468644        0.001301330317      4
+       4      -45.125900418680        0.000000851315        0.000232161461      5
+       5      -45.125900448577        0.000000029897        0.000045397749      6
+       6      -45.125900449811        0.000000001234        0.000008936251      7
+       7      -45.125900449854        0.000000000043        0.000000986732      8
+       8      -45.125900449854        0.000000000001        0.000000152114      9
+       9      -45.125900449854        0.000000000000        0.000000020472     10
+      10      -45.125900449854        0.000000000000        0.000000004022      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.117e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.711e-04 seconds
+        β          6.129e-04 seconds
+  Time spent building 1-rdm: 4.836e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.640e-04 seconds
+        β          6.195e-04 seconds
+  Time spent building 1-rdm: 4.940e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.847e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.542e-03 seconds
+        ββ         5.843e-04 seconds
+  Time spent building 2-rdm: 2.480e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.804 s.
+  Integrals update took    13.491 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.796 s.
+  Integrals update took    13.246 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.791 s.
+  Integrals update took    13.420 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.836 s.
+  Integrals update took    13.507 s.
+       6     -38.981414635279 -1.6169e-06    -38.981414775657 -5.5718e-07  2.0843e-06    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267594217108  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092885810009       45.092885810009        0.248071003812      1
+       1      -45.125148965610        0.032263155601        0.042658105719      2
+       2      -45.125884245890        0.000735280280        0.005736261708      3
+       3      -45.125899757183        0.000015511293        0.001301929970      4
+       4      -45.125900609417        0.000000852234        0.000232259259      5
+       5      -45.125900639317        0.000000029900        0.000045432747      6
+       6      -45.125900640554        0.000000001236        0.000008949092      7
+       7      -45.125900640596        0.000000000043        0.000000987271      8
+       8      -45.125900640597        0.000000000001        0.000000151601      9
+       9      -45.125900640597        0.000000000000        0.000000020392     10
+      10      -45.125900640597        0.000000000000        0.000000003998      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.115e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.642e-04 seconds
+        β          6.222e-04 seconds
+  Time spent building 1-rdm: 4.907e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.627e-04 seconds
+        β          6.160e-04 seconds
+  Time spent building 1-rdm: 4.860e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.912e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.534e-03 seconds
+        ββ         5.738e-04 seconds
+  Time spent building 2-rdm: 2.494e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.807 s.
+  Integrals update took    13.230 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.793 s.
+  Integrals update took    13.308 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.803 s.
+  Integrals update took    13.499 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.836 s.
+  Integrals update took    13.205 s.
+       7     -38.981414826021 -1.9074e-07    -38.981414843324 -6.7667e-08  7.0172e-07    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267598338372  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092889931273       45.092889931273        0.248039238289      1
+       1      -45.125149099344        0.032259168071        0.042652310577      2
+       2      -45.125884254987        0.000735155644        0.005739030662      3
+       3      -45.125899780530        0.000015525543        0.001302101309      4
+       4      -45.125900633024        0.000000852493        0.000232284628      5
+       5      -45.125900662921        0.000000029898        0.000045440396      6
+       6      -45.125900664158        0.000000001237        0.000008952621      7
+       7      -45.125900664201        0.000000000043        0.000000987398      8
+       8      -45.125900664202        0.000000000001        0.000000151413      9
+       9      -45.125900664202        0.000000000000        0.000000020361     10
+      10      -45.125900664202        0.000000000000        0.000000003989      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.122e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.645e-04 seconds
+        β          6.166e-04 seconds
+  Time spent building 1-rdm: 4.821e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.688e-04 seconds
+        β          6.199e-04 seconds
+  Time spent building 1-rdm: 4.851e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.894e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.545e-03 seconds
+        ββ         5.785e-04 seconds
+  Time spent building 2-rdm: 2.464e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.790 s.
+  Integrals update took    13.227 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.348 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.803 s.
+  Integrals update took    13.482 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.793 s.
+  Integrals update took    13.195 s.
+       8     -38.981414849626 -2.3605e-08    -38.981414851807 -8.4836e-09  2.4882e-07    4/N
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267599838124  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092891431024       45.092891431024        0.248028274957      1
+       1      -45.125149145752        0.032257714727        0.042650232831      2
+       2      -45.125884253041        0.000735107290        0.005739989385      3
+       3      -45.125899783436        0.000015530395        0.001302153196      4
+       4      -45.125900636006        0.000000852570        0.000232291577      5
+       5      -45.125900665902        0.000000029896        0.000045442045      6
+       6      -45.125900667139        0.000000001237        0.000008953646      7
+       7      -45.125900667182        0.000000000043        0.000000987429      8
+       8      -45.125900667183        0.000000000001        0.000000151345      9
+       9      -45.125900667183        0.000000000000        0.000000020349     10
+      10      -45.125900667183        0.000000000000        0.000000003985      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.141e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.526e-04 seconds
+        β          6.272e-04 seconds
+  Time spent building 1-rdm: 4.837e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.662e-04 seconds
+        β          6.142e-04 seconds
+  Time spent building 1-rdm: 4.878e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.888e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.546e-03 seconds
+        ββ         5.757e-04 seconds
+  Time spent building 2-rdm: 2.516e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.792 s.
+  Integrals update took    13.379 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.846 s.
+  Integrals update took    13.401 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.795 s.
+  Integrals update took    13.248 s.
+       9     -38.981414852607 -2.9814e-09    -38.981414852883 -1.0758e-09  8.9931e-08    3/Y
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267600381044  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092891973944       45.092891973944        0.248024198795      1
+       1      -45.125149160036        0.032257186092        0.042649500840      2
+       2      -45.125884251678        0.000735091642        0.005740321090      3
+       3      -45.125899783787        0.000015532109        0.001302171372      4
+       4      -45.125900636385        0.000000852598        0.000232294137      5
+       5      -45.125900666280        0.000000029895        0.000045442533      6
+       6      -45.125900667517        0.000000001237        0.000008953974      7
+       7      -45.125900667561        0.000000000043        0.000000987440      8
+       8      -45.125900667561        0.000000000001        0.000000151321      9
+       9      -45.125900667561        0.000000000000        0.000000020345     10
+      10      -45.125900667561        0.000000000000        0.000000003983      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.111e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.589e-04 seconds
+        β          6.290e-04 seconds
+  Time spent building 1-rdm: 4.832e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.701e-04 seconds
+        β          6.200e-04 seconds
+  Time spent building 1-rdm: 4.911e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.905e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.540e-03 seconds
+        ββ         5.828e-04 seconds
+  Time spent building 2-rdm: 2.493e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.793 s.
+  Integrals update took    13.420 s.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.797 s.
+  Integrals update took    13.361 s.
+      10     -38.981414852985 -3.7807e-10    -38.981414853021 -1.3768e-10  2.8447e-08    2/Y
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267600566496  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092892159396       45.092892159396        0.248022915304      1
+       1      -45.125149165814        0.032257006417        0.042649248184      2
+       2      -45.125884251155        0.000735085342        0.005740434321      3
+       3      -45.125899783827        0.000015532672        0.001302176590      4
+       4      -45.125900636433        0.000000852606        0.000232294720      5
+       5      -45.125900666328        0.000000029895        0.000045442583      6
+       6      -45.125900667565        0.000000001237        0.000008954066      7
+       7      -45.125900667608        0.000000000043        0.000000987442      8
+       8      -45.125900667609        0.000000000001        0.000000151313      9
+       9      -45.125900667609        0.000000000000        0.000000020343     10
+      10      -45.125900667609        0.000000000000        0.000000003983      3
+  ---------------------------------------------------------------------------------
+
+  Done diagonalizing Hamiltonian, 3.111e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.655e-04 seconds
+        β          6.117e-04 seconds
+  Time spent building 1-rdm: 4.837e-04 seconds
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.607e-04 seconds
+        β          6.186e-04 seconds
+  Time spent building 1-rdm: 4.993e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.924e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.537e-03 seconds
+        ββ         5.761e-04 seconds
+  Time spent building 2-rdm: 2.471e-03 seconds
+ sydong:  unsymmetrize 2RDM
+
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.794 s.
+  Integrals update took    13.226 s.
+      11     -38.981414853033 -4.7720e-11    -38.981414853037 -1.6328e-11  4.5643e-08    1/Y
+    ----------------------------------------------------------------------------------------
+
+  A miracle has come to pass: MCSCF iterations have converged!
+
+  Performing final CI Calculation using converged orbitals
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+  Number of determinants (CAS): 400
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Davidson-Liu solver algorithm using SigmaVectorSparseList sigma algorithm
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267600604991  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092892197891       45.092892197891        0.248022679575      1
+       1      -45.125149167293        0.032256969402        0.042649194716      2
+       2      -45.125884251049        0.000735083755        0.005740457754      3
+       3      -45.125899783831        0.000015532783        0.001302177406      4
+       4      -45.125900636438        0.000000852607        0.000232294769      5
+       5      -45.125900666333        0.000000029895        0.000045442573      6
+       6      -45.125900667570        0.000000001237        0.000008954082      7
+       7      -45.125900667613        0.000000000043        0.000000987442      8
+       8      -45.125900667614        0.000000000001        0.000000151311      9
+       9      -45.125900667614        0.000000000000        0.000000020343     10
+      10      -45.125900667614        0.000000000000        0.000000003983      3
+  ---------------------------------------------------------------------------------
+  Davidson-Liu procedure took  0.026241 s
+
+  Done diagonalizing Hamiltonian, 3.118e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.615e-04 seconds
+        β          6.180e-04 seconds
+  Time spent building 1-rdm: 4.835e-04 seconds
+
+  ==> CI Vectors & Occupation Number for Triplet (Ms = 0)  <==
+
+  Important determinants with coefficients |C| >= 5.000e-02
+
+  ---- Root No. 0 ----
+
+          A    Coefficients
+    -----------------------
+     22ba00    0.6980495252
+     22ab00   -0.6980495252
+    -----------------------
+
+    Occupation Numbers:
+        1A    1.98052860    2A    1.97752970    4A    1.00000000    3A    0.99948173
+        5A    0.02542623    6A    0.01703373
+
+    Total Energy:  -38.981414853037698
+
+  ==> Energy Summary <==
+
+    Multi.(2ms)  Irrep.  No.               Energy      <S^2>
+    --------------------------------------------------------
+       3  (  0)     A     0      -38.981414853038   2.000000
+    --------------------------------------------------------
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.594e-04 seconds
+        β          6.159e-04 seconds
+  Time spent building 1-rdm: 4.869e-04 seconds
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.901e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.552e-03 seconds
+        ββ         5.805e-04 seconds
+  Time spent building 2-rdm: 2.461e-03 seconds
+
+  ==> General Determinant-Based CI Solver <==
+
+  Number of active orbitals: 6
+  Number of active alpha electrons: 3
+  Number of active beta electrons: 3
+  Number of determinants (CAS): 400
+
+  ==> Diagonalizing Hamiltonian Triplet (Ms = 0)  <==
+
+
+  Davidson-Liu solver algorithm using SigmaVectorSparseList sigma algorithm
+
+  Spin-adaptation of the initial guess based on minimum spin-complete subset
+  Initial guess determinants do not form a spin-complete set. 1 determinant(s) missing
+
+  Guess determinants after screening: 49
+
+  ==> Initial Guess <==
+
+  Initial guess determinants:         49
+
+  Classification of the initial guess solutions
+
+  Number   2S+1   Selected
+  ------------------------
+    23       1        
+    23       3       *
+     3       5        
+  ------------------------
+
+    Spin    Root           Energy        <S^2>    Status
+  -------------------------------------------------------
+   triplet    0      -73.267600604991  +2.000000  added
+  -------------------------------------------------------
+
+  ==> Davidson-Liu Solver <==
+
+    --------------------------------------------------------
+    Print level                                      Default
+    Energy convergence threshold                   1.000e-10
+    Residual convergence threshold                 1.000e-08
+    Schmidt orthogonality threshold                1.000e-12
+    Schmidt discard threshold                      1.000e-07
+    Size of the space                                    400
+    Number of roots                                        1
+    Maximum number of iterations                         100
+    Collapse subspace size                                 2
+    Maximum subspace size                                 10
+    --------------------------------------------------------
+
+  Davidson-Liu solver: adding 1 guess vectors
+  Iteration     Average Energy            max(∆E)            max(Residual)  Vectors
+  ---------------------------------------------------------------------------------
+       0      -45.092892197891       45.092892197891        0.248022679575      1
+       1      -45.125149167293        0.032256969402        0.042649194716      2
+       2      -45.125884251049        0.000735083755        0.005740457754      3
+       3      -45.125899783831        0.000015532783        0.001302177406      4
+       4      -45.125900636438        0.000000852607        0.000232294769      5
+       5      -45.125900666333        0.000000029895        0.000045442573      6
+       6      -45.125900667570        0.000000001237        0.000008954082      7
+       7      -45.125900667613        0.000000000043        0.000000987442      8
+       8      -45.125900667614        0.000000000001        0.000000151311      9
+       9      -45.125900667614        0.000000000000        0.000000020343     10
+      10      -45.125900667614        0.000000000000        0.000000003983      3
+  ---------------------------------------------------------------------------------
+  Davidson-Liu procedure took  0.025887 s
+
+  Done diagonalizing Hamiltonian, 3.060e-02 seconds.
+
+  ==> Computing 1 Coupling Lists <==
+
+  (N-1) a lists size counts
+      Size      Count
+         4        300
+        α          6.596e-04 seconds
+        β          6.126e-04 seconds
+  Time spent building 1-rdm: 4.821e-04 seconds
+
+  ==> CI Vectors & Occupation Number for Triplet (Ms = 0)  <==
+
+  Important determinants with coefficients |C| >= 5.000e-02
+
+  ---- Root No. 0 ----
+
+          A    Coefficients
+    -----------------------
+     22ba00    0.6980495252
+     22ab00   -0.6980495252
+    -----------------------
+
+    Occupation Numbers:
+        1A    1.98052860    2A    1.97752970    4A    1.00000000    3A    0.99948173
+        5A    0.02542623    6A    0.01703373
+
+    Total Energy:  -38.981414853037698
+
+  ==> Energy Summary <==
+
+    Multi.(2ms)  Irrep.  No.               Energy      <S^2>
+    --------------------------------------------------------
+       3  (  0)     A     0      -38.981414853038   2.000000
+    --------------------------------------------------------
+
+  ==> Computing 2 Coupling Lists <==
+
+  (N-2) aa lists size counts
+      Size      Count
+        10        120
+        αα         5.915e-04 seconds
+  (N-2) ab lists size counts
+      Size      Count
+        16        225
+        αβ         1.521e-03 seconds
+        ββ         5.699e-04 seconds
+  Time spent building 2-rdm: 2.272e-03 seconds
+
+  ==> Computing 3 Coupling Lists <==
+
+  (N-3) aaa lists size counts
+      Size      Count
+        20         20
+        ααα        3.465e-04 seconds
+  (N-3) aab lists size counts
+      Size      Count
+        40         90
+        ααβ        1.861e-03 seconds
+        αββ        1.584e-03 seconds
+        βββ        3.225e-04 seconds
+  Time spent building 3-rdm: 1.445e-02 seconds
+
+  ==> Semicanonicalize Orbitals <==
+
+    MIX INACTIVE ORBITALS         FALSE
+    MIX GAS ACTIVE ORBITALS       FALSE
+    FROZEN_DOCC                   CANONICAL
+    FROZEN_UOCC                   CANONICAL
+    GAS1                          CANONICAL
+    RESTRICTED_DOCC               CANONICAL
+    RESTRICTED_UOCC               CANONICAL
+
+    Off-Diag. Elements       Max           2-Norm
+    ------------------------------------------------
+    FROZEN_DOCC          0.0000000000   0.0000000000
+    GAS1                 0.0470538661   0.0671093331
+    RESTRICTED_UOCC      0.1486006100   1.1923199075
+    ------------------------------------------------
+
+    Canonicalization test failed
+
+  Warning: Cannot fix orbital phases (Ca) for CustomIntegrals.
+  Integrals are about to be updated.
+  Frozen-core energy         -34.319194221675282 a.u.
+  Timing for frozen one-body operator:                        0.003 s.
+  Resorting integrals after freezing core.
+  Timing for freezing core and virtual orbitals:              3.785 s.
+  Integrals update took    13.314 s.
+  Orbital rotations on spin-dependent RDMs ...
+    Transformed 1 RDMs.
+    Transformed 2 RDMs.
+    Transformed 3 RDMs.
+  Timing for orbital canonicalization:                       14.273 s.
+
+  ==> Multireference Driven Similarity Renormalization Group <==
+
+    Computing Fock matrix and cleaning JK ........... Done
+    Reading DSRG options ............................ Done
+    Setting ambit MO space .......................... Done
+    Preparing tensors for density cumulants ......... Done
+    Filling Fock matrix from ForteIntegrals ......... Done
+
+              ----------------------------------------------------
+                    MR-DSRG Second-Order Perturbation Theory
+                Chenyang Li, Kevin Hannon, Francesco Evangelista
+              ----------------------------------------------------
+
+    References:
+      u-DSRG-MRPT2:    J. Chem. Theory Comput. 2015, 11, 2097.
+      (pr-)DSRG-MRPT2: J. Chem. Phys. 2017, 146, 124132.
+
+  ==> Calculation Information <==
+
+    --------------------------------------------------------
+    int_type                                         FCIDUMP
+    source operator                                 STANDARD
+    reference relaxation                                NONE
+    state_type                                STATE-SPECIFIC
+    form Hbar3                                         FALSE
+    flow parameter                                 5.000e-01
+    taylor expansion threshold                     1.000e-03
+    intruder_tamp                                  1.000e-01
+    ntamp                                                 15
+    --------------------------------------------------------
+  =>** Before self.dsrg_solver.compute_energy() **<=
+
+
+  ==> Checking Semicanonical Orbitals <==
+
+    Block             Fa Max         Fa Mean           Fb Max         Fb Mean
+    -------------------------------------------------------------------------
+    CORE        0.0000000000    0.0000000000     0.0000000000    0.0000000000
+    VIRTUAL     0.0000000000    0.0000000000     0.0000000000    0.0000000000
+    GAS1        0.0000000000    0.0000000000     0.0000000000    0.0000000000
+    -------------------------------------------------------------------------
+    Orbitals are semi-canonicalized.
+
+  ==> Computing DSRG-MRPT2 ... <==
+
+    Computing T2 amplitudes                  ...  Done. Timing        0.046395 s
+    Computing T1 amplitudes                  ...  Done. Timing        0.001559 s
+    Renormalizing two-electron integrals     ...  Done. Timing        0.040960 s
+    Renormalizing Fock matrix elements       ...  Done. Timing        0.001511 s
+    Computing <[F, T1]>                      ...  Done. Timing        0.000595 s
+    Computing <[F, T2]>                      ...  Done. Timing        0.001815 s
+    Computing <[V, T1]>                      ...  Done. Timing        0.001527 s
+    Computing <[V, T2]> (C_2)^4              ...  Done. Timing        0.012534 s
+    Computing <[V, T2]> C_4 (C_2)^2 HH       ...  Done. Timing        0.002540 s
+    Computing <[V, T2]> C_4 (C_2)^2 PP       ...  Done. Timing        0.004952 s
+    Computing <[V, T2]> C_4 (C_2)^2 PH       ...  Done. Timing        0.014877 s
+    Computing <[V, T2]> C_6 C_2              ...  Done. Timing        0.011667 s
+
+  ==> Excitation Amplitudes Summary <==
+
+    Active Indices:    0    1    2    3    4    5 
+    Largest T1 amplitudes for spin case A:
+       i       a                  i       a                  i       a               
+    --------------------------------------------------------------------------------
+    [  5      36    ]-0.095097 [  5      59    ]-0.084135 [  4      42    ]-0.075054 
+    [  4      37    ] 0.061675 [  4      40    ]-0.058149 [  4      48    ]-0.057460 
+    [  5      53    ]-0.055042 [  5      39    ]-0.051065 [  5      27    ] 0.049119 
+    [  4      60    ] 0.047998 [  5      10    ] 0.034792 [  4      28    ]-0.032068 
+    [  4      31    ] 0.031436 [  4      50    ] 0.031248 [  4      52    ] 0.029231 
+    --------------------------------------------------------------------------------
+    Norm of T1A vector: (nonzero elements: 386)                   0.237536135812697.
+    --------------------------------------------------------------------------------
+    Largest T1 amplitudes for spin case B:
+       _       _                  _       _                  _       _               
+       i       a                  i       a                  i       a               
+    --------------------------------------------------------------------------------
+    [  5      36    ]-0.095097 [  5      59    ]-0.084135 [  4      42    ]-0.075054 
+    [  4      37    ] 0.061675 [  4      40    ]-0.058149 [  4      48    ]-0.057460 
+    [  5      53    ]-0.055042 [  5      39    ]-0.051065 [  5      27    ] 0.049119 
+    [  4      60    ] 0.047998 [  5      10    ] 0.034792 [  4      28    ]-0.032068 
+    [  4      31    ] 0.031436 [  4      50    ] 0.031248 [  4      52    ] 0.029231 
+    --------------------------------------------------------------------------------
+    Norm of T1B vector: (nonzero elements: 386)                   0.237536135812697.
+    --------------------------------------------------------------------------------
+    Largest T2 amplitudes for spin case AA:
+     i   j   a   b              i   j   a   b              i   j   a   b             
+    --------------------------------------------------------------------------------
+    [  3   5   5  34]  0.034779 [  2   5   5  35]  0.031029 [  2   3   2  34] -0.030863 
+    [  2   3   3  35]  0.028356 [  0   3   0  34] -0.027761 [  0   2   0  35] -0.024698 
+    [  1   3   1  34] -0.024395 [  2   5   2  56]  0.023944 [  4   5   5  58] -0.023603 
+    [  3   5   5  15] -0.023388 [  1   4   4  24] -0.022736 [  4   5   5  40]  0.022315 
+    [  3   5   3  56]  0.021882 [  0   2   2  26] -0.021860 [  2   5   2  39] -0.021561 
+    --------------------------------------------------------------------------------
+    Norm of T2AA vector: (nonzero elements: 160426)               0.488360410127514.
+    --------------------------------------------------------------------------------
+    Largest T2 amplitudes for spin case AB:
+         _       _                  _       _                  _       _             
+     i   j   a   b              i   j   a   b              i   j   a   b             
+    --------------------------------------------------------------------------------
+    [  3   3   3  34] -0.033954 [  2   2   2  35] -0.033435 [  2   3   2  34] -0.032857 
+    [  0   3   0  34] -0.030043 [  2   5   2  56]  0.028420 [  3   3   3  15]  0.026262 
+    [  0   2   0  35] -0.025250 [  5   5   5  36] -0.024856 [  4   4   0  58] -0.024727 
+    [  0   3   0  15]  0.024398 [  1   3   1  34] -0.024190 [  0   5   1  50] -0.024140 
+    [  0   3   1  25] -0.023924 [  1   5   0  50] -0.023905 [  3   4   3  40] -0.023512 
+    --------------------------------------------------------------------------------
+    Norm of T2AB vector: (nonzero elements: 201606)               0.551875778761382.
+    --------------------------------------------------------------------------------
+    Largest T2 amplitudes for spin case BB:
+     _   _   _   _              _   _   _   _              _   _   _   _             
+     i   j   a   b              i   j   a   b              i   j   a   b             
+    --------------------------------------------------------------------------------
+    [  3   5   5  34]  0.034779 [  2   5   5  35]  0.031029 [  2   3   2  34] -0.030863 
+    [  2   3   3  35]  0.028356 [  0   3   0  34] -0.027761 [  0   2   0  35] -0.024698 
+    [  1   3   1  34] -0.024395 [  2   5   2  56]  0.023944 [  4   5   5  58] -0.023603 
+    [  3   5   5  15] -0.023388 [  1   4   4  24] -0.022736 [  4   5   5  40]  0.022315 
+    [  3   5   3  56]  0.021882 [  0   2   2  26] -0.021860 [  2   5   2  39] -0.021561 
+    --------------------------------------------------------------------------------
+    Norm of T2BB vector: (nonzero elements: 160426)               0.488360410127514.
+    --------------------------------------------------------------------------------
+
+  ==> Possible Intruders <==
+
+    T1 amplitudes larger than 0.1000 for spin case A: NULL
+    T1 amplitudes larger than 0.1000 for spin case B: NULL
+    T2 amplitudes larger than 0.1000 for spin case AA: NULL
+    T2 amplitudes larger than 0.1000 for spin case AB: NULL
+    T2 amplitudes larger than 0.1000 for spin case BB: NULL
+
+  ==> DSRG-MRPT2 Energy Summary <==
+
+    E0 (reference)                 =    -38.981414853037705
+    <[F, T1]>                      =     -0.011844533760433
+    <[F, T2]>                      =      0.011847887408195
+    <[V, T1]>                      =      0.011078978281928
+    <[V, T2]> (C_2)^4              =     -0.142747332773628
+    <[V, T2]> C_4 (C_2)^2 HH       =      0.000000000000000
+    <[V, T2]> C_4 (C_2)^2 PP       =      0.031355540926901
+    <[V, T2]> C_4 (C_2)^2 PH       =      0.007685932456461
+    <[V, T2]> C_6 C_2              =     -0.000589053984631
+    <[V, T2]>                      =     -0.104294913374897
+    DSRG-MRPT2 correlation energy  =     -0.093212581445207
+    DSRG-MRPT2 total energy        =    -39.074627434482913
+    max(T1)                        =      0.095097245469309
+    max(T2)                        =      0.039777957334272
+    ||T1||                         =      0.335926824820014
+    ||T2||                         =      1.302021229125606
+
+  Energy took      0.664 s
+
+  =>** After self.dsrg_solver.compute_energy() **<=
+
+  Semicanonical orbitals must be used!
+
+
+  ==> Total Timings (s) for Computing Commutators <==
+
+           [H1, T1]    [H1, T2]    [H2, T1]    [H2, T2]  
+    -----------------------------------------------------
+    -> C0       0.001       0.002       0.002       0.047
+    -> C1       0.000       0.000       0.000       0.000
+    -> C2                   0.000       0.000       0.000
+    -----------------------------------------------------
+
+
+  Time to prepare integrals:       30.732 seconds
+  Time to run job          :      525.636 seconds
+  Total                    :      556.367 seconds
