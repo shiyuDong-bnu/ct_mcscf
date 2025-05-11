@@ -27,11 +27,11 @@ ISYM=1,
                     if abs(val)>1e-10:
                         print("{:28.20E}{:4d}{:4d}{:4d}{:4d}".format(val,i+1,j+1,0,0),file=dump_file)
         print("{:28.20E}{:4d}{:4d}{:4d}{:4d}".format(V_nuc,0,0,0,0),file=dump_file)
-def write_dump_np(fname,n_ele,n_obs,V_nuc,mo_h_core,mo_eri):
+def write_dump_np(fname,n_ele,ms2,n_obs,V_nuc,mo_h_core,mo_eri):
     myfcidump={}
     myfcidump['norb']=n_obs
     myfcidump['nelec']=n_ele
-    myfcidump['ms2']=0
+    myfcidump['ms2']=ms2
     myfcidump['uhf']=False
     myfcidump['orbsym']=[1]*n_obs
     myfcidump['isym']=1
