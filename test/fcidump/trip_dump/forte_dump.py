@@ -1,13 +1,13 @@
+import sys
 import psi4
 import numpy as np
-import sys
 sys.path.append("/data/home/sydong/work/ct_mcscf/")
 sys.path.insert(0, "/data/home/sydong/work/reproducing/forte")
 
 psi4.set_output_file("fcidump.out")
 psi_mol=psi4.geometry(
 """
-0 1
+0 3
 C
 H 1 r_ch
 H 1 r_ch 2 ahch
@@ -15,8 +15,8 @@ symmetry c1
 unit bohr
 """
 )
-psi_mol.r_ch=2.1023
-psi_mol.ahch=101.71
+psi_mol.r_ch=2.0413
+psi_mol.ahch=134.22
 psi4.set_options(
     {
         "basis":"cc-pVDZ",

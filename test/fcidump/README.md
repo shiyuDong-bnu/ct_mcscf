@@ -16,3 +16,5 @@ python forte_dump.py
 ```
 This time the forte read integral from TEST.DUMP.npy
 Return energy(): -38.94082208693524
+
+Under the trip_dump we test triplet state and the usage is similar
