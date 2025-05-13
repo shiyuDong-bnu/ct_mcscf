@@ -12,7 +12,7 @@ import psi4
 import forte
 import numpy as np
 from psi4.core import MintsHelper
-from write_dump import write_dump_np
+from utils.write_dump import write_dump_np
 from psi4_mp2 import compute_mp2
 # set geometry and basis
 psi_mol = psi4.geometry(
