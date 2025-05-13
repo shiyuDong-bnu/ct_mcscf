@@ -27,6 +27,6 @@ eq(#4)
 D^{\mu\lambda}_{\nu\kappa}=\langle \Phi_0 \vert \hat E_{\nu \kappa}^{\mu\lambda} \vert \Phi_0 \rangle
 ```
 In implementation we use numpy array  ,the index is
-```
+```math
 D2[\mu,\lambda,\nu,\kappa]=D^{\mu,\lambda}_{\nu,\kappa}
 ```
