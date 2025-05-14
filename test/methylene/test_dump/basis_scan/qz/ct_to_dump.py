@@ -83,10 +83,11 @@ def convert_ct_to_quccsd(hamiltonian, hf_ct):
 
 n_ele=mcscf_wfn.nalpha()*2
 n_obs=mcscf_wfn.nmo()
+ms2=mcscf_wfn.nalpha()-mcscf_wfn.nbeta()
 V_nuc=psi_mol.nuclear_repulsion_energy()
 h1e_ct, h2e_ct, cp_ct=convert_ct_to_quccsd(h_ct, rhf_ct)
 h1e_ct_mo=np.einsum("ij,iI,jJ->IJ",h1e_ct,cp_ct,cp_ct,optimize=True)
 h2e_ct_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",h2e_ct,cp_ct,cp_ct,cp_ct,cp_ct,optimize=True)
-write_dump_np("MRDRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,
+write_dump_np("MRDRESSED.DUMP",n_ele=n_ele,n_obs=n_obs,V_nuc=V_nuc,ms2=ms2,
         mo_h_core=h1e_ct_mo,mo_eri=h2e_ct_mo)
 
