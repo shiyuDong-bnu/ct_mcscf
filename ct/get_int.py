@@ -82,34 +82,34 @@ def get_hcore_int(my_orbital_space):
 # Density
 @timer_decorator
 def get_density(my_orbital_space,mr_info=None):
-    no=my_orbital_space.no
     nbf=my_orbital_space.nbf
-    o=my_orbital_space.o   
-    delta = np.identity(no)
+    delta = np.identity(nbf)
     D1 = np.zeros((nbf, nbf))
-    D1[o,o] = 2 * delta[o,o]
     D2 = np.zeros((nbf,nbf,nbf,nbf))
-    D2[o,o,o,o] = 4 * np.einsum("ij,kl->ikjl", delta[o,o], delta[o,o])
-    D2[o,o,o,o] -= 2 * np.einsum("il,kj->ikjl", delta[o,o], delta[o,o])
+    if mr_info is None:
+        ## single reference closed shell
+        o=my_orbital_space.o   
+        D1[o,o] = 2 * delta[o,o]
+
+        D2[o,o,o,o] = 4 * np.einsum("ij,kl->ikjl", delta[o,o], delta[o,o])
+        D2[o,o,o,o] -= 2 * np.einsum("il,kj->ikjl", delta[o,o], delta[o,o])
     if mr_info is  not None:
+        ## multireference
         a_ind=mr_info['active_index']
         o_ind=mr_info['occupied_index']
-        ## copy from single reference
-        D1 = np.zeros((nbf, nbf))
+        ## 1rdm
         D1[o_ind,o_ind] = 2 * delta[o_ind,o_ind]
-        D2 = np.zeros((nbf,nbf,nbf,nbf))
+        D1[a_ind,a_ind]=mr_info['RDM1']
         ## end copy from single reference
 
-        D1[a_ind,a_ind]=mr_info['RDM1']
         ## 2rdm ,first index is occ
-        delta=np.identity(nbf)
         D2[o_ind,:,:,:]=2*np.einsum("iq,rs->irqs",delta[o_ind,:],D1)
         D2[o_ind,:,:,:]-=np.einsum("is,rq->irqs",delta[o_ind,:],D1)
         ## first index is active
-        ## third index is occ
+        ## second index is occ
         D2[a_ind,o_ind,:,:]=2*np.einsum("is,uq->uiqs",delta[o_ind,:],D1[a_ind,:])
         D2[a_ind,o_ind,:,:]-=np.einsum("iq,us->uiqs",delta[o_ind,:],D1[a_ind,:])
-        ## third index is active
+        ## second index is active
         D2[a_ind,a_ind,a_ind,a_ind]=mr_info['RDM2']
     return D1,D2
 def  get_fock(my_orbital_space,h,D1,g):
