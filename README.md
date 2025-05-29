@@ -23,6 +23,8 @@ eq(#2)
 \hat a _{\kappa \tau}\hat a_{\nu\sigma} 
 ```
 eq(#4)
+
+
 ```math
 D^{\mu\lambda}_{\nu\kappa}=\langle \Phi_0 \vert \hat E_{\nu \kappa}^{\mu\lambda} \vert \Phi_0 \rangle
 ```
@@ -30,3 +32,13 @@ In implementation we use numpy array  ,the index is
 ```math
 D2[\mu,\lambda,\nu,\kappa]=D^{\mu,\lambda}_{\nu,\kappa}
 ```
+In forte
+ The spin-dependent n-body RDMs are defined by
+ *
+ *   D(p1,σ1; ...; pn,σn; q1,σ1; ...; qn,σn) = <A| a+(p1,σ1) ... a+(pn,σn) a(qn,σn) ... a(q1,σ1) |B>
+ *
+ * where spins σ1 >= σ2 >= ... >= σn given that α > β.
+ * The spin-free n-body RDMs are defined using spin-dependent RDMs as
+ *
+ *   F(p1, ..., pn, q1, ..., qn) = sum_{σ1,...,σn} D(p1,σ1; ...; pn,σn; q1,σ1; ...; qn,σn)
+ *
