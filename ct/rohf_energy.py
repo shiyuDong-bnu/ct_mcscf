@@ -27,6 +27,7 @@ def rohf_energy(molecule, wfn, ct=None):
 
     print('\nNumber of occupied orbitals: %d' % ndocc)
     print('Number of basis functions: %d' % nbf)
+    print(' ms: ' ,nocca-noccb)
 
     if ct is None:
         H = wfn.H().to_array()
@@ -161,5 +162,6 @@ def rohf_energy(molecule, wfn, ct=None):
 
     print('Final SCF energy: %.8f hartree' % SCF_E)
 
+    print("Orbital Energy ",eps )
     out = {'wfn': wfn, 'C': C, 'eps': eps, 'H1': H, 'H2': I, 'nbf': nbf, 'ndocc': ndocc, 'escf': SCF_E}
     return out
