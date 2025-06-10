@@ -96,6 +96,7 @@ class SlicedERI:
             self.ao_int["g_pqrx"],
             optimize="greedy",
         )
+        del self.ao_int
     def format_g_for_fock(self):
         n_obs=self.coeff_gbs.shape[1]
         n_cbs=self.coeff_cbs.shape[-1]
@@ -120,5 +121,12 @@ class SlicedERI:
         g2[obs,obs,obs,cbs]=self.mo_int["g_pqrx"]
         g2[cbs,obs,obs,cbs]=np.swapaxes(self.mo_int["g_pqxy"],0,2)
         return (g1,g2)
+    def format_cbar1(self):
+        ## g_sscs 
+        n_obs=self.coeff_gbs.shape[1]
+        n_cbs=self.coeff_cbs.shape[-1]
+        s=slice(0,n_obs) ## correspondint to index pqrst
+        c=slice(n_obs,n_obs+n_cbs) # corresponding to index x,y
+        return np.moveaxis(self.mo_int["g_pqrx"],[0,2],[1,3])
 
         

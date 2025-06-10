@@ -10,7 +10,6 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
-    g=get_eri_ri_ri_int(my_orbital_space)
     sliced_g=SlicedERI(my_orbital_space)
     D1,D2=get_density(my_orbital_space)
     h=get_hcore_int(my_orbital_space)
@@ -39,7 +38,7 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
 
     B_rational_temp=rational_generate(B_final_temp)
     B_rational=conjugate(rational_generate(conjugate(B_rational_temp)))
-    hbar,gbar=get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h)
+    hbar,gbar=get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,sliced_g,G,f,h)
     Cp=my_orbital_space.Cp
     mints=psi4.core.MintsHelper(my_orbital_space.bs_obs())
     Cinv = Cp.T @ mints.ao_overlap()
