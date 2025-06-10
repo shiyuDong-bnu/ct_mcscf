@@ -113,9 +113,9 @@ def get_density(my_orbital_space,mr_info=None):
         D2[a_ind,a_ind,a_ind,a_ind]=mr_info['RDM2']
     return D1,D2
 def  get_fock(my_orbital_space,h,D1,g):
-    o=my_orbital_space.o
+    s=my_orbital_space.s
     # build fock
     f = np.copy(h)
-    f += np.einsum("lk,mlnk->mn", D1[o,o], g[:,o,:,o])
-    f -= 0.5 * np.einsum("lk,mlkn->mn", D1[o,o], g[:,o,o,:])
+    f += np.einsum("lk,mlnk->mn", D1, g[0][:,s,:,s])
+    f -= 0.5 * np.einsum("lk,mlkn->mn", D1, g[1][:,s,s,:])
     return f
