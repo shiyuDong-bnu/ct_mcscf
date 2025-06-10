@@ -15,7 +15,7 @@ def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
     h=get_hcore_int(my_orbital_space)
     f_only_j,k,f,f_virtual_cabs_int=get_fock(my_orbital_space,h,D1,sliced_g.format_g_for_fock())
     G=get_f12(gamma,my_orbital_space)
-    V_noper,X_noper=gen_V(gamma,my_orbital_space)
+    V_noper,X_noper=gen_V(gamma,sliced_g,my_orbital_space)
     fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs=f_only_j,k,f,f_virtual_cabs_int
     B_final_temp=gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo)
     if freeze_core:

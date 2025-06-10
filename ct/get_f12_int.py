@@ -38,7 +38,7 @@ def get_f12(gamma,my_orbital_space):
     G = (0.375 * QF + 0.125 * QF.transpose((0,1,3,2))) / gamma
     return G
 @timer_decorator
-def gen_V(gamma,my_orbital_space):
+def gen_V(gamma,sliced_g,my_orbital_space):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
     Cp=my_orbital_space.Cp
@@ -55,8 +55,8 @@ def gen_V(gamma,my_orbital_space):
     r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
     r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     rr_gggg=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    v_ggga=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_cabs)
-    v_gggg=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_obs)
+    v_ggga=sliced_g.ao_int["g_pqrx"] 
+    v_gggg=sliced_g.ao_int["g_pqrs"]
     end=time.perf_counter()
     print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-being)
     
