@@ -55,16 +55,12 @@ def gen_V(gamma,sliced_g,my_orbital_space):
     r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
     r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     rr_gggg=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    v_ggga=sliced_g.ao_int["g_pqrx"] 
-    v_gggg=sliced_g.ao_int["g_pqrs"]
     end=time.perf_counter()
     print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-being)
     
     rv_gggg_phy=np.einsum("iajb->ijab",rv_gggg)
     r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
-    v_ggga_phy=np.einsum("iajb->ijab",v_ggga)
     r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
-    v_gggg_phy=np.einsum("iajb->ijab",v_gggg)
     rr_gggg_phy=np.einsum("iajb->ijab",rr_gggg)    
     ## generate V term
     # term1 // get mo integral (rv)_{xy}^{ij}
@@ -72,11 +68,11 @@ def gen_V(gamma,sliced_g,my_orbital_space):
     term1=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rv_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
     # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
     r_xypq=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
-    v_pqij=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",v_gggg_phy,Cp,Cp,Cp,Cp,optimize=True)
+    v_pqij=sliced_g.mo_int["g_pqrs"]
     term2=np.einsum("xypq,pqij->xyij",r_xypq,v_pqij,optimize=True)
     # term3,term4, -r_{xy}^{a^\prime o} v_{a^prime o ij} -r_{xy}^{ob^\prime}v_{ob^\prime}^{ij}
     r_yxoa=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,C_occ,Cx,optimize=True)
-    v_jioa=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",v_ggga_phy,Cp,Cp,C_occ,Cx,optimize=True)
+    v_jioa=sliced_g.mo_int["g_pqrx"][:,:,o,:]
     term3=np.einsum("yxoa,jioa->yxji",r_yxoa,v_jioa,optimize=True)
     term4=np.einsum("ijkl->jilk",term3)
     # print(np.allclose(term1,fg))
