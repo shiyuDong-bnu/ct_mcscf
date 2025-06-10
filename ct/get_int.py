@@ -120,5 +120,4 @@ def  get_fock(my_orbital_space,h,D1,g):
     f_only_j =np.copy(h)+ np.einsum("lk,mlnk->mn", D1, g[0][:,s,:,s])
     k=0.5 * np.einsum("lk,mlkn->mn", D1, g[1][:,s,s,:])
     f_total=f_only_j-k
-    f_virtual_cabs=f_total[n_occ:n_gbs,n_gbs:]
-    return f_only_j,k,f_total,f_virtual_cabs
+    return f_only_j,k,f_total
