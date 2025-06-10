@@ -31,7 +31,7 @@ def get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h):
     # Eq. (16)
     gbar = 0.25 * (np.copy(Cbar2) + Cbar2.transpose((1,0,3,2)))
     gbar += 0.25 * (Cbar2.transpose((2,3,0,1)) + Cbar2.transpose((3,2,1,0)))
-    gbar += g[s,s,s,s]
+    gbar += g.mo_int["g_pqrs"]
     return hbar ,gbar
 @timer_decorator
 def one_body(my_orbital_space,h,Dbar,G,g,f):
@@ -54,19 +54,20 @@ def one_body(my_orbital_space,h,Dbar,G,g,f):
     temp -= np.einsum('xaij,jj->xaij', G[c,v,o,o], f[o,o])
 
     # Eq. (18)
-    Cbar1[v,s] += np.einsum("trij,trxq,xaij->aq",Dbar[s,s,o,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    g_sscs=g.format_cbar1()
+    Cbar1[v,s] += np.einsum("trij,trxq,xaij->aq",Dbar[s,s,o,o], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("trij,trxq,xaij->aq",Dbar[s,s,o,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("trij,trxq,xaij->aq",Dbar[s,s,o,o], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (18):", path_info[0])
         print("Path info for Eq. (18):", path_info[1])
-    Cbar1[v,o] -= 2*np.einsum("tris,trxs,xaij->aj", Dbar[s,s,o,s], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar1[v,o] -= 2*np.einsum("tris,trxs,xaij->aj", Dbar[s,s,o,s], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("tris,trxs,xaij->aj", Dbar[s,s,o,s], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("tris,trxs,xaij->aj", Dbar[s,s,o,s], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (18):", path_info[0])
         print("Path info for Eq. (18):", path_info[1])
-    Cbar1[v,o] += np.einsum("tris,trxs,xaji->aj", Dbar[s,s,o,s], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar1[v,o] += np.einsum("tris,trxs,xaji->aj", Dbar[s,s,o,s], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("tris,trxs,xaji->aj", Dbar[s,s,o,s], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("tris,trxs,xaji->aj", Dbar[s,s,o,s], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (18):", path_info[0])
         print("Path info for Eq. (18):", path_info[1])
 
@@ -111,6 +112,7 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
     nbf=my_orbital_space.nbf
     Cbar2 = np.zeros((nbf,nbf,nbf,nbf))
 
+    g_sscs=g.format_cbar1()
 
     # Eq. (27), without 0.5
     temp = np.einsum('xaij,aa->xaij', G[c,v,o,o], f[v,v])
@@ -118,41 +120,41 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
     temp -= np.einsum('xaij,jj->xaij', G[c,v,o,o], f[o,o])
 
     # Eq. (21)
-    Cbar2[v,s,o,s] += 4 * np.einsum("ti,trxs,xaij->arjs", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar2[v,s,o,s] += 4 * np.einsum("ti,trxs,xaij->arjs", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("ti,trxs,xaij->arjs", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("ti,trxs,xaij->arjs", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (21):", path_info[0])
         print("Path info for Eq. (21):", path_info[1])
 
 
-    Cbar2[v,s,o,s] -= 2 * np.einsum("ti,trxs,xaji->arjs", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar2[v,s,o,s] -= 2 * np.einsum("ti,trxs,xaji->arjs", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:  
-        path_info = np.einsum_path("ti,trxs,xaji->arjs", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("ti,trxs,xaji->arjs", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (21):", path_info[0])
         print("Path info for Eq. (21):", path_info[1])
-    Cbar2[v,s,o,s] -= 2 * np.einsum("ti,rtxs,xaij->arjs", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar2[v,s,o,s] -= 2 * np.einsum("ti,rtxs,xaij->arjs", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("ti,rtxs,xaij->arjs", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("ti,rtxs,xaij->arjs", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (21):", path_info[0])
         print("Path info for Eq. (21):", path_info[1])
     
 
 
-    Cbar2[s,v,o,o] += 4 * np.einsum("tu,ptxu,xaij->paij", D1[s,s], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar2[s,v,o,o] += 4 * np.einsum("tu,ptxu,xaij->paij", D1[s,s], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("tu,ptxu,xaij->paij", D1[s,s], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("tu,ptxu,xaij->paij", D1[s,s], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (21):", path_info[0])
         print("Path info for Eq. (21):", path_info[1])
-    Cbar2[s,v,o,o] -= 2 * np.einsum("tu,tpxu,xaij->paij", D1[s,s],  g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar2[s,v,o,o] -= 2 * np.einsum("tu,tpxu,xaij->paij", D1[s,s],  g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:
-        path_info = np.einsum_path("tu,tpxu,xaij->paij", D1[s,s],  g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("tu,tpxu,xaij->paij", D1[s,s],  g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (21):", path_info[0])
         print("Path info for Eq. (21):", path_info[1])
     
 
-    Cbar2[s,v,o,s] -= 2 * np.einsum("tj,ptxs,xaij->pais", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+    Cbar2[s,v,o,s] -= 2 * np.einsum("tj,ptxs,xaij->pais", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
     if debug:   
-        path_info = np.einsum_path("tj,ptxs,xaij->pais", D1[s,o], g[s,s,c,s], G[c,v,o,o],optimize='greedy')
+        path_info = np.einsum_path("tj,ptxs,xaij->pais", D1[s,o], g_sscs, G[c,v,o,o],optimize='greedy')
         print("Path info for Eq. (21):", path_info[0])
         print("Path info for Eq. (21):", path_info[1])
     # Eq. (22)
