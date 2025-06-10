@@ -96,7 +96,6 @@ class SlicedERI:
             self.ao_int["g_pqrx"],
             optimize="greedy",
         )
-        del self.ao_int
     def format_g_for_fock(self):
         n_obs=self.coeff_gbs.shape[1]
         n_cbs=self.coeff_cbs.shape[-1]
