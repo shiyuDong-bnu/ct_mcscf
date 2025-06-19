@@ -14,9 +14,10 @@ def get_f12(gamma,my_orbital_space):
     Cp=my_orbital_space.Cp
     Cx=my_orbital_space.Cx
     c=my_orbital_space.c
-    no=my_orbital_space.no
     o=my_orbital_space.o
     v=my_orbital_space.v
+    no=o.stop
+    ## calculation begin here
     mints=psi4.core.MintsHelper(bs_obs)
     begin=time.time()
     f12_cf = mints.f12_cgtg(gamma)
@@ -36,6 +37,7 @@ def get_f12(gamma,my_orbital_space):
     QF[v,c,o,o] = QF[c,v,o,o].transpose((1,0,3,2))
 
     G = (0.375 * QF + 0.125 * QF.transpose((0,1,3,2))) / gamma
+    print(G.shape)
     return G
 @timer_decorator
 def gen_V(gamma,sliced_g,my_orbital_space):
@@ -43,11 +45,11 @@ def gen_V(gamma,sliced_g,my_orbital_space):
     bs_cabs=my_orbital_space.bs_cabs()
     Cp=my_orbital_space.Cp
     Cx=my_orbital_space.Cx
-    c=my_orbital_space.c
-    no=my_orbital_space.no
     o=my_orbital_space.o
-    v=my_orbital_space.v
-    n_occ=no
+
+
+
+    ## calculation begin here.
     mints=psi4.core.MintsHelper(bs_obs)
     being=time.perf_counter()
     f12_cgtg=mints.f12_cgtg(gamma)
@@ -64,7 +66,7 @@ def gen_V(gamma,sliced_g,my_orbital_space):
     rr_gggg_phy=np.einsum("iajb->ijab",rr_gggg)    
     ## generate V term
     # term1 // get mo integral (rv)_{xy}^{ij}
-    C_occ=Cp[:,:n_occ]
+    C_occ=Cp[:,o]
     term1=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rv_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
     # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
     r_xypq=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
@@ -175,26 +177,29 @@ def get_fock_ri(my_orbital_space):
 def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
-    Cp=my_orbital_space.Cp
+    cp=my_orbital_space.Cp
     Cx=my_orbital_space.Cx
-    c=my_orbital_space.c
-    no=my_orbital_space.no
-    o=my_orbital_space.o
-    v=my_orbital_space.v
-    n_occ=no
-    mints=psi4.core.MintsHelper(bs_obs)
-    cp_save=Cp
-    n_occ=no
+    c=my_orbital_space.c #{x,y,z,...}
+    o=my_orbital_space.o #{i,j,k,l,...}
+    v=my_orbital_space.v #{a,b,c,d,...}
+
     cx_save=Cx
+    n_occ=o.stop
     n_gbs=my_orbital_space.nbf
     n_cabs=my_orbital_space.ncabs
     n_ri=my_orbital_space.nri
+
+
+    mints=psi4.core.MintsHelper(bs_obs)
+
+
+    ## calculation begin here
     begin=time.time()
     f12_cgtg=mints.f12_cgtg(gamma)
     d_com_ao=mints.ao_f12_double_commutator(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     d_com_ao_phy=np.einsum("iajb->ijab",d_com_ao)
-    d_com_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",d_com_ao_phy,cp_save[:,:n_occ],cp_save[:,:n_occ],
-                    cp_save[:,:n_occ],cp_save[:,:n_occ],optimize=True)
+    d_com_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",d_com_ao_phy,cp[:,o],cp[:,o],
+                    cp[:,o],cp[:,o],optimize=True)
     rr_gggc_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
     rr_gggg_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs) ## calculated twice
     end=time.time()
@@ -204,18 +209,18 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     rr_gggg_ao_phy=np.einsum("iajb->ijab",rr_gggg_ao)
 
     rr_ooop_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_ao_phy,
-                        cp_save[:,:n_occ],
-                        cp_save[:,:n_occ],
-                        cp_save[:,:n_occ],
-                        cp_save,optimize=True)
+                        cp[:,o],
+                        cp[:,o],
+                        cp[:,o],
+                        cp,optimize=True)
     rr_oooc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggc_ao_phy,
-                        cp_save[:,:n_occ],
-                        cp_save[:,:n_occ],
-                        cp_save[:,:n_occ],
+                        cp[:,o],
+                        cp[:,o],
+                        cp[:,o],
                         cx_save,optimize=True)
     # stack into one term
     rr_ooori=np.concatenate((rr_ooop_mo,rr_oooc_mo),axis=-1)
-    temp=np.einsum("mnkP,lP->mnkl",rr_ooori,fock_ri_mo[:n_occ,:],optimize=True)
+    temp=np.einsum("mnkP,lP->mnkl",rr_ooori,fock_ri_mo[o,:],optimize=True)
     B_temp=np.copy(d_com_mo)
     B_temp+=temp
     B_temp+=np.einsum("klmn->lknm",temp)
@@ -225,12 +230,12 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
     r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
     r_ggaa_phy=np.einsum("iajb->ijab",r_gaga)
-    r_oocc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggaa_phy,cp_save[:,:n_occ],cp_save[:,:n_occ],
+    r_oocc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggaa_phy,cp[:,o],cp[:,o],
                         cx_save,cx_save,optimize=True)
-    r_oopc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,cp_save[:,:n_occ],cp_save[:,:n_occ],
-                        cp_save,cx_save,optimize=True)
-    r_oopq_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,cp_save[:,:n_occ],cp_save[:,:n_occ],
-                        cp_save,cp_save,optimize=True)
+    r_oopc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,cp[:,o],cp[:,o],
+                        cp,cx_save,optimize=True)
+    r_oopq_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,cp[:,o],cp[:,o],
+                        cp,cp,optimize=True)
     r_oo_ri_ri_mo=np.zeros((n_occ,n_occ,n_ri,n_ri))
     r_oo_ri_ri_mo[:,:,:n_gbs,:n_gbs]=r_oopq_mo
     r_oo_ri_ri_mo[:,:,:n_gbs,n_gbs:]=r_oopc_mo
