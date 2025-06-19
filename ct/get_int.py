@@ -95,11 +95,11 @@ def get_density(my_orbital_space,mr_info=None):
         D2[o,o,o,o] -= 2 * np.einsum("il,kj->ikjl", delta[o,o], delta[o,o])
     if mr_info is  not None:
         ## multireference
-        a_ind=mr_info['active_index']
-        o_ind=mr_info['occupied_index']
+        a_ind=mr_info.active_index
+        o_ind=mr_info.inactive_docc_index
         ## 1rdm
         D1[o_ind,o_ind] = 2 * delta[o_ind,o_ind]
-        D1[a_ind,a_ind]=mr_info['RDM1']
+        D1[a_ind,a_ind]=mr_info.rdm1
         ## end copy from single reference
 
         ## 2rdm ,first index is occ
@@ -110,11 +110,9 @@ def get_density(my_orbital_space,mr_info=None):
         D2[a_ind,o_ind,:,:]=2*np.einsum("is,uq->uiqs",delta[o_ind,:],D1[a_ind,:])
         D2[a_ind,o_ind,:,:]-=np.einsum("iq,us->uiqs",delta[o_ind,:],D1[a_ind,:])
         ## second index is active
-        D2[a_ind,a_ind,a_ind,a_ind]=mr_info['RDM2']
+        D2[a_ind,a_ind,a_ind,a_ind]=mr_info.rdm2
     return D1,D2
 def  get_fock(my_orbital_space,h,D1,g):
-    n_gbs=my_orbital_space.nbf
-    n_occ=my_orbital_space.no
     s=my_orbital_space.s
     # build fock
     f_only_j =np.copy(h)+ np.einsum("lk,mlnk->mn", D1, g[0][:,s,:,s])
