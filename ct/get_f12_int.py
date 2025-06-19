@@ -7,7 +7,7 @@ import sys
 import time
 # G = 3/8 <αβ|Q12 F12|ij> + 1/8 <αβ|Q12 F12|ji>
 @timer_decorator
-def get_f12(gamma,my_orbital_space):
+def get_f12(my_orbital_space,f12_int,gamma):
     nri=my_orbital_space.nri
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
@@ -18,14 +18,16 @@ def get_f12(gamma,my_orbital_space):
     v=my_orbital_space.v
     no=o.stop
     ## calculation begin here
-    mints=psi4.core.MintsHelper(bs_obs)
+    # mints=psi4.core.MintsHelper(bs_obs)
     begin=time.time()
-    f12_cf = mints.f12_cgtg(gamma)
+    # f12_cf = mints.f12_cgtg(gamma)
     QF = np.zeros((nri, nri, no, no))
 
     # <xy|ij>
-    QF_xyij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_cabs, bs_obs).to_array().swapaxes(1,2)
-    QF_xaij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)
+    # QF_xyij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_cabs, bs_obs).to_array().swapaxes(1,2)
+    # QF_xaij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)
+    QF_xyij = f12_int.ao_int["f12_cgcg"].swapaxes(1,2)
+    QF_xaij = f12_int.ao_int["f12_cggg"].swapaxes(1,2)
     end=time.time()
     print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
 
