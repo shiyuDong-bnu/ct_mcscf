@@ -5,6 +5,8 @@ Two motivations to do this :
 1. avoid redundance calculation
 2. easy to interface with c++ parallel generated integral.
 """    
+import time
+import sys
 import psi4
 import numpy as np
 class F12_INT:
@@ -20,12 +22,13 @@ class F12_INT:
         self.ao_int = {}
         self.mo_int = {}
         self.cgtg = self.mints.f12_cgtg(gamma)
-        self.gen_ao_int()
-    def gen_ao_int(self):
+        self.gen_f12_ao_int()
+    def gen_f12_ao_int(self):
         """
         ao integral is in chemist's notation
         f12_cgcg means integral type is ao_f12 , the basis type is cabs obs cabs obs
         """
+        begin = time.time()
         #  First f12 integral is used in get_f12 function.
         f12_cgcg = self.mints.ao_f12(self.cgtg, self.bs_cabs, self.bs_obs, self.bs_cabs, self.bs_obs).to_array()
         f12_cggg = self.mints.ao_f12(self.cgtg, self.bs_cabs, self.bs_obs, self.bs_obs, self.bs_obs).to_array()
@@ -49,3 +52,12 @@ class F12_INT:
         self.ao_int["double_commutator_gggg"]=double_commutator_gggg
         self.ao_int["f12_squared_gggc"]=f12_squared_gggc
         self.ao_int["f12_gcgc"]=np.moveaxis(f12_cgcg,[0,1,2,3],[1,0,3,2])
+
+        end = time.time()
+        print(
+            f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ", end - begin
+        )
+        ## 4 f12          cgcg cggg gggg 
+        ## 1  f12g12       gggg 
+        ## 2  f12 squared  gggg gggc
+        ## 1 double_commutator gggg 
