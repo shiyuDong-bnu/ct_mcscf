@@ -181,7 +181,7 @@ def get_fock_ri(my_orbital_space):
     return fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs
 
 @timer_decorator
-def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
+def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo,f12_int):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
     cp=my_orbital_space.Cp
@@ -197,18 +197,21 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     n_ri=my_orbital_space.nri
 
 
-    mints=psi4.core.MintsHelper(bs_obs)
+    # mints=psi4.core.MintsHelper(bs_obs)
 
 
     ## calculation begin here
     begin=time.time()
-    f12_cgtg=mints.f12_cgtg(gamma)
-    d_com_ao=mints.ao_f12_double_commutator(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+    # f12_cgtg=mints.f12_cgtg(gamma)
+    # d_com_ao=mints.ao_f12_double_commutator(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+    d_com_ao=f12_int.ao_int["double_commutator_gggg"]
     d_com_ao_phy=np.einsum("iajb->ijab",d_com_ao)
     d_com_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",d_com_ao_phy,cp[:,o],cp[:,o],
                     cp[:,o],cp[:,o],optimize=True)
-    rr_gggc_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
-    rr_gggg_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs) ## calculated twice
+    # rr_gggc_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
+    # rr_gggg_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs) ## calculated twice
+    rr_gggc_ao=f12_int.ao_int["f12_squared_gggc"]
+    rr_gggg_ao=f12_int.ao_int["f12_squared_gggg"]
     end=time.time()
     print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
     # generat r2 ooo_ri
@@ -231,9 +234,12 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo):
     B_temp=np.copy(d_com_mo)
     B_temp+=temp
     B_temp+=np.einsum("klmn->lknm",temp)
-    r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
-    r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    r_gaga=mints.ao_f12(f12_cgtg,bs_obs,bs_cabs,bs_obs,bs_cabs)
+    # r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
+    # r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+    # r_gaga=mints.ao_f12(f12_cgtg,bs_obs,bs_cabs,bs_obs,bs_cabs)
+    r_ggga=f12_int.ao_int["f12_gggc"]
+    r_gggg=f12_int.ao_int["f12_gggg"]
+    r_gaga=f12_int.ao_int["f12_gcgc"]
     r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
     r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
     r_ggaa_phy=np.einsum("iajb->ijab",r_gaga)
