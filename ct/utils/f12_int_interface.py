@@ -34,21 +34,18 @@ class F12_INT:
 
         ## Second those integral is used in gen_V function
         f12g12_gggg=self.mints.ao_f12g12(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_obs)
-        f12_gggc=self.mints.ao_f12(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_cabs)
         f12_gggg=self.mints.ao_f12(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_obs)
         f12_squared_gggg=self.mints.ao_f12_squared(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_obs)
         
         self.ao_int["f12g12_gggg"]=f12g12_gggg
-        self.ao_int["f12_gggc"]=f12_gggc
+        self.ao_int["f12_gggc"]=np.moveaxis(f12_cggg,[0,1,2,3],[3,2,1,0])
         self.ao_int["f12_gggg"]=f12_gggg
         self.ao_int["f12_squared_gggg"]=f12_squared_gggg
 
         ## Third those integral is used in gen_V function
         double_commutator_gggg=self.mints.ao_f12_double_commutator(self.cgtg,self.bs_obs,
                          self.bs_obs,self.bs_obs,self.bs_obs)
-        f12_squared_gggc=self.mints.ao_f12_squared(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_cabs)
-        f12_gcgc=self.mints.ao_f12(self.cgtg,self.bs_obs,self.bs_cabs,self.bs_obs,self.bs_cabs)
-        
+        f12_squared_gggc=self.mints.ao_f12_squared(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_cabs)        
         self.ao_int["double_commutator_gggg"]=double_commutator_gggg
         self.ao_int["f12_squared_gggc"]=f12_squared_gggc
-        self.ao_int["f12_gcgc"]=f12_gcgc
+        self.ao_int["f12_gcgc"]=np.moveaxis(f12_cgcg,[0,1,2,3],[1,0,3,2])
