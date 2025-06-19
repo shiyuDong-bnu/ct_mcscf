@@ -42,7 +42,7 @@ def get_f12(my_orbital_space,f12_int,gamma):
     print(G.shape)
     return G
 @timer_decorator
-def gen_V(gamma,sliced_g,my_orbital_space):
+def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     bs_obs=my_orbital_space.bs_obs()
     bs_cabs=my_orbital_space.bs_cabs()
     Cp=my_orbital_space.Cp
@@ -52,13 +52,18 @@ def gen_V(gamma,sliced_g,my_orbital_space):
 
 
     ## calculation begin here.
-    mints=psi4.core.MintsHelper(bs_obs)
+    # mints=psi4.core.MintsHelper(bs_obs)
     being=time.perf_counter()
-    f12_cgtg=mints.f12_cgtg(gamma)
-    rv_gggg=mints.ao_f12g12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
-    r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    rr_gggg=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+    # f12_cgtg=mints.f12_cgtg(gamma)
+    # rv_gggg=mints.ao_f12g12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+    # r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
+    # r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+    # rr_gggg=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
+
+    rv_gggg=f12_int.ao_int["f12g12_gggg"]
+    r_ggga=f12_int.ao_int["f12_gggc"]
+    r_gggg=f12_int.ao_int["f12_gggg"] 
+    rr_gggg=f12_int.ao_int["f12_squared_gggg"]  
     end=time.perf_counter()
     print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-being)
     
