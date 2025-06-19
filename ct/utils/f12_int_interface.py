@@ -26,8 +26,19 @@ class F12_INT:
         ao integral is in chemist's notation
         f12_cgcg means integral type is ao_f12 , the basis type is cabs obs cabs obs
         """
-        #  Fist f12 integral is used in get_f12 function.
+        #  First f12 integral is used in get_f12 function.
         f12_cgcg = self.mints.ao_f12(self.cgtg, self.bs_cabs, self.bs_obs, self.bs_cabs, self.bs_obs).to_array()
         f12_cggg = self.mints.ao_f12(self.cgtg, self.bs_cabs, self.bs_obs, self.bs_obs, self.bs_obs).to_array()
         self.ao_int["f12_cgcg"]=f12_cgcg
         self.ao_int["f12_cggg"]=f12_cggg
+
+        ## Second those integral is used in gen_V function
+        f12g12_gggg=self.mints.ao_f12g12(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_obs)
+        f12_gggc=self.mints.ao_f12(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_cabs)
+        f12_gggg=self.mints.ao_f12(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_obs)
+        f12_squared_gggg=self.mints.ao_f12_squared(self.cgtg,self.bs_obs,self.bs_obs,self.bs_obs,self.bs_obs)
+        
+        self.ao_int["f12g12_gggg"]=f12g12_gggg
+        self.ao_int["f12_gggc"]=f12_gggc
+        self.ao_int["f12_gggg"]=f12_gggg
+        self.ao_int["f12_squared_gggg"]=f12_squared_gggg
