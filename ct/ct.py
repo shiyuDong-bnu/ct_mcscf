@@ -7,12 +7,12 @@ from ct.get_f12_int import get_f12,gen_V,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
 from ct.utils.eri_interface import SlicedERI
 from ct.utils.f12_int_interface import  F12_INT
-def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core):
+def canonical_transform(mol,wfn,int_wfn,basis,df_basis,gamma,freeze_core):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
-    sliced_g=SlicedERI(my_orbital_space)
-    my_f12_int=F12_INT(my_orbital_space,gamma)
+    sliced_g=SlicedERI(my_orbital_space,int_wfn)
+    my_f12_int=F12_INT(my_orbital_space,gamma,int_wfn)
     D1,D2=get_density(my_orbital_space)
     h=get_hcore_int(my_orbital_space)
     fock_only_j,k,f=get_fock(my_orbital_space,h,D1,sliced_g.format_g_for_fock())
