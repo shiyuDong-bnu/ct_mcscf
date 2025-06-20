@@ -13,7 +13,7 @@ import numpy as np
 
 
 class SlicedERI:
-    def __init__(self, my_orbital_space):
+    def __init__(self, my_orbital_space,int_wfn=None):
         self.bs_obs = my_orbital_space.bs_obs()
         self.bs_cabs = my_orbital_space.bs_cabs()
 
@@ -24,10 +24,21 @@ class SlicedERI:
 
         self.ao_int = {}
         self.mo_int = {}
-
-        self.gen_ao_int()
+        if int_wfn!=None:
+            self.load_ao_int(int_wfn)
+        else:
+            self.gen_ao_int()
         self.gen_mo_int()
+    def load_ao_int(self,int_wfn):
+        print("loading eri integrals from int_wfn")
+        result=int_wfn.variables()
+        n_gbs=self.bs_obs.nbf()
+        n_cabs=self.bs_cabs.nbf()
 
+        self.ao_int["g_pqrs"]=result["g_pqrs".upper()].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
+        self.ao_int["g_pqxy"]=result["g_pqxy".upper()].np.reshape(n_gbs,n_cabs,n_gbs,n_cabs)
+        self.ao_int["g_pxqy"] =result["g_pxqy".upper()].np.reshape(n_gbs,n_gbs,n_cabs,n_cabs)
+        self.ao_int["g_pqrx"]=result["g_pqrx".upper()].np.reshape(n_gbs,n_gbs,n_gbs,n_cabs)
     def gen_ao_int(self):
         """
         ao integral is in chemist's notation

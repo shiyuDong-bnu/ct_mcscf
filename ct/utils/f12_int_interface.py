@@ -10,7 +10,7 @@ import sys
 import psi4
 import numpy as np
 class F12_INT:
-    def __init__(self, my_orbital_space,gamma):
+    def __init__(self, my_orbital_space,gamma,int_wfn=None):
         self.bs_obs = my_orbital_space.bs_obs()
         self.bs_cabs = my_orbital_space.bs_cabs()
 
@@ -22,12 +22,39 @@ class F12_INT:
         self.ao_int = {}
         self.mo_int = {}
         self.cgtg = self.mints.f12_cgtg(gamma)
-        self.gen_f12_ao_int()
+        if int_wfn!=None:
+            self.load_f12_ao_int(int_wfn)
+        else:
+            self.gen_f12_ao_int()
+    def load_f12_ao_int(self,int_wfn):
+            print("loading f12 integrals from int_wfn")
+            result=int_wfn.variables()
+            n_gbs=self.bs_obs.nbf()
+            n_cabs=self.bs_cabs.nbf()
+
+            
+            self.ao_int["f12_cgcg"]=result["F12_CGCG"].np.reshape(n_cabs,n_gbs,n_cabs,n_gbs)
+            self.ao_int["f12_cggg"]=result ["F12_CGGG"].np.reshape(n_cabs,n_gbs,n_gbs,n_gbs)
+            self.ao_int["f12_gggg"]=result ["F12_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
+
+  
+            self.ao_int["f12g12_gggg"]=result ["F12G12_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
+
+
+            self.ao_int["f12_squared_gggg"]=result ["F12_SQUARED_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
+            self.ao_int["f12_squared_gggc"]=result ["F12_SQUARED_GGGC"].np.reshape(n_gbs,n_gbs,n_gbs,n_cabs)
+
+       
+            self.ao_int["double_commutator_gggg"]=result ["F12_DOUBLE_COMMUTATOR_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
+            
+            self.ao_int["f12_gcgc"]=np.moveaxis(self.ao_int["f12_cgcg"],[0,1,2,3],[1,0,3,2])
+            self.ao_int["f12_gggc"]=np.moveaxis(self.ao_int["f12_cggg"],[0,1,2,3],[3,2,1,0])        
     def gen_f12_ao_int(self):
         """
         ao integral is in chemist's notation
         f12_cgcg means integral type is ao_f12 , the basis type is cabs obs cabs obs
         """
+        psi4.core.set_global_option("SCREENING", "NONE")
         begin = time.time()
         #  First f12 integral is used in get_f12 function.
         f12_cgcg = self.mints.ao_f12(self.cgtg, self.bs_cabs, self.bs_obs, self.bs_cabs, self.bs_obs).to_array()
@@ -57,7 +84,7 @@ class F12_INT:
         print(
             f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ", end - begin
         )
-        ## 4 f12          cgcg cggg gggg 
+        ## 3 f12          cgcg cggg gggg 
         ## 1  f12g12       gggg 
         ## 2  f12 squared  gggg gggc
         ## 1 double_commutator gggg 
