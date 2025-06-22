@@ -6,17 +6,19 @@ from ct.get_int import get_eri_ri_ri_int,get_hcore_int,get_density,get_fock
 from ct.get_f12_int import get_f12,gen_V,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
 from ct.utils.eri_interface import SlicedERI
-def canonical_transform(mol,wfn,basis,df_basis,gamma,freeze_core,mr_info):
+from ct.utils.f12_int_interface import  F12_INT
+def canonical_transform(mol,wfn,int_wfn,basis,df_basis,gamma,freeze_core,mr_info):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs,mr_info)
-    sliced_g=SlicedERI(my_orbital_space)
+    sliced_g=SlicedERI(my_orbital_space,int_wfn)
+    my_f12_int=F12_INT(my_orbital_space,gamma,int_wfn)
     D1,D2=get_density(my_orbital_space,mr_info)
     h=get_hcore_int(my_orbital_space)
     fock_only_j,k,f=get_fock(my_orbital_space,h,D1,sliced_g.format_g_for_fock())
-    G=get_f12(gamma,my_orbital_space)
-    V_noper,X_noper=gen_V(gamma,sliced_g,my_orbital_space)
-    B_final_temp=gen_b(gamma,my_orbital_space,f,fock_only_j,k)
+    G=get_f12(my_orbital_space,my_f12_int,gamma)
+    V_noper,X_noper=gen_V(gamma,sliced_g,my_orbital_space,my_f12_int)
+    B_final_temp=gen_b(gamma,my_orbital_space,f,fock_only_j,k,my_f12_int)
     if freeze_core:
         nfrzc=wfn.nfrzc()
         try :
