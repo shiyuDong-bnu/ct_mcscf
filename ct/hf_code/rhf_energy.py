@@ -1,7 +1,7 @@
 import numpy as np
 import psi4
 import time
-from ct.diis import DIIS
+from ct.hf_code.diis import DIIS
 def rhf_energy(molecule, wfn, ct=None):
     maxiter = psi4.core.get_global_option('MAXITER')
     e_conv = psi4.core.get_global_option('E_CONVERGENCE')
