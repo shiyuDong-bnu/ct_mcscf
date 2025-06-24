@@ -1,3 +1,6 @@
+"""
+This moudle is used to generate fock matrix.
+"""
 import numpy as np
 import psi4
 from ct.utils.timer import timer_decorator
