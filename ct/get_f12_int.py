@@ -1,4 +1,8 @@
 """
+This moudle have three function to generate f12 related integral
+1. get_f12 create G 
+2. gen_V create v and x
+3. get_b create b 
 """
 import psi4
 import numpy as np
@@ -51,14 +55,7 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
 
 
 
-    ## calculation begin here.
-    # mints=psi4.core.MintsHelper(bs_obs)
     being=time.perf_counter()
-    # f12_cgtg=mints.f12_cgtg(gamma)
-    # rv_gggg=mints.ao_f12g12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    # r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
-    # r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    # rr_gggg=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
 
     rv_gggg=f12_int.ao_int["f12g12_gggg"]
     r_ggga=f12_int.ao_int["f12_gggc"]
@@ -84,9 +81,7 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     v_jioa=sliced_g.mo_int["g_pqrx"][:,:,o,:]
     term3=np.einsum("yxoa,jioa->yxji",r_yxoa,v_jioa,optimize=True)
     term4=np.einsum("ijkl->jilk",term3)
-    # print(np.allclose(term1,fg))
     V_noper=term1-term2-term3-term4
-    ## debug
     ## generate X term together ,to use common imterdiate array
     term1=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_phy,C_occ,C_occ,C_occ,C_occ,optimize=True)
     ## term2  // -r_{xy}^{pq}  the same as those in v term
@@ -99,86 +94,6 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     X_noper/=gamma**2
     return V_noper,X_noper
 
-@timer_decorator
-def get_fock_ri(my_orbital_space):
-    bs_obs=my_orbital_space.bs_obs()
-    bs_cabs=my_orbital_space.bs_cabs()
-    Cp=my_orbital_space.Cp
-    Cx=my_orbital_space.Cx
-    nbf=my_orbital_space.nbf
-    no=my_orbital_space.no
-    ncabs=my_orbital_space.ncabs
-    n_occ=no
-    mints=psi4.core.MintsHelper(bs_obs)
-    # build fock matrix  f=t+v+j-k
-    #1) generate ao inteagrals
-    cp_save=Cp
-    n_occ=no
-    cx_save=Cx
-    n_gbs=nbf
-    n_cabs=ncabs
-    begin=time.time()
-    t_oo_ao=mints.ao_kinetic(bs_obs,bs_obs)
-    t_oc_ao=mints.ao_kinetic(bs_obs,bs_cabs)
-    t_cc_ao=mints.ao_kinetic(bs_cabs,bs_cabs)
-    v_oo_ao=mints.ao_potential(bs_obs,bs_obs)
-    v_oc_ao=mints.ao_potential(bs_obs,bs_cabs)
-    v_cc_ao=mints.ao_potential(bs_cabs,bs_cabs)
-    v_oooo_ao=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_obs)
-    v_oooc_ao=mints.ao_eri(bs_obs,bs_obs,bs_obs,bs_cabs)
-    v_oocc_ao=mints.ao_eri(bs_obs,bs_obs,bs_cabs,bs_cabs)
-    v_ococ_ao=mints.ao_eri(bs_obs,bs_cabs,bs_obs,bs_cabs)
-    end=time.time()
-    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
-    #3) transform to mo basis
-    t_oo_mo=np.einsum("ij,iI,jJ->IJ",t_oo_ao,cp_save,cp_save,optimize=True)
-    t_oc_mo=np.einsum("ij,iI,jJ->IJ",t_oc_ao,cp_save,cx_save,optimize=True)
-    t_cc_mo=np.einsum("ij,iI,jJ->IJ",t_cc_ao,cx_save,cx_save,optimize=True)
-    v_oo_mo=np.einsum("ij,iI,jJ->IJ",v_oo_ao,cp_save,cp_save,optimize=True)
-    v_oc_mo=np.einsum("ij,iI,jJ->IJ",v_oc_ao,cp_save,cx_save,optimize=True)
-    v_cc_mo=np.einsum("ij,iI,jJ->IJ",v_cc_ao,cx_save,cx_save,optimize=True)
-    hcore_oo_mo=t_oo_mo+v_oo_mo
-    hcore_oc_mo=t_oc_mo+v_oc_mo
-    hcore_cc_mo=t_cc_mo+v_cc_mo
-
-    n_ri=n_gbs+n_cabs
-    hcore_ri_mo=np.zeros((n_ri,n_ri))
-    hcore_ri_mo[:n_gbs,:n_gbs]=hcore_oo_mo
-    hcore_ri_mo[:n_gbs,n_gbs:]=hcore_oc_mo
-    hcore_ri_mo[n_gbs:,:n_gbs]=hcore_oc_mo.T
-    hcore_ri_mo[n_gbs:,n_gbs:]=hcore_cc_mo
-    ## 1) generate density basis and change to ao 
-    density_matrix=np.einsum("iI,jI->ij",cp_save[:,:n_occ],cp_save[:,:n_occ])
-    J_oo_ao=np.einsum("iajb,ia->jb",v_oooo_ao,density_matrix,optimize=True)
-    J_oc_ao=np.einsum("iajb,ia->jb",v_oooc_ao,density_matrix,optimize=True)
-    J_cc_ao=np.einsum("iajb,ia->jb",v_oocc_ao,density_matrix,optimize=True)
-    ## 2) change to mo
-    J_oo_mo=np.einsum("ij,iI,jJ->IJ",J_oo_ao,cp_save,cp_save,optimize=True)
-    J_oc_mo=np.einsum("ij,iI,jJ->IJ",J_oc_ao,cp_save,cx_save,optimize=True)
-    J_cc_mo=np.einsum("ij,iI,jJ->IJ",J_cc_ao,cx_save,cx_save,optimize=True)
-    j_ri_mo=np.zeros((n_ri,n_ri))
-    j_ri_mo[:n_gbs,:n_gbs]=J_oo_mo
-    j_ri_mo[:n_gbs,n_gbs:]=J_oc_mo
-    j_ri_mo[n_gbs:,:n_gbs]=J_oc_mo.T
-    j_ri_mo[n_gbs:,n_gbs:]=J_cc_mo
-    ## 1) generate exchange in similar way
-    density_matrix=np.einsum("iI,jI->ij",cp_save[:,:n_occ],cp_save[:,:n_occ])
-    K_oo_ao=np.einsum("iajb,aj->ib",v_oooo_ao,density_matrix,optimize=True)
-    K_oc_ao=np.einsum("iajb,aj->ib",v_oooc_ao,density_matrix,optimize=True)
-    K_cc_ao=np.einsum("iajb,ij->ab",v_ococ_ao,density_matrix,optimize=True)
-    ## 2) change to mo
-    K_oo_mo=np.einsum("ij,iI,jJ->IJ",K_oo_ao,cp_save,cp_save,optimize=True)
-    K_oc_mo=np.einsum("ij,iI,jJ->IJ",K_oc_ao,cp_save,cx_save,optimize=True)
-    K_cc_mo=np.einsum("ij,iI,jJ->IJ",K_cc_ao,cx_save,cx_save,optimize=True)
-    K_ri_mo=np.zeros((n_ri,n_ri))
-    K_ri_mo[:n_gbs,:n_gbs]=K_oo_mo
-    K_ri_mo[:n_gbs,n_gbs:]=K_oc_mo
-    K_ri_mo[n_gbs:,:n_gbs]=K_oc_mo.T
-    K_ri_mo[n_gbs:,n_gbs:]=K_cc_mo
-    fock_ri_mo=hcore_ri_mo+2*j_ri_mo
-    total_fock=fock_ri_mo-K_ri_mo
-    f_virtual_cabs=total_fock[n_occ:n_gbs,n_gbs:]
-    return fock_ri_mo,K_ri_mo,total_fock,f_virtual_cabs
 
 @timer_decorator
 def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo,f12_int):
@@ -197,19 +112,14 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo,f12_int):
     n_ri=my_orbital_space.nri
 
 
-    # mints=psi4.core.MintsHelper(bs_obs)
 
 
     ## calculation begin here
     begin=time.time()
-    # f12_cgtg=mints.f12_cgtg(gamma)
-    # d_com_ao=mints.ao_f12_double_commutator(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
     d_com_ao=f12_int.ao_int["double_commutator_gggg"]
     d_com_ao_phy=np.einsum("iajb->ijab",d_com_ao)
     d_com_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",d_com_ao_phy,cp[:,o],cp[:,o],
                     cp[:,o],cp[:,o],optimize=True)
-    # rr_gggc_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
-    # rr_gggg_ao=mints.ao_f12_squared(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs) ## calculated twice
     rr_gggc_ao=f12_int.ao_int["f12_squared_gggc"]
     rr_gggg_ao=f12_int.ao_int["f12_squared_gggg"]
     end=time.time()
@@ -234,9 +144,6 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo,f12_int):
     B_temp=np.copy(d_com_mo)
     B_temp+=temp
     B_temp+=np.einsum("klmn->lknm",temp)
-    # r_ggga=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_cabs)
-    # r_gggg=mints.ao_f12(f12_cgtg,bs_obs,bs_obs,bs_obs,bs_obs)
-    # r_gaga=mints.ao_f12(f12_cgtg,bs_obs,bs_cabs,bs_obs,bs_cabs)
     r_ggga=f12_int.ao_int["f12_gggc"]
     r_gggg=f12_int.ao_int["f12_gggg"]
     r_gaga=f12_int.ao_int["f12_gcgc"]
