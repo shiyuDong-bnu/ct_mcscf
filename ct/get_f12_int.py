@@ -13,77 +13,44 @@ import time
 @timer_decorator
 def get_f12(my_orbital_space,f12_int,gamma):
     nri=my_orbital_space.nri
-    bs_obs=my_orbital_space.bs_obs()
-    bs_cabs=my_orbital_space.bs_cabs()
-    Cp=my_orbital_space.Cp
-    Cx=my_orbital_space.Cx
     c=my_orbital_space.c
     o=my_orbital_space.o
     v=my_orbital_space.v
     no=o.stop
     ## calculation begin here
-    # mints=psi4.core.MintsHelper(bs_obs)
-    begin=time.time()
-    # f12_cf = mints.f12_cgtg(gamma)
     QF = np.zeros((nri, nri, no, no))
-
-    # <xy|ij>
-    # QF_xyij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_cabs, bs_obs).to_array().swapaxes(1,2)
-    # QF_xaij = mints.ao_f12(f12_cf, bs_cabs, bs_obs, bs_obs, bs_obs).to_array().swapaxes(1,2)
-    QF_xyij = f12_int.ao_int["f12_cgcg"].swapaxes(1,2)
-    QF_xaij = f12_int.ao_int["f12_cggg"].swapaxes(1,2)
-    end=time.time()
-    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
-
-    QF[c,c,o,o] = np.einsum("xX,yY,iI,jJ,xyij->XYIJ", Cx, Cx, Cp[:,o], Cp[:,o], QF_xyij, optimize=True)
-
-    # <xa|ij> and <ax|ji>
-    
-    QF[c,v,o,o] = np.einsum("xX,aA,iI,jJ,xaij->XAIJ", Cx, Cp[:,v], Cp[:,o], Cp[:,o], QF_xaij, optimize=True)
-    QF[v,c,o,o] = QF[c,v,o,o].transpose((1,0,3,2))
-
+    f12_int.form_f12_moint()    
+    QF[c,c,o,o]=f12_int.mo_int["qf_xyij"]
+    QF[c,v,o,o]=f12_int.mo_int["qf_xaij"]
+    QF[v,c,o,o]=f12_int.mo_int["qf_xaij"].transpose((1,0,3,2))
     G = (0.375 * QF + 0.125 * QF.transpose((0,1,3,2))) / gamma
     print(G.shape)
     return G
 @timer_decorator
 def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
-    bs_obs=my_orbital_space.bs_obs()
-    bs_cabs=my_orbital_space.bs_cabs()
-    Cp=my_orbital_space.Cp
-    Cx=my_orbital_space.Cx
+
     o=my_orbital_space.o
-
-
-
-    being=time.perf_counter()
-
-    rv_gggg=f12_int.ao_int["f12g12_gggg"]
-    r_ggga=f12_int.ao_int["f12_gggc"]
-    r_gggg=f12_int.ao_int["f12_gggg"] 
-    rr_gggg=f12_int.ao_int["f12_squared_gggg"]  
-    end=time.perf_counter()
-    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-being)
-    
-    rv_gggg_phy=np.einsum("iajb->ijab",rv_gggg)
-    r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
-    r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
-    rr_gggg_phy=np.einsum("iajb->ijab",rr_gggg)    
-    ## generate V term
-    # term1 // get mo integral (rv)_{xy}^{ij}
-    C_occ=Cp[:,o]
-    term1=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rv_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
-    # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
-    r_xypq=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
+    ## load mo integral
+   
+    f12_int.form_v_and_x_moint()
+    rv_ijxy=f12_int.mo_int["rv_ijxy"]
+    r_xypq=f12_int.mo_int["r_xypq"]
+    r_yxoa=f12_int.mo_int["r_yxoa"]
+    rr_ijkl=f12_int.mo_int["rr_ijkl"]
     v_pqij=sliced_g.mo_int["g_pqrs"]
+    v_jioa=sliced_g.mo_int["g_pqrx"][:,:,o,:]
+   
+   # term1 // get mo integral (rv)_{xy}^{ij}
+    term1=rv_ijxy
+    # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
     term2=np.einsum("xypq,pqij->xyij",r_xypq,v_pqij,optimize=True)
     # term3,term4, -r_{xy}^{a^\prime o} v_{a^prime o ij} -r_{xy}^{ob^\prime}v_{ob^\prime}^{ij}
-    r_yxoa=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,C_occ,Cx,optimize=True)
-    v_jioa=sliced_g.mo_int["g_pqrx"][:,:,o,:]
+
     term3=np.einsum("yxoa,jioa->yxji",r_yxoa,v_jioa,optimize=True)
     term4=np.einsum("ijkl->jilk",term3)
     V_noper=term1-term2-term3-term4
     ## generate X term together ,to use common imterdiate array
-    term1=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_phy,C_occ,C_occ,C_occ,C_occ,optimize=True)
+    term1=rr_ijkl
     ## term2  // -r_{xy}^{pq}  the same as those in v term
     term2=np.einsum("xypq,ijpq->xyij",r_xypq,r_xypq,optimize=True)
     ## term3 
@@ -110,57 +77,16 @@ def gen_b(gamma,my_orbital_space,total_fock,fock_ri_mo,K_ri_mo,f12_int):
     n_gbs=my_orbital_space.nbf
     n_cabs=my_orbital_space.ncabs
     n_ri=my_orbital_space.nri
+    f12_int.form_b_moint()
 
-
-
-
-    ## calculation begin here
-    begin=time.time()
-    d_com_ao=f12_int.ao_int["double_commutator_gggg"]
-    d_com_ao_phy=np.einsum("iajb->ijab",d_com_ao)
-    d_com_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",d_com_ao_phy,cp[:,o],cp[:,o],
-                    cp[:,o],cp[:,o],optimize=True)
-    rr_gggc_ao=f12_int.ao_int["f12_squared_gggc"]
-    rr_gggg_ao=f12_int.ao_int["f12_squared_gggg"]
-    end=time.time()
-    print(f"{ sys._getframe(  ).f_code.co_name} time to do integrals in ",end-begin)
-    # generat r2 ooo_ri
-    rr_gggc_ao_phy=np.einsum("iajb->ijab",rr_gggc_ao)
-    rr_gggg_ao_phy=np.einsum("iajb->ijab",rr_gggg_ao)
-
-    rr_ooop_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_ao_phy,
-                        cp[:,o],
-                        cp[:,o],
-                        cp[:,o],
-                        cp,optimize=True)
-    rr_oooc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggc_ao_phy,
-                        cp[:,o],
-                        cp[:,o],
-                        cp[:,o],
-                        cx_save,optimize=True)
-    # stack into one term
-    rr_ooori=np.concatenate((rr_ooop_mo,rr_oooc_mo),axis=-1)
+    rr_ooori=f12_int.mo_int["rr_ooori"]
+    d_com_mo=f12_int.mo_int["d_com_mo"]
     temp=np.einsum("mnkP,lP->mnkl",rr_ooori,fock_ri_mo[o,:],optimize=True)
     B_temp=np.copy(d_com_mo)
     B_temp+=temp
     B_temp+=np.einsum("klmn->lknm",temp)
-    r_ggga=f12_int.ao_int["f12_gggc"]
-    r_gggg=f12_int.ao_int["f12_gggg"]
-    r_gaga=f12_int.ao_int["f12_gcgc"]
-    r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
-    r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
-    r_ggaa_phy=np.einsum("iajb->ijab",r_gaga)
-    r_oocc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggaa_phy,cp[:,o],cp[:,o],
-                        cx_save,cx_save,optimize=True)
-    r_oopc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,cp[:,o],cp[:,o],
-                        cp,cx_save,optimize=True)
-    r_oopq_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,cp[:,o],cp[:,o],
-                        cp,cp,optimize=True)
-    r_oo_ri_ri_mo=np.zeros((n_occ,n_occ,n_ri,n_ri))
-    r_oo_ri_ri_mo[:,:,:n_gbs,:n_gbs]=r_oopq_mo
-    r_oo_ri_ri_mo[:,:,:n_gbs,n_gbs:]=r_oopc_mo
-    r_oo_ri_ri_mo[:,:,n_gbs:,:n_gbs]=np.einsum("ijkl->jilk",r_oopc_mo)
-    r_oo_ri_ri_mo[:,:,n_gbs:,n_gbs:]=r_oocc_mo
+
+    r_oo_ri_ri_mo=f12_int.mo_int["r_oo_ri_ri_mo"]
     temps=np.einsum("mnPQ,PR,klRQ->mnkl",r_oo_ri_ri_mo,K_ri_mo,
             r_oo_ri_ri_mo,optimize=True)
     B_temp-=temps

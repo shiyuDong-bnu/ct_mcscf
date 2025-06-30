@@ -11,6 +11,7 @@ import psi4
 import numpy as np
 class F12_INT:
     def __init__(self, my_orbital_space,gamma,int_wfn=None):
+        self.orbital_space = my_orbital_space
         self.bs_obs = my_orbital_space.bs_obs()
         self.bs_cabs = my_orbital_space.bs_cabs()
 
@@ -88,3 +89,89 @@ class F12_INT:
         ## 1  f12g12       gggg 
         ## 2  f12 squared  gggg gggc
         ## 1 double_commutator gggg 
+    def form_f12_moint(self):
+        Cx=self.coeff_cbs
+        Cp=self.coeff_gbs
+        o=self.orbital_space.o
+        v=self.orbital_space.v
+        QF_xyij = self.ao_int["f12_cgcg"].swapaxes(1,2)
+        QF_xaij = self.ao_int["f12_cggg"].swapaxes(1,2)
+        QF_XYIJ=np.einsum("xX,yY,iI,jJ,xyij->XYIJ", Cx, Cx, Cp[:,o], Cp[:,o], QF_xyij, optimize=True)
+        QF_XAIJ=np.einsum("xX,aA,iI,jJ,xaij->XAIJ", Cx, Cp[:,v], Cp[:,o], Cp[:,o], QF_xaij, optimize=True)
+        self.mo_int["qf_xyij"] = QF_XYIJ
+        self.mo_int["qf_xaij"] = QF_XAIJ
+    def form_v_and_x_moint(self):
+        """
+        form the V and X mo integral
+        the index is confusion now ,need to be fixed.
+        """
+        Cx=self.coeff_cbs
+        Cp=self.coeff_gbs
+        o=self.orbital_space.o
+        v=self.orbital_space.v
+        C_occ=Cp[:,o]
+
+        rv_gggg=self.ao_int["f12g12_gggg"]
+        r_ggga=self.ao_int["f12_gggc"]
+        r_gggg=self.ao_int["f12_gggg"] 
+        rr_gggg=self.ao_int["f12_squared_gggg"]  
+        rv_gggg_phy=np.einsum("iajb->ijab",rv_gggg)
+        r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
+        r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
+        rr_gggg_phy=np.einsum("iajb->ijab",rr_gggg)
+
+        self.mo_int["rv_ijxy"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rv_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
+        self.mo_int["r_xypq"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
+        self.mo_int["r_yxoa"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,C_occ,Cx,optimize=True)
+        self.mo_int["rr_ijkl"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_phy,C_occ,C_occ,C_occ,C_occ,optimize=True)
+    def form_b_moint(self):
+        Cx=self.coeff_cbs
+        Cp=self.coeff_gbs
+        o=self.orbital_space.o
+        v=self.orbital_space.v
+        n_occ=o.stop
+        n_gbs=self.orbital_space.nbf
+        n_cabs=self.orbital_space.ncabs
+        n_ri=self.orbital_space.nri
+        C_occ=Cp[:,o]
+        d_com_ao=self.ao_int["double_commutator_gggg"]
+        d_com_ao_phy=np.einsum("iajb->ijab",d_com_ao)
+        self.mo_int["d_com_mo"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",d_com_ao_phy,C_occ,C_occ,
+        C_occ,C_occ,optimize=True)
+
+        rr_gggc_ao=self.ao_int["f12_squared_gggc"]
+        rr_gggg_ao=self.ao_int["f12_squared_gggg"]
+        rr_gggc_ao_phy=np.einsum("iajb->ijab",rr_gggc_ao)
+        rr_gggg_ao_phy=np.einsum("iajb->ijab",rr_gggg_ao)
+
+        rr_ooop_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_ao_phy,
+                            C_occ,
+                            C_occ,
+                            C_occ,
+                            Cp,optimize=True)
+        rr_oooc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggc_ao_phy,
+                            C_occ,
+                            C_occ,
+                            C_occ,
+                            Cx,optimize=True)
+        self.mo_int["rr_ooori"]=np.concatenate((rr_ooop_mo,rr_oooc_mo),axis=-1)
+
+        r_ggga=self.ao_int["f12_gggc"]
+        r_gggg=self.ao_int["f12_gggg"]
+        r_gaga=self.ao_int["f12_gcgc"]
+        r_ggga_phy=np.einsum("iajb->ijab",r_ggga)
+        r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
+        r_ggaa_phy=np.einsum("iajb->ijab",r_gaga)
+        r_oocc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggaa_phy,C_occ,C_occ,
+                            Cx,Cx,optimize=True)
+        r_oopc_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,
+                            Cp,Cx,optimize=True)
+        r_oopq_mo=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,
+                            Cp,Cp,optimize=True)
+        r_oo_ri_ri_mo=np.zeros((n_occ,n_occ,n_ri,n_ri))
+        r_oo_ri_ri_mo[:,:,:n_gbs,:n_gbs]=r_oopq_mo
+        r_oo_ri_ri_mo[:,:,:n_gbs,n_gbs:]=r_oopc_mo
+        r_oo_ri_ri_mo[:,:,n_gbs:,:n_gbs]=np.einsum("ijkl->jilk",r_oopc_mo)
+        r_oo_ri_ri_mo[:,:,n_gbs:,n_gbs:]=r_oocc_mo
+        self.mo_int["r_oo_ri_ri_mo"]=r_oo_ri_ri_mo
+
