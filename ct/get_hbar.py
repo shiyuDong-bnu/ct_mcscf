@@ -2,21 +2,22 @@ import numpy as np
 from ct.utils.timer import timer_decorator  
 
 @timer_decorator
-def get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,g,G,f,h):
+def get_hbar(my_orbital_space,V,X,B,D1,D2,g,G,f,h):
+    """
+    g class of sliced eri
+    G  rational generator array
+    D1 ,D2 density metrix
+    f,h fock and core hamiltonian
+    V term is of shape  [s,s,o,o] V^{pq}_{ij} -> V[p,q,i,j] # eq(23)
+    X term is of shape  [o,o,o,o] X^{kl}_{ij} -> X[k,l,i,j] # eq(24)
+    B term is of shape  [o,o,o,o] B^{kl}_{ij} -> B[k,l,i,j] # eq(25)
+    """
     s=my_orbital_space.s
     c=my_orbital_space.c
     o=my_orbital_space.o
     v=my_orbital_space.v
 
     nbf=my_orbital_space.nbf
-    V = np.zeros((nbf, nbf, nbf, nbf))
-    V[s,s,o,o] = V_rational
-    # Eq. (24)
-    X = np.zeros((nbf, nbf, nbf, nbf))
-    X[o,o,o,o] = X_rational
-    # Eq. (25)
-    B = np.zeros((nbf, nbf, nbf, nbf))
-    B[o,o,o,o] =B_rational
     # Eq. (28)
     Dbar = 2 * np.einsum("pq,rs->prqs", D1, D1) - np.einsum("ps,rq->prqs", D1, D1) - D2
 
