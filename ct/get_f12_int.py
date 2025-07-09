@@ -33,28 +33,28 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     ## load mo integral
    
     f12_int.form_v_and_x_moint()
-    rv_ijxy=f12_int.mo_int["rv_ijxy"]
-    r_xypq=f12_int.mo_int["r_xypq"]
-    r_yxoa=f12_int.mo_int["r_yxoa"]
+    rv_ijpq=f12_int.mo_int["rv_ijpq"]
+    r_ijpq=f12_int.mo_int["r_ijpq"]
+    r_ijoa=f12_int.mo_int["r_ijoa"]
     rr_ijkl=f12_int.mo_int["rr_ijkl"]
     v_pqij=sliced_g.mo_int["g_pqrs"]
     v_jioa=sliced_g.mo_int["g_pqrx"][:,:,o,:]
    
    # term1 // get mo integral (rv)_{xy}^{ij}
-    term1=rv_ijxy
+    term1=rv_ijpq
     # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
-    term2=np.einsum("xypq,pqij->xyij",r_xypq,v_pqij,optimize=True)
+    term2=np.einsum("xypq,pqij->xyij",r_ijpq,v_pqij,optimize=True)
     # term3,term4, -r_{xy}^{a^\prime o} v_{a^prime o ij} -r_{xy}^{ob^\prime}v_{ob^\prime}^{ij}
 
-    term3=np.einsum("yxoa,jioa->yxji",r_yxoa,v_jioa,optimize=True)
+    term3=np.einsum("yxoa,jioa->yxji",r_ijoa,v_jioa,optimize=True)
     term4=np.einsum("ijkl->jilk",term3)
     V_noper=term1-term2-term3-term4
     ## generate X term together ,to use common imterdiate array
     term1=rr_ijkl
     ## term2  // -r_{xy}^{pq}  the same as those in v term
-    term2=np.einsum("xypq,ijpq->xyij",r_xypq,r_xypq,optimize=True)
+    term2=np.einsum("xypq,ijpq->xyij",r_ijpq,r_ijpq,optimize=True)
     ## term3 
-    term3=np.einsum("xyob,ijob->xyij",r_yxoa,r_yxoa,optimize=True)
+    term3=np.einsum("xyob,ijob->xyij",r_ijoa,r_ijoa,optimize=True)
     term4=np.einsum("ijkl->jilk",term3)
     X_noper=term1-term2-term3-term4
     V_noper/=gamma

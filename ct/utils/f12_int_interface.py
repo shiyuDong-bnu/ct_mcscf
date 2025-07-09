@@ -120,9 +120,9 @@ class F12_INT:
         r_gggg_phy=np.einsum("iajb->ijab",r_gggg)
         rr_gggg_phy=np.einsum("iajb->ijab",rr_gggg)
 
-        self.mo_int["rv_ijxy"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rv_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
-        self.mo_int["r_xypq"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
-        self.mo_int["r_yxoa"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,C_occ,Cx,optimize=True)
+        self.mo_int["rv_ijpq"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rv_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
+        self.mo_int["r_ijpq"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_gggg_phy,C_occ,C_occ,Cp,Cp,optimize=True)
+        self.mo_int["r_ijoa"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,C_occ,Cx,optimize=True)
         self.mo_int["rr_ijkl"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_phy,C_occ,C_occ,C_occ,C_occ,optimize=True)
     def form_b_moint(self):
         Cx=self.coeff_cbs
