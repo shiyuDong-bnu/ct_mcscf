@@ -20,9 +20,9 @@ def get_f12(my_orbital_space,f12_int,gamma):
     ## calculation begin here
     QF = np.zeros((nri, nri, no, no))
     f12_int.form_f12_moint()    
-    QF[c,c,o,o]=f12_int.mo_int["qf_xyij"]
-    QF[c,v,o,o]=f12_int.mo_int["qf_xaij"]
-    QF[v,c,o,o]=f12_int.mo_int["qf_xaij"].transpose((1,0,3,2))
+    QF[c,c,o,o]=f12_int.mo_int["r_xyij"]
+    QF[c,v,o,o]=f12_int.mo_int["r_xaij"]
+    QF[v,c,o,o]=f12_int.mo_int["r_xaij"].transpose((1,0,3,2))
     G = (0.375 * QF + 0.125 * QF.transpose((0,1,3,2))) / gamma
     print(G.shape)
     return G

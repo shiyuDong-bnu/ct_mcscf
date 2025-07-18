@@ -9,6 +9,7 @@ import time
 import sys
 import psi4
 import numpy as np
+import torch
 class F12_INT:
     def __init__(self, my_orbital_space,gamma,int_wfn=None):
         self.orbital_space = my_orbital_space
@@ -23,10 +24,32 @@ class F12_INT:
         self.ao_int = {}
         self.mo_int = {}
         self.cgtg = self.mints.f12_cgtg(gamma)
+
+        self.df= False
         if int_wfn!=None:
-            self.load_f12_ao_int(int_wfn)
+            if int_wfn.variables()['SYDONG_DF']==1.0:
+                self.load_df_mo_int()
+                self.df=True
+            else:
+                self.load_f12_ao_int(int_wfn)
         else:
             self.gen_f12_ao_int()
+    def load_df_mo_int(self):
+        print("loading eri integral from dfint_wfn")
+        tensor_model = torch.jit.load("r_tensors.pt")
+        self.f12_xyij = list(tensor_model.parameters())[0]
+        self.f12_xpij = list(tensor_model.parameters())[1]
+        self.f12_pqij = list(tensor_model.parameters())[2]
+        tensor_model = torch.jit.load("rv_tensors.pt")
+        self.rv = list(tensor_model.parameters())[0]
+        self.dc  = list(tensor_model.parameters())[1]
+        tensor_model = torch.jit.load("rr_tensors.pt")
+        self.rr_xyij = list(tensor_model.parameters())[0]
+        self.rr_xpij = list(tensor_model.parameters())[1]
+        self.rr_pqij = list(tensor_model.parameters())[2]
+
+
+
     def load_f12_ao_int(self,int_wfn):
             print("loading f12 integrals from int_wfn")
             result=int_wfn.variables()
@@ -38,14 +61,13 @@ class F12_INT:
             self.ao_int["f12_cggg"]=result ["F12_CGGG"].np.reshape(n_cabs,n_gbs,n_gbs,n_gbs)
             self.ao_int["f12_gggg"]=result ["F12_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
 
-  
             self.ao_int["f12g12_gggg"]=result ["F12G12_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
 
 
             self.ao_int["f12_squared_gggg"]=result ["F12_SQUARED_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
             self.ao_int["f12_squared_gggc"]=result ["F12_SQUARED_GGGC"].np.reshape(n_gbs,n_gbs,n_gbs,n_cabs)
 
-       
+        
             self.ao_int["double_commutator_gggg"]=result ["F12_DOUBLE_COMMUTATOR_GGGG"].np.reshape(n_gbs,n_gbs,n_gbs,n_gbs)
             
             self.ao_int["f12_gcgc"]=np.moveaxis(self.ao_int["f12_cgcg"],[0,1,2,3],[1,0,3,2])
@@ -90,6 +112,9 @@ class F12_INT:
         ## 2  f12 squared  gggg gggc
         ## 1 double_commutator gggg 
     def form_f12_moint(self):
+        if self.df:
+            self.form_f12_dfint()
+            return
         Cx=self.coeff_cbs
         Cp=self.coeff_gbs
         o=self.orbital_space.o
@@ -98,13 +123,16 @@ class F12_INT:
         QF_xaij = self.ao_int["f12_cggg"].swapaxes(1,2)
         QF_XYIJ=np.einsum("xX,yY,iI,jJ,xyij->XYIJ", Cx, Cx, Cp[:,o], Cp[:,o], QF_xyij, optimize=True)
         QF_XAIJ=np.einsum("xX,aA,iI,jJ,xaij->XAIJ", Cx, Cp[:,v], Cp[:,o], Cp[:,o], QF_xaij, optimize=True)
-        self.mo_int["qf_xyij"] = QF_XYIJ
-        self.mo_int["qf_xaij"] = QF_XAIJ
+        self.mo_int["r_xyij"] = QF_XYIJ
+        self.mo_int["r_xaij"] = QF_XAIJ
     def form_v_and_x_moint(self):
         """
         form the V and X mo integral
         the index is confusion now ,need to be fixed.
         """
+        if self.df:
+            self.form_v_and_x_dfint()
+            return
         Cx=self.coeff_cbs
         Cp=self.coeff_gbs
         o=self.orbital_space.o
@@ -125,6 +153,9 @@ class F12_INT:
         self.mo_int["r_ijoa"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",r_ggga_phy,C_occ,C_occ,C_occ,Cx,optimize=True)
         self.mo_int["rr_ijkl"]=np.einsum("ijkl,iI,jJ,kK,lL->IJKL",rr_gggg_phy,C_occ,C_occ,C_occ,C_occ,optimize=True)
     def form_b_moint(self):
+        if self.df:
+            self.form_b_dfint()
+            return
         Cx=self.coeff_cbs
         Cp=self.coeff_gbs
         o=self.orbital_space.o
@@ -175,3 +206,41 @@ class F12_INT:
         r_oo_ri_ri_mo[:,:,n_gbs:,n_gbs:]=r_oocc_mo
         self.mo_int["r_oo_ri_ri_mo"]=r_oo_ri_ri_mo
 
+
+    def form_f12_dfint(self):
+        """
+        form the f12 dfint
+        """
+        self.mo_int["r_xyij"] = np.array(self.f12_xyij)
+        self.mo_int["r_xaij"] = np.array(self.f12_xpij[:,self.orbital_space.v,:,:])
+    def form_v_and_x_dfint(self):
+        """
+        form the V and X dfint
+        """
+        self.mo_int["rv_ijpq"]=np.array(self.rv)
+        self.mo_int["r_ijpq"]=np.einsum("pqij->ijpq",np.array(self.f12_pqij)) 
+        self.mo_int["r_ijoa"]=np.einsum("aoji->ijoa",np.array(self.f12_xpij)[:,self.orbital_space.o,:,:]) 
+        self.mo_int["rr_ijkl"]=self.rr_pqij[self.orbital_space.o,self.orbital_space.o,:,:] 
+    def form_b_dfint(self):
+        """
+        form the B dfint
+        """
+        o=self.orbital_space.o
+        n_occ=o.stop
+        n_gbs=self.orbital_space.nbf
+        n_ri=self.orbital_space.nri
+        self.mo_int["d_com_mo"]=np.array(self.dc)
+        rr_oooc_mo=np.einsum("xpij->jipx",np.array(self.rr_xpij)[:,o,:,:] )
+        rr_ooop_mo=np.einsum("pqij->ijpq",np.array(self.rr_pqij)[o,:,:,:] )
+        self.mo_int["rr_ooori"]=np.concatenate((rr_ooop_mo,rr_oooc_mo),axis=-1)
+
+        r_oo_ri_ri_mo=np.zeros((n_occ,n_occ,n_ri,n_ri))
+        r_oopq_mo=np.einsum("pqij->ijpq",np.array(self.f12_pqij))
+        r_oopc_mo=np.einsum("xpij->jipx",np.array(self.f12_xpij))
+        r_oocc_mo=np.einsum("xyij->ijxy",np.array(self.f12_xyij))
+        r_oo_ri_ri_mo[:,:,:n_gbs,:n_gbs]=r_oopq_mo
+        r_oo_ri_ri_mo[:,:,:n_gbs,n_gbs:]=r_oopc_mo
+        r_oo_ri_ri_mo[:,:,n_gbs:,:n_gbs]=np.einsum("ijkl->jilk",r_oopc_mo)
+        r_oo_ri_ri_mo[:,:,n_gbs:,n_gbs:]=r_oocc_mo
+        self.mo_int["r_oo_ri_ri_mo"]=r_oo_ri_ri_mo   
+        pass

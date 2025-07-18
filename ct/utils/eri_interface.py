@@ -10,6 +10,7 @@ import time
 import sys
 import psi4
 import numpy as np
+import torch
 
 
 class SlicedERI:
@@ -25,10 +26,26 @@ class SlicedERI:
         self.ao_int = {}
         self.mo_int = {}
         if int_wfn!=None:
-            self.load_ao_int(int_wfn)
+            if int_wfn.variables()['SYDONG_DF']==1.0:
+                self.load_df_mo_int()
+            else:
+                self.load_ao_int(int_wfn)
+                self.gen_mo_int()
         else:
             self.gen_ao_int()
-        self.gen_mo_int()
+            self.gen_mo_int()
+    def load_df_mo_int(self):
+        print("loading eri integral from dfint_wfn")
+        tensor_model = torch.jit.load("eri_tensors.pt")
+        mo_pqrs = list(tensor_model.parameters())[0]
+        mo_pqxy = list(tensor_model.parameters())[1]
+        mo_pxqy = list(tensor_model.parameters())[2]
+        mo_pqrx = list(tensor_model.parameters())[3]
+
+        self.mo_int["g_pqrs"]=np.array(mo_pqrs)
+        self.mo_int["g_pqxy"]=np.array(mo_pqxy)
+        self.mo_int["g_pxqy"]=np.array(mo_pxqy)
+        self.mo_int["g_pqrx"]=np.array(mo_pqrx)
     def load_ao_int(self,int_wfn):
         print("loading eri integrals from int_wfn")
         result=int_wfn.variables()
