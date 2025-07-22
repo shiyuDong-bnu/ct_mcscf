@@ -2,7 +2,8 @@ import psi4
 import numpy as np
 from ct.get_cabs import get_cabs
 from ct.utils.orbital_space import OrbitalSpace
-from ct.get_int import get_eri_ri_ri_int,get_hcore_int,get_density,get_fock
+from ct.get_fock import get_hcore_int,get_density,get_fock
+#from ct.get_int import get_eri_ri_ri_int,get_hcore_int,get_density,get_fock
 from ct.get_f12_int import get_f12,gen_V,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
 from ct.utils.eri_interface import SlicedERI

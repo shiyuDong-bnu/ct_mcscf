@@ -2,7 +2,7 @@
 import numpy as np
 import psi4
 import time
-import ct.helper_HF as scf_helper
+import ct.hf_code.helper_HF as scf_helper
 def rohf_energy(molecule, wfn, ct=None):
     maxiter = psi4.core.get_global_option('MAXITER')
     e_conv = psi4.core.get_global_option('E_CONVERGENCE')
