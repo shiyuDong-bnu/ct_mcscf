@@ -128,6 +128,12 @@ class SlicedERI:
             self.ao_int["g_pqrx"],
             optimize="greedy",
         )
+        ## slice the mo int to fitting into the same patter of df mo int 
+        n_occ=self.n_occ
+        occ=slice(0,n_occ)
+        self.mo_int["g_ipxq"]=np.moveaxis(self.mo_int["g_pqrx"],[0,1,2,3],[1,0,3,2])[occ,:,:,:]
+        self.mo_int["g_pixq"]=np.moveaxis(self.mo_int["g_pqrx"],[0,1,2,3],[1,0,3,2])[:,occ,:,:]
+
         del self.ao_int
     def format_g_for_fock(self):
         n_obs=self.coeff_gbs.shape[1]
