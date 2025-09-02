@@ -37,18 +37,30 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     r_ijpq=f12_int.mo_int["r_ijpq"]
     r_ijoa=f12_int.mo_int["r_ijoa"]
     rr_ijkl=f12_int.mo_int["rr_ijkl"]
-    v_pqij=sliced_g.mo_int["g_pqrs"]
+    #v_pqij=sliced_g.mo_int["g_pqrs"]
     v_jioa=np.moveaxis(sliced_g.mo_int["g_pixq"],[0,1,2,3],[1,2,3,0])[:,:,o,:]
+
+    L1=sliced_g.mo_int["C_mo_pq"]
+    R1=sliced_g.mo_int["T_ind_pq"]
+    
    
    # term1 // get mo integral (rv)_{xy}^{ij}
     term1=rv_ijpq
     # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
-    term2=np.einsum("xypq,pqij->xyij",r_ijpq,v_pqij,optimize=True)
+    #term2=np.einsum("xypq,pqij->xyij",r_ijpq,v_pqij,optimize=True)
+    # term2 df
+    # r_{ij}^{pq} g_{pq}_{rs} =r_{ij}^{pq} L^A_{pr} R^{A}_{qs}
+    term2_df=np.zeros_like(term1)
+    for i in range(term1.shape[0]):
+        for j in range(term1.shape[1]):
+            r_ijpq_slice=r_ijpq[i,j,:,:]
+            temp1=np.einsum("pq,Apr->Aqr",r_ijpq_slice,L1)
+            term2_df[i,j,:,:]=np.einsum("Aqr,Aqs->rs",temp1,R1)
     # term3,term4, -r_{xy}^{a^\prime o} v_{a^prime o ij} -r_{xy}^{ob^\prime}v_{ob^\prime}^{ij}
 
     term3=np.einsum("yxoa,jioa->yxji",r_ijoa,v_jioa,optimize=True)
     term4=np.einsum("ijkl->jilk",term3)
-    V_noper=term1-term2-term3-term4
+    V_noper=term1-term2_df-term3-term4
     ## generate X term together ,to use common imterdiate array
     term1=rr_ijkl
     ## term2  // -r_{xy}^{pq}  the same as those in v term

@@ -43,6 +43,8 @@ class SlicedERI:
         mo_ixjy = list(tensor_model.parameters())[2]
         mo_ipxq = list(tensor_model.parameters())[3]
         mo_pixq = list(tensor_model.parameters())[4]
+        C_mo_pq = list(tensor_model.parameters())[5]
+        T_ind_pq = list(tensor_model.parameters())[6]
 
         self.mo_int["g_pqrs"]=np.array(mo_pqrs)
         self.mo_int["g_pqxy"]=np.array(mo_ijxy)
@@ -50,6 +52,8 @@ class SlicedERI:
         #self.mo_int["g_iqrx"]=np.array(mo_pqrx)
         self.mo_int["g_ipxq"]=np.array(mo_ipxq)
         self.mo_int["g_pixq"]=np.array(mo_pixq)
+        self.mo_int["C_mo_pq"]=np.array(C_mo_pq)
+        self.mo_int["T_ind_pq"]=np.array(T_ind_pq)
     def load_ao_int(self,int_wfn):
         print("loading eri integrals from int_wfn")
         result=int_wfn.variables()
@@ -148,7 +152,18 @@ class SlicedERI:
         ## cggg
         ## ggcg
         ## cgcg
-        g1[obs,occ,obs,occ]=self.mo_int["g_pqrs"][:,occ,:,occ]
+        # df g_pqrs
+
+        C_mo_pq=self.mo_int["C_mo_pq"]
+        T_ind_pq=self.mo_int["T_ind_pq"]
+        temp_j=np.einsum("Apq,Aij->pqij",C_mo_pq,T_ind_pq[:,occ,occ])
+        temp_j=np.moveaxis(temp_j,[0,1,2,3],[0,2,1,3]) ## to phy notation
+
+        temp_k=np.einsum("Api,Ajs->pijs",C_mo_pq[:,:,occ],T_ind_pq[:,occ,:])
+        temp_k=np.moveaxis(temp_k,[0,1,2,3],[0,2,1,3]) ## to phy notation
+
+       # g1[obs,occ,obs,occ]=self.mo_int["g_pqrs"][:,occ,:,occ]
+        g1[obs,occ,obs,occ]=temp_j
         g1[cbs,occ,obs,occ]=np.moveaxis(self.mo_int["g_pixq"],[0,1,2,3],[2,3,0,1])[:,occ,:,occ]
         g1[obs,occ,cbs,occ]=self.mo_int["g_pixq"][:,occ,:,occ]
         g1[cbs,occ,cbs,occ]=np.moveaxis(self.mo_int["g_pxqy"],[0,2],[1,3])[:,occ,:,occ]
@@ -157,7 +172,8 @@ class SlicedERI:
         ## gggc
         ## cggc
         g2=np.empty((n_total,n_occ,n_occ,n_total))
-        g2[obs,occ,occ,obs]=self.mo_int["g_pqrs"][:,occ,occ,:]
+        #g2[obs,occ,occ,obs]=self.mo_int["g_pqrs"][:,occ,occ,:]
+        g2[obs,occ,occ,obs]=temp_k
         g2[cbs,occ,occ,obs]=np.moveaxis(self.mo_int["g_ipxq"],[0,1,2,3],[2,3,0,1])[:,occ,occ,:]
         g2[obs,occ,occ,cbs]=np.moveaxis(self.mo_int["g_ipxq"],[0,1,2,3],[1,0,3,2])[:,occ,occ,:]
         g2[cbs,occ,occ,cbs]=np.swapaxes(self.mo_int["g_pqxy"],0,2)[:,occ,occ,:]
