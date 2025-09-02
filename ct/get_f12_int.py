@@ -38,7 +38,7 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     r_ijoa=f12_int.mo_int["r_ijoa"]
     rr_ijkl=f12_int.mo_int["rr_ijkl"]
     v_pqij=sliced_g.mo_int["g_pqrs"]
-    v_jioa=sliced_g.mo_int["g_pqrx"][:,:,o,:]
+    v_jioa=np.moveaxis(sliced_g.mo_int["g_pixq"],[0,1,2,3],[1,2,3,0])[:,:,o,:]
    
    # term1 // get mo integral (rv)_{xy}^{ij}
     term1=rv_ijpq

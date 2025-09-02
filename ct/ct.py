@@ -10,7 +10,7 @@ from ct.utils.f12_int_interface import  F12_INT
 def canonical_transform(mol,wfn,int_wfn,basis,df_basis,gamma,freeze_core):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
-    my_orbital_space=OrbitalSpace(wfn,obs,ribs,cabs)
+    my_orbital_space=OrbitalSpace(wfn,obs,cabs)
     sliced_g=SlicedERI(my_orbital_space,int_wfn)
     my_f12_int=F12_INT(my_orbital_space,gamma,int_wfn)
     D1,D2=get_density(my_orbital_space)

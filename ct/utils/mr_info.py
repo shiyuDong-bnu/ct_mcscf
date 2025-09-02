@@ -54,7 +54,15 @@ class MRInfo:
         vir in gbs B {a,b,c,d,...}
         """
         return slice(self.n_occupied, self.nbf)
-
+    @property
+    def active_occ(self):
+        return slice(self.n_frozen,self.n_occupied)
+    @property
+    def active_occ_(self):
+        return slice(0,self.n_occupied-self.n_frozen)
+    @property
+    def active_vir_(self):
+        return slice(self.n_occupied-self.n_frozen,self.nbf)
     def __repr__(self):
         return (
             f"MRInfo(n_frozen={self.n_frozen}, "

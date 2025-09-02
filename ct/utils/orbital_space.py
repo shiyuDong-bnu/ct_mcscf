@@ -1,8 +1,8 @@
+import numpy as np
 class OrbitalSpace():
-    def __init__(self,wfn,obs,ribs,cabs,mr_info=None):
+    def __init__(self,wfn,obs,cabs,mr_info=None):
         self.wfn=wfn
         self.obs=obs
-        self.ribs=ribs
         self.cabs=cabs
         self.mr_info=None
         if mr_info !=None:
@@ -14,6 +14,7 @@ class OrbitalSpace():
         return self.obs.C().to_array()
     @property
     def Cx(self):
+        np.save("ctcx.npy",self.cabs.C().to_array())
         return self.cabs.C().to_array()
     def bs_obs(self):
         return self.obs.basisset()
@@ -23,6 +24,9 @@ class OrbitalSpace():
     def nalpha(self):
         return self.wfn.nalpha()
     @property
+    def nfrzc(self):
+        return self.wfn.nfrzc()
+    @property
     def nbf(self):
         return self.obs.dim().sum()
     @property
@@ -31,6 +35,24 @@ class OrbitalSpace():
     @property
     def nri(self):
         return self.ncabs+self.nbf
+    @property
+    def n_active_hole(self):
+        """
+        active hole :  restricted_docc + active
+        """
+        if self.mr_info is None:
+            return self.nalpha-self.nfrzc 
+        else:
+            return self.mr_info.n_restricted_docc + self.mr_info.n_active
+    @property
+    def n_all_hole(self):
+        """
+        all hole: frozen_docc + restricted_docc + active
+        """
+        if self.mr_info is None:
+            return  self.nalpha
+        else:
+            return self.mr_info.n_restricted_docc + self.mr_info.n_active +self.mr_info.n_frozen
     @property
     def o(self):
         """

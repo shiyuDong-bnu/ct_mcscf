@@ -17,6 +17,7 @@ class SlicedERI:
     def __init__(self, my_orbital_space,int_wfn=None):
         self.bs_obs = my_orbital_space.bs_obs()
         self.bs_cabs = my_orbital_space.bs_cabs()
+        self.n_occ=my_orbital_space.o.stop
 
         self.mints = psi4.core.MintsHelper(self.bs_obs)
 
@@ -38,14 +39,19 @@ class SlicedERI:
         print("loading eri integral from dfint_wfn")
         tensor_model = torch.jit.load("eri_tensors.pt")
         mo_pqrs = list(tensor_model.parameters())[0]
-        mo_pqxy = list(tensor_model.parameters())[1]
-        mo_pxqy = list(tensor_model.parameters())[2]
-        mo_pqrx = list(tensor_model.parameters())[3]
+
+        mo_ijxy = list(tensor_model.parameters())[1]
+        mo_ixjy = list(tensor_model.parameters())[2]
+        mo_ipxq = list(tensor_model.parameters())[3]
+        mo_pixq = list(tensor_model.parameters())[4]
 
         self.mo_int["g_pqrs"]=np.array(mo_pqrs)
-        self.mo_int["g_pqxy"]=np.array(mo_pqxy)
-        self.mo_int["g_pxqy"]=np.array(mo_pxqy)
-        self.mo_int["g_pqrx"]=np.array(mo_pqrx)
+        self.mo_int["g_pqxy"]=np.array(mo_ijxy)
+        self.mo_int["g_pxqy"]=np.array(mo_ixjy)
+        #self.mo_int["g_iqrx"]=np.array(mo_pqrx)
+        self.mo_int["g_ipxq"]=np.array(mo_ipxq)
+        self.mo_int["g_pixq"]=np.array(mo_pixq)
+
     def load_ao_int(self,int_wfn):
         print("loading eri integrals from int_wfn")
         result=int_wfn.variables()
@@ -124,37 +130,44 @@ class SlicedERI:
             self.ao_int["g_pqrx"],
             optimize="greedy",
         )
+        ## slice the mo int to fitting into the same patter of df mo int 
+        n_occ=self.n_occ
+        occ=slice(0,n_occ)
+        self.mo_int["g_ipxq"]=np.moveaxis(self.mo_int["g_pqrx"],[0,1,2,3],[1,0,3,2])[occ,:,:,:]
+        self.mo_int["g_pixq"]=np.moveaxis(self.mo_int["g_pqrx"],[0,1,2,3],[1,0,3,2])[:,occ,:,:]
+
         del self.ao_int
     def format_g_for_fock(self):
         n_obs=self.coeff_gbs.shape[1]
         n_cbs=self.coeff_cbs.shape[-1]
+        n_occ=self.n_occ
         obs=slice(0,n_obs)
         cbs=slice(n_obs,n_obs+n_cbs)
+        occ=slice(0,n_occ)
         n_total=n_obs+n_cbs
-        g1=np.empty((n_total,n_obs,n_total,n_obs)) # eq8 (g^{\mu\lambda}_{\nu\kappa})
+        g1=np.empty((n_total,n_occ,n_total,n_occ)) # eq8 (g^{\mu\lambda}_{\nu\kappa})
         ## gggg
         ## cggg
         ## ggcg
         ## cgcg
-        g1[obs,obs,obs,obs]=self.mo_int["g_pqrs"]
-        g1[cbs,obs,obs,obs]=np.moveaxis(self.mo_int["g_pqrx"],[0,1,2],[3,2,1])
-        g1[obs,obs,cbs,obs]=np.moveaxis(self.mo_int["g_pqrx"],[0,2],[1,3])
-        g1[cbs,obs,cbs,obs]=np.moveaxis(self.mo_int["g_pxqy"],[0,2],[1,3])
+        g1[obs,occ,obs,occ]=self.mo_int["g_pqrs"][:,occ,:,occ]
+        g1[cbs,occ,obs,occ]=np.moveaxis(self.mo_int["g_pixq"],[0,1,2,3],[2,3,0,1])[:,occ,:,occ]
+        g1[obs,occ,cbs,occ]=self.mo_int["g_pixq"][:,occ,:,occ]
+        g1[cbs,occ,cbs,occ]=np.moveaxis(self.mo_int["g_pxqy"],[0,2],[1,3])[:,occ,:,occ]
         ## gggg
         ## cggg
         ## gggc
         ## cggc
-        g2=np.empty((n_total,n_obs,n_obs,n_total))
-        g2[:,obs,obs,obs]=g1[:,obs,obs,obs]
-        g2[obs,obs,obs,cbs]=self.mo_int["g_pqrx"]
-        g2[cbs,obs,obs,cbs]=np.swapaxes(self.mo_int["g_pqxy"],0,2)
+        g2=np.empty((n_total,n_occ,n_occ,n_total))
+        g2[obs,occ,occ,obs]=self.mo_int["g_pqrs"][:,occ,occ,:]
+        g2[cbs,occ,occ,obs]=np.moveaxis(self.mo_int["g_ipxq"],[0,1,2,3],[2,3,0,1])[:,occ,occ,:]
+        g2[obs,occ,occ,cbs]=np.moveaxis(self.mo_int["g_ipxq"],[0,1,2,3],[1,0,3,2])[:,occ,occ,:]
+        g2[cbs,occ,occ,cbs]=np.swapaxes(self.mo_int["g_pqxy"],0,2)[:,occ,occ,:]
         return (g1,g2)
     def format_cbar1(self):
         ## g_sscs 
         n_obs=self.coeff_gbs.shape[1]
         n_cbs=self.coeff_cbs.shape[-1]
-        s=slice(0,n_obs) ## correspondint to index pqrst
-        c=slice(n_obs,n_obs+n_cbs) # corresponding to index x,y
-        return np.moveaxis(self.mo_int["g_pqrx"],[0,2],[1,3])
+        return  self.mo_int["g_ipxq"],self.mo_int["g_pixq"]
 
         
