@@ -25,7 +25,7 @@ def get_hbar(my_orbital_space,V,X,B,D1,D2,g,G,f,h):
     hbar=one_body(my_orbital_space,h,Dbar,G,g,f)
 
     # 2-body
-    Cbar2_p,Cbar2_pp = two_body_decoposited(my_orbital_space,D1,g,G,f)
+    Cbar2_p = two_body_decoposited(my_orbital_space,D1,g,G,f)
     # Eq. (20)
     Cbar2_p[:,:,o,o] += two_body_direct(my_orbital_space,V,X,B,G,f,h)
 
@@ -36,12 +36,6 @@ def get_hbar(my_orbital_space,V,X,B,D1,D2,g,G,f,h):
     gbar[o,:,:,:] += 0.25 *Cbar2_p.transpose((2,3,0,1)) 
     gbar[:,o,:,:] += 0.25 *Cbar2_p.transpose((3,2,1,0)) 
 
-    gbar[o,:,:,:] += 0.25 *Cbar2_pp 
-    gbar[:,o,:,:] += 0.25 *Cbar2_pp.transpose((1,0,3,2)) 
-    gbar[:,:,o,:] += 0.25 *Cbar2_pp.transpose((2,3,0,1)) 
-    gbar[:,:,:,o] += 0.25 *Cbar2_pp.transpose((3,2,1,0)) 
-    #gbar = 0.25 * (np.copy(Cbar2) + Cbar2.transpose((1,0,3,2)))
-    #gbar += 0.25 * (Cbar2.transpose((2,3,0,1)) + Cbar2.transpose((3,2,1,0)))
     return hbar ,gbar
 @timer_decorator
 def one_body(my_orbital_space,h,Dbar,G,g,f):
@@ -155,7 +149,10 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
     Cbar2_pp[o,v,v,o] -= np.einsum("xaij,xbkl,li->kabj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
     Cbar2_pp[o,v,o,v] -= np.einsum("xaij,xbkl,lj->kaib", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
-    return Cbar2_p,Cbar2_pp
+
+    # using permutation symmetry
+    Cbar2_p[:,:,o,:] += Cbar2_pp.transpose((2,3,0,1))
+    return Cbar2_p
 def three_body(my_orbital_space,g,G,f):
     s=my_orbital_space.s
     c=my_orbital_space.c
