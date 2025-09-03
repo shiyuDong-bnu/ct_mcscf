@@ -116,7 +116,8 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
     g_ipxq,g_pixq=g.format_cbar1()
 
     # Eq. (27), without 0.5
-    temp = np.einsum('xaij,aa->xaij', G[c,v,o,o], f[v,v])
+    temp = np.einsum("xaij,xy->yaij",G[c,v,o,o],f[c,c])
+    temp += np.einsum('xaij,aa->xaij', G[c,v,o,o], f[v,v])
     temp -= np.einsum('xaij,ii->xaij', G[c,v,o,o], f[o,o])
     temp -= np.einsum('xaij,jj->xaij', G[c,v,o,o], f[o,o])
 
@@ -135,19 +136,19 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
 
     Cbar2[s,v,o,s] -= 2 * np.einsum("tj,ptxs,xaij->pais", D1[o,o], g_pixq[:,o,:,:], G[c,v,o,o],optimize='greedy')
     # Eq. (22)
-    Cbar2[o,v,v,o] += 2 * np.einsum("xaij,ybkl,xy,ki->labj", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
+    #Cbar2[o,v,v,o] += 2 * np.einsum("xaij,ybkl,xy,ki->labj", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
     Cbar2[o,v,v,o] += 2 * np.einsum("xaij,xbkl,ki->labj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
 
-    Cbar2[o,v,v,o] -= np.einsum("xaij,ybkl,xy,kj->labi", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
+    #Cbar2[o,v,v,o] -= np.einsum("xaij,ybkl,xy,kj->labi", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
     Cbar2[o,v,v,o] -= np.einsum("xaij,xbkl,kj->labi", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
 
-    Cbar2[o,v,v,o] -= np.einsum("xaij,ybkl,xy,li->kabj", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
+    #Cbar2[o,v,v,o] -= np.einsum("xaij,ybkl,xy,li->kabj", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
     Cbar2[o,v,v,o] -= np.einsum("xaij,xbkl,li->kabj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
 
-    Cbar2[o,v,o,v] -= np.einsum("xaij,ybkl,xy,lj->kaib", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o], optimize="greedy")
+    #Cbar2[o,v,o,v] -= np.einsum("xaij,ybkl,xy,lj->kaib", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o], optimize="greedy")
     Cbar2[o,v,o,v] -= np.einsum("xaij,xbkl,lj->kaib", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
     return Cbar2
 def three_body(my_orbital_space,g,G,f):
