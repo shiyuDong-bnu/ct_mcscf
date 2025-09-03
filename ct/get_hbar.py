@@ -111,6 +111,7 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
     v=my_orbital_space.v
 
     nbf=my_orbital_space.nbf
+    no=o.stop
     Cbar2 = np.zeros((nbf,nbf,nbf,nbf))
 
     g_ipxq,g_pixq=g.format_cbar1()
@@ -122,34 +123,31 @@ def two_body_decoposited(my_orbital_space,D1,g,G,f):
     temp -= np.einsum('xaij,jj->xaij', G[c,v,o,o], f[o,o])
 
     # Eq. (21)
-    Cbar2[v,s,o,s] += 4 * np.einsum("ti,trxs,xaij->arjs", D1[o,o], g_ipxq[o,:,:,:], G[c,v,o,o],optimize='greedy')
+    Cbar2_p=np.zeros((nbf,nbf,no,nbf))
+    Cbar2_p[v,s,o,s] += 4 * np.einsum("ti,trxs,xaij->arjs", D1[o,o], g_ipxq[o,:,:,:], G[c,v,o,o],optimize='greedy')
 
 
-    Cbar2[v,s,o,s] -= 2 * np.einsum("ti,trxs,xaji->arjs", D1[o,o], g_ipxq[o,:,:,:], G[c,v,o,o],optimize='greedy')
-    Cbar2[v,s,o,s] -= 2 * np.einsum("ti,rtxs,xaij->arjs", D1[o,o], g_pixq[:,o,:,:], G[c,v,o,o],optimize='greedy')
+    Cbar2_p[v,s,o,s] -= 2 * np.einsum("ti,trxs,xaji->arjs", D1[o,o], g_ipxq[o,:,:,:], G[c,v,o,o],optimize='greedy')
+    Cbar2_p[v,s,o,s] -= 2 * np.einsum("ti,rtxs,xaij->arjs", D1[o,o], g_pixq[:,o,:,:], G[c,v,o,o],optimize='greedy')
     
 
 
-    Cbar2[s,v,o,o] += 4 * np.einsum("tu,ptxu,xaij->paij", D1[o,o], g_pixq[:,o,:,o], G[c,v,o,o],optimize='greedy')
-    Cbar2[s,v,o,o] -= 2 * np.einsum("tu,tpxu,xaij->paij", D1[o,o],  g_ipxq[o,:,:,o], G[c,v,o,o],optimize='greedy')
+    Cbar2_p[s,v,o,o] += 4 * np.einsum("tu,ptxu,xaij->paij", D1[o,o], g_pixq[:,o,:,o], G[c,v,o,o],optimize='greedy')
+    Cbar2_p[s,v,o,o] -= 2 * np.einsum("tu,tpxu,xaij->paij", D1[o,o],  g_ipxq[o,:,:,o], G[c,v,o,o],optimize='greedy')
     
 
-    Cbar2[s,v,o,s] -= 2 * np.einsum("tj,ptxs,xaij->pais", D1[o,o], g_pixq[:,o,:,:], G[c,v,o,o],optimize='greedy')
+    Cbar2_p[s,v,o,s] -= 2 * np.einsum("tj,ptxs,xaij->pais", D1[o,o], g_pixq[:,o,:,:], G[c,v,o,o],optimize='greedy')
     # Eq. (22)
-    #Cbar2[o,v,v,o] += 2 * np.einsum("xaij,ybkl,xy,ki->labj", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
-    Cbar2[o,v,v,o] += 2 * np.einsum("xaij,xbkl,ki->labj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
+    Cbar2_pp=np.zeros((no,nbf,nbf,nbf))
+    Cbar2_pp[o,v,v,o] += 2 * np.einsum("xaij,xbkl,ki->labj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
+    Cbar2_pp[o,v,v,o] -= np.einsum("xaij,xbkl,kj->labi", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
-    #Cbar2[o,v,v,o] -= np.einsum("xaij,ybkl,xy,kj->labi", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
-    Cbar2[o,v,v,o] -= np.einsum("xaij,xbkl,kj->labi", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
+    Cbar2_pp[o,v,v,o] -= np.einsum("xaij,xbkl,li->kabj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
 
-
-    #Cbar2[o,v,v,o] -= np.einsum("xaij,ybkl,xy,li->kabj", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o],optimize="greedy")
-    Cbar2[o,v,v,o] -= np.einsum("xaij,xbkl,li->kabj", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
-
-
-    #Cbar2[o,v,o,v] -= np.einsum("xaij,ybkl,xy,lj->kaib", G[c,v,o,o], G[c,v,o,o], f[c,c], D1[o,o], optimize="greedy")
-    Cbar2[o,v,o,v] -= np.einsum("xaij,xbkl,lj->kaib", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
+    Cbar2_pp[o,v,o,v] -= np.einsum("xaij,xbkl,lj->kaib", temp, G[c,v,o,o], D1[o,o],optimize="greedy")
+    Cbar2[:,:,o,:]+=Cbar2_p
+    Cbar2[o,:,:,:]+=Cbar2_pp
     return Cbar2
 def three_body(my_orbital_space,g,G,f):
     s=my_orbital_space.s
