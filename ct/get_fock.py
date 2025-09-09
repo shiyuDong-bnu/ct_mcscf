@@ -64,10 +64,11 @@ def get_density(my_orbital_space,mr_info=None):
         ## second index is active
         D2[a_ind,a_ind,a_ind,a_ind]=mr_info.rdm2
     return D1,D2
-def  get_fock(my_orbital_space,h,D1,g):
+def  get_fock(my_orbital_space,h,g,rdm):
     s=my_orbital_space.s
     o=my_orbital_space.o
     # build fock
+    D1=rdm.form_fock_density()
     f_only_j =np.copy(h)+ np.einsum("lk,mlnk->mn", D1[o,o], g[0][:,o,:,o])
     k=0.5 * np.einsum("lk,mlkn->mn", D1[o,o], g[1][:,o,o,:])
     f_total=f_only_j-k
