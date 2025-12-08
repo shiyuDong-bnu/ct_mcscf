@@ -12,9 +12,10 @@ Download forte from [git@github.com:shiyuDong-bnu/forte.git](https://github.com/
 git clone git@github.com:shiyuDong-bnu/forte.git
 git checkout ct_forte
 ```
+install forte  using ct_forte branch  (I have modified some code to read and write fcidump and RDMs variables ) 
 Next 
 Download ct_mcscf from [git@github.com:shiyuDong-bnu/ct_mcscf.git](https://github.com/shiyuDong-bnu/ct_mcscf.git)
-using cholesky branch 
+using cholesky branch  (I do not use choleksy descomposition now,but in the future a tensor decomposition method may be ok !) 
 ```
 git clone git@github.com:shiyuDong-bnu/ct_mcscf.git
 git checkout cholesky
@@ -24,14 +25,20 @@ Third you need fast_int to calculate density fitting f12 integrals
 rm -rf fast_int
 git clone  git@github.com:shiyuDong-bnu/fast_int.git
 ```
-Examples are in test 
+compile the fast_int and get fast_int.so 
+Now two Examples are in test: 
+one is sinlge reference Ne atom 
 ```
 cd test/Ne_jcp
 python ct_hf_df.py
+```
+another is methylene  multi-reference. 
+```
 cd ../methylene
 python ct_to_dump.py
 python forte_from_dump.py
 ```
+You need to change the `ct_mcscf` and `ct_forte` file path in scripts to run smoothly.
 
 Information of 2RDM order in ct
 eq(#2)
