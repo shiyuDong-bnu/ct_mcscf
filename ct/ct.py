@@ -7,15 +7,18 @@ from ct.get_f12_int import get_f12,gen_V,gen_b,rational_generate,conjugate
 from ct.get_hbar import get_hbar
 from ct.utils.eri_interface import SlicedERI
 from ct.utils.f12_int_interface import  F12_INT
+from ct.utils.rdm import RDM
+
 def canonical_transform(mol,wfn,int_wfn,basis,df_basis,gamma,freeze_core):
 
     obs,ribs,cabs=get_cabs(mol,wfn,basis,df_basis)
     my_orbital_space=OrbitalSpace(wfn,obs,cabs)
     sliced_g=SlicedERI(my_orbital_space,int_wfn)
     my_f12_int=F12_INT(my_orbital_space,gamma,int_wfn)
-    D1,D2=get_density(my_orbital_space)
+   # D1,D2=get_density(my_orbital_space)
+    rdm=RDM(my_orbital_space)
     h=get_hcore_int(my_orbital_space)
-    fock_only_j,k,f=get_fock(my_orbital_space,h,D1,sliced_g.format_g_for_fock())
+    fock_only_j,k,f=get_fock(my_orbital_space,h,sliced_g.format_g_for_fock(),rdm)
     G=get_f12(my_orbital_space,my_f12_int,gamma)
     V_noper,X_noper=gen_V(gamma,sliced_g,my_orbital_space,my_f12_int)
     B_final_temp=gen_b(gamma,my_orbital_space,f,fock_only_j,k,my_f12_int)
@@ -39,7 +42,7 @@ def canonical_transform(mol,wfn,int_wfn,basis,df_basis,gamma,freeze_core):
 
     B_rational_temp=rational_generate(B_final_temp)
     B_rational=conjugate(rational_generate(conjugate(B_rational_temp)))
-    hbar,gbar=get_hbar(my_orbital_space,V_rational,X_rational,B_rational,D1,D2,sliced_g,G,f,h)
+    hbar,gbar=get_hbar(my_orbital_space,V_rational,X_rational,B_rational,sliced_g,G,f,h,rdm)
     Cp=my_orbital_space.Cp
     mints=psi4.core.MintsHelper(my_orbital_space.bs_obs())
     Cinv = Cp.T @ mints.ao_overlap()

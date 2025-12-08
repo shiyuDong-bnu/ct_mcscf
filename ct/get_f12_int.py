@@ -9,6 +9,7 @@ import numpy as np
 from ct.utils.timer import timer_decorator
 import sys
 import time
+from numba import njit, prange,set_num_threads
 # G = 3/8 <αβ|Q12 F12|ij> + 1/8 <αβ|Q12 F12|ji>
 @timer_decorator
 def get_f12(my_orbital_space,f12_int,gamma):
@@ -37,13 +38,51 @@ def gen_V(gamma,sliced_g,my_orbital_space,f12_int):
     r_ijpq=f12_int.mo_int["r_ijpq"]
     r_ijoa=f12_int.mo_int["r_ijoa"]
     rr_ijkl=f12_int.mo_int["rr_ijkl"]
-    v_pqij=sliced_g.mo_int["g_pqrs"]
+    #v_pqij=sliced_g.mo_int["g_pqrs"]
     v_jioa=np.moveaxis(sliced_g.mo_int["g_pixq"],[0,1,2,3],[1,2,3,0])[:,:,o,:]
+
+    L1=sliced_g.mo_int["C_mo_pq"]
+    R1=sliced_g.mo_int["T_ind_pq"]
+    L1_shaped=L1.reshape(L1.shape[0]*L1.shape[1],L1.shape[2])
+    R1_shaped=R1.reshape(R1.shape[0]*R1.shape[1],R1.shape[2])
+    
    
    # term1 // get mo integral (rv)_{xy}^{ij}
     term1=rv_ijpq
     # term2 // -r_{xy}^{pq} v_{pq}^{ij} 
-    term2=np.einsum("xypq,pqij->xyij",r_ijpq,v_pqij,optimize=True)
+    #term2=np.einsum("xypq,pqij->xyij",r_ijpq,v_pqij,optimize=True)
+    # term2 df
+    # r_{ij}^{pq} g_{pq}_{rs} =r_{ij}^{pq} L^A_{pr} R^{A}_{qs}
+    @njit(parallel=True)
+    def df_term2():
+        term2_df=np.zeros_like(term1)
+        for i in range(term1.shape[0]):
+            for j in range(term1.shape[1]):
+                r_ijpq_slice=np.ascontiguousarray(r_ijpq[i,j,:,:])
+                #temp1=np.einsum("pq,Apr->Aqr",r_ijpq_slice,L1)
+                #temp1=np.einsum("pq,Arp->Aqr",r_ijpq_slice,L1)
+                #print(r_ijpq_slice.flags['C_CONTIGUOUS'])
+                #print(L1_shaped.flags['C_CONTIGUOUS'])
+                temp1_dot=np.dot(r_ijpq_slice.T,L1_shaped.T)#  q,p || p,Ar -> q,Ar
+                temp1_dot=temp1_dot.reshape(r_ijpq_slice.shape[0],L1.shape[0],L1.shape[1]) # q,A,r
+                temp1_dot=np.ascontiguousarray(np.swapaxes(temp1_dot,1,0))
+                #temp1_dot=np.swapaxes(temp1_dot,1,0)  # A,q,r
+                #print(np.allclose(temp1_dot,temp1),end=" ")
+                temp1_dot=temp1_dot.reshape(temp1_dot.shape[0]*temp1_dot.shape[1],temp1_dot.shape[2]) # Aq,r
+                #print(np.allclose(temp1_dot.reshape(*L1.shape),temp1),end=" ")
+                #if not np.allclose(temp1_dot.reshape(*L1.shape),temp1):
+                #    import pdb
+                #    pdb.set_trace()
+                #    pass
+
+                temp2_dot=np.dot(temp1_dot.T,R1_shaped)
+                #temp2=np.einsum("Aqr,Aqs->rs",temp1,R1)
+                #print(np.allclose(temp2_dot,temp2))
+                term2_df[i,j,:,:]=temp2_dot
+                #term2_df[i,j,:,:]=temp2
+        return term2_df
+    set_num_threads(64)
+    term2=df_term2()
     # term3,term4, -r_{xy}^{a^\prime o} v_{a^prime o ij} -r_{xy}^{ob^\prime}v_{ob^\prime}^{ij}
 
     term3=np.einsum("yxoa,jioa->yxji",r_ijoa,v_jioa,optimize=True)
