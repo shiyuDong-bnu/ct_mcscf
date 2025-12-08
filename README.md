@@ -14,12 +14,23 @@ git checkout ct_forte
 ```
 Next 
 Download ct_mcscf from [git@github.com:shiyuDong-bnu/ct_mcscf.git](https://github.com/shiyuDong-bnu/ct_mcscf.git)
+using cholesky branch 
 ```
 git clone git@github.com:shiyuDong-bnu/ct_mcscf.git
+git checkout cholesky
+```
+Third you need fast_int to calculate density fitting f12 integrals
+```
+rm -rf fast_int
+git clone  git@github.com:shiyuDong-bnu/fast_int.git
 ```
 Examples are in test 
 ```
-cd test
+cd test/Ne_jcp
+python ct_hf_df.py
+cd ../methylene
+python ct_to_dump.py
+python forte_from_dump.py
 ```
 
 Information of 2RDM order in ct
