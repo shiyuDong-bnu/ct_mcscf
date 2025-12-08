@@ -39,6 +39,7 @@ class SlicedERI:
         print("loading eri integral from dfint_wfn")
         tensor_model = torch.jit.load("eri_tensors.pt")
         mo_pqrs = list(tensor_model.parameters())[0]
+
         mo_ijxy = list(tensor_model.parameters())[1]
         mo_ixjy = list(tensor_model.parameters())[2]
         mo_ipxq = list(tensor_model.parameters())[3]
