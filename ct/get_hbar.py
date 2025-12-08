@@ -27,17 +27,14 @@ def get_hbar(my_orbital_space,V,X,B,g,G,f,h,rdm):
 
     # 2-body
     Cbar2_p = two_body_decoposited(my_orbital_space,D1,g,G,f)
-    np.save("cbar.npy",Cbar2_p)
     # Eq. (20)
     Cbar2_p[:,:,o,o] += two_body_direct(my_orbital_space,V,X,B,G,f,h)
     # Eq. (16)
     gbar = g.mo_int["g_pqrs"]
-    np.save("g.npy",gbar)
     gbar[:,:,o,:] += 0.25 *Cbar2_p 
     gbar[:,:,:,o] += 0.25 *Cbar2_p.transpose((1,0,3,2)) 
     gbar[o,:,:,:] += 0.25 *Cbar2_p.transpose((2,3,0,1)) 
     gbar[:,o,:,:] += 0.25 *Cbar2_p.transpose((3,2,1,0)) 
-    np.save("gbar.npy",gbar)
     return hbar ,gbar
 @timer_decorator
 def one_body(my_orbital_space,h,G,g,f,rdm):
