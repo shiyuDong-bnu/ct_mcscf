@@ -1,0 +1,6 @@
+[submodule "ucc/QC5"]
+	path = ucc/QC5
+	url = https://github.com/xiaoamero/QC5.git
+[submodule "fast_int"]
+	path = fast_int
+	url = git@github.com:shiyuDong-bnu/fast_int.git
